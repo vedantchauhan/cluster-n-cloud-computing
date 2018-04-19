@@ -3,20 +3,23 @@
 #comp90024
 
 
-# change stream_output_file path before run
+# change couchdb ip address before running
 # python: 3.6.3
 # run > python tweets_crawler.py
 
 
 import tweepy
 from twitter import *
+from textblob import TextBlob
+import json
+import couchdb
 
 TWITTER_KEY = "985778410898124800-kNVBSiLMIWRILWlGR71zk8HCl6IllEo"
 TWITTER_SECRET = "ttLXW3R5rC3MMXMwbq7irCf9GcAhIOV9i3Pz1VhmS9IaP"
 TWITTER_APP_KEY = "se7dR9OJzvcJdG9nO6g9VVpKE"
 TWITTER_APP_SECRET = "0iJSVbUVN2OPOSPy3KJQdQP3Q0iGvyZfHAMQXKwce03tfO5PYk"
 
-stream_output_file = "/Users/alfredgordon/Documents/cluster/tweets/stream.json"      # change file path during test
+COUCHDB_ADDR = "http://127.0.0.1:5984"      # change file path during test
 
 
 # Melbourne
@@ -37,8 +40,9 @@ class StreamListener(tweepy.StreamListener):
 
     def on_status(self, status):
         
-        # change this code to store data into CouchDB
-        file = open(stream_output_file,"a")
+        # store tweets in json format
+        record = {}
+        
         
         # filter out retweets
         try:
@@ -47,15 +51,31 @@ class StreamListener(tweepy.StreamListener):
         except:
             pass
         
-        # filter out location
+        # store text in json
+        record['text'] = status.text
         print(status.text)
         
-        # store data into database
-        file.write(str(status.text.encode('utf-8')).strip())
-        file.close()
+        
+        # perform sentiment analysis n store scores to json
+        blob = TextBlob(status.text)
+        score = blob.sentiment
+        sent = {'polarity':str(score.polarity), 'subjectiviy':str(score.subjectivity)}
+        print(score)
+        record['sentiment_score'] = sent
+        
+        
+        # connect to couchdb
+        couch = couchdb.Server(COUCHDB_ADDR)
+        print(record)
+        
+        # locate database
+        db = couch['tweets']
+        
+        # save into couchdb
+        db.save(record)
         return True
         
-    # error: disconnect stream and start using SearchAPI    
+    # error: disconnect stream   
     def on_error(self, status_code):
         return False
         
@@ -83,33 +103,49 @@ def SearchMode():
     
     # create an api object to pull data from twitter
     twitter = Twitter(auth = OAuth(TWITTER_KEY,TWITTER_SECRET,TWITTER_APP_KEY,TWITTER_APP_SECRET))
+    
+    # query 100 tweets at a time
     while True: 
         query = twitter.search.tweets(q = "", geocode = "%f,%f,%dkm" % (latitude, longitude, max_range), count = 100)
         for result in query["statuses"]:
-            #-----------------------------------------------------------------------
-            # only process a result if it has a geolocation
-            #-----------------------------------------------------------------------
-            #if result["geo"]:
-                try:
+            # store tweets in json
+            record = {}
+
+            try:
                     
-                    # filter out retweets
-                    if result["retweeted_status"]:
-                        continue
-                except:
-                    pass
+                # filter out retweets
+                if result["retweeted_status"]:
+                    continue
+            except:
+                pass
                 
-                user = result["user"]["screen_name"]
-                text = result["text"]
+            user = result["user"]["screen_name"]
+            text = result["text"]
                 
-                #latitude = result["geo"]["coordinates"][0]
-                #longitude = result["geo"]["coordinates"][1]
-    
-                #-----------------------------------------------------------------------
-                # now write this row to json file (connect to couchDB)
-                #-----------------------------------------------------------------------
-                file = open(stream_output_file,"a")
-                file.write(str(text.encode('utf-8')).strip())
-                print(text)
+            
+                
+            # store text in json
+            record['text'] = text
+            print(text)
+            
+            # perform sentiment analysis n store scores to json
+            blob = TextBlob(text)
+            score = blob.sentiment
+            sent = {'polarity':str(score.polarity), 'subjectiviy':str(score.subjectivity)}
+            print(score)
+            record['sentiment_score'] = sent
+            
+            
+            # connect to couchdb
+            couch = couchdb.Server(COUCHDB_ADDR)
+            print(record)
+            
+            # locate database
+            db = couch['tweets']
+            
+            # save into couchdb
+            db.save(record)                
+            print(text)
             
 
     
@@ -125,4 +161,6 @@ if __name__ == '__main__':
         StreamMode()
         #SearchMode()
     except:
+        #print("Start SearchMode")
         SearchMode()
+        
