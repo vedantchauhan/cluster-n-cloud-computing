@@ -1,5 +1,5 @@
 from nltk.corpus import twitter_samples
-from sentAnalyse import SentAnalyse
+from sentiment import classifier
 from textblob import TextBlob
 
 # accuracy test of our classifier

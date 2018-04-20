@@ -1,5 +1,5 @@
 from textblob import TextBlob
-from preprocess import Preprocess
+from sentiment.preprocess import Preprocess
 
 
 class Baseline():

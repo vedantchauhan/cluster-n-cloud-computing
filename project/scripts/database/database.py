@@ -1,7 +1,7 @@
 import couchdb
+from crawler.config import couchdb_uri
 
 
-COUCHDB_ADDR = "http://127.0.0.1:5984"      # change file path during test
 
 
 class DButils():
@@ -10,10 +10,15 @@ class DButils():
     
     def __init__(self):
         # connect to couchdb
-        self.couch = couchdb.Server(COUCHDB_ADDR)
+        self.couch = couchdb.Server(couchdb_uri)
         
         
     def save(self, database, record):
+        
+        #implement something to prevent duplication
+        
+        
+        
         print(record)
     
         # locate database

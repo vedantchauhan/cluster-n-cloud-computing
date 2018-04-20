@@ -1,7 +1,9 @@
 
 import tweepy
-import classifier
-import database
+from sentiment import classifier
+from database import database
+
+from crawler.config import db_name
 
 
 
@@ -38,5 +40,5 @@ class MyStreamListener(tweepy.StreamListener):
         
         
         # save into couchdb
-        db.save('tweets',record)
+        db.save(db_name,record)
         return True
