@@ -93,8 +93,6 @@ def stop_word_dict(stopwords):
     d = {}
     for word in stopwords:
         d[word] = d.get(word,0) + 1
-        
-    print("stopwords lookup ready")
     return d
 
 

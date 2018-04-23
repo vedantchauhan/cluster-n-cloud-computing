@@ -14,7 +14,15 @@ class Parser():
             
         result = {
             "coordinates":status.coordinates,
-            "place":status.place,
+            "place":{
+                "id":status.place.id,
+                "url":status.place.url,
+                "place_type":status.place.place_type,
+                "name":status.place.name,
+                "full_name":status.place.full_name,
+                "country_code":status.place.country_code,
+                "country":status.place.country
+                },
             "lang":status.lang,
             "text":status.text,
             "sentiment":sentiment_score

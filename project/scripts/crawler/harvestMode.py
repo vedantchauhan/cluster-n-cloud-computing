@@ -16,10 +16,7 @@ from database import database
 from crawler import streamHarvest
 from crawler.config import app_auth,couchdb_uri,MELBOURNE_STR,MELBOURNE_SRC,db_name
 
-TWITTER_KEY = "985778410898124800-kNVBSiLMIWRILWlGR71zk8HCl6IllEo"
-TWITTER_SECRET = "ttLXW3R5rC3MMXMwbq7irCf9GcAhIOV9i3Pz1VhmS9IaP"
-TWITTER_APP_KEY = "se7dR9OJzvcJdG9nO6g9VVpKE"
-TWITTER_APP_SECRET = "0iJSVbUVN2OPOSPy3KJQdQP3Q0iGvyZfHAMQXKwce03tfO5PYk"
+
 
 class HarvestSys():
     def __init__(self):

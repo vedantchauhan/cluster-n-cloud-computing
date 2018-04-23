@@ -2,10 +2,8 @@ from crawler.harvestMode import HarvestSys
 
 
 def run_crawler(crawler):
-    try:
-        crawler.StreamMode()
-    except:
-        crawler.SearchMode()
+    crawler.StreamMode()
+
     
 
 

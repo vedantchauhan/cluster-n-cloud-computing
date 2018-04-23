@@ -30,16 +30,8 @@ class MyStreamListener(tweepy.StreamListener):
         
         record = parser.status_parse(status,sent)
         if record is None:
-            return
-        
-        print(record)
-        
-        """
-        
-        
-        
-        
+            return 
         # save into couchdb
         db.save(db_name,record)
-        """
+        
         return True
