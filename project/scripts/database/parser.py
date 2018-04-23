@@ -3,8 +3,28 @@ import json
 
 class Parser():
     
+    def status_parse(self,status,sentiment_score):
+        
+        # filter out retweets
+        try:
+            if status.retweeted_status:
+                return None
+        except:
+            pass
+            
+        result = {
+            "coordinates":status.coordinates,
+            "place":status.place,
+            "lang":status.lang,
+            "text":status.text,
+            "sentiment":sentiment_score
+        }
+        return result
+        
+        
+    
     @staticmethod
-    def parse_to_json(json_object):
+    def parse_to_json(self,json_object):
         response = {
             "_id": json_object["id_str"],
                     "user": {

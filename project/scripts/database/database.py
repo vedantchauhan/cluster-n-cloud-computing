@@ -10,7 +10,10 @@ class DButils():
     
     def __init__(self):
         # connect to couchdb
-        self.couch = couchdb.Server(couchdb_uri)
+        try:
+            self.couch = couchdb.Server(couchdb_uri)
+        except:
+            print("ERROR: couchDB is not running")
         
         
     def save(self, database, record):

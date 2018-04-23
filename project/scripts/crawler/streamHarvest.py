@@ -4,6 +4,7 @@ from sentiment import classifier
 from database import database
 
 from crawler.config import db_name
+from database.parser import Parser
 
 
 
@@ -12,33 +13,33 @@ from crawler.config import db_name
 class MyStreamListener(tweepy.StreamListener):
 
     def on_status(self, status):
+        #setup
         db = database.DButils()
-        
-        cl = classifier.Baseline()
-        
-        # store tweets in json format
-        record = {}
-        
-        
-        # filter out retweets
-        try:
-            if status.retweeted_status:
-                return 
-        except:
-            pass
-        
-        # store text in json
-        record['text'] = status.text
-        print(status.text)
+        cl = classifier.MyClassifier()
+        parser = Parser()
         
         
         # perform sentiment analysis n store scores to json
-        
         polarity, subjectivity, label = cl.get_sent_score(status.text)
-        sent = {'polarity':str(polarity), 'subjectiviy':str(subjectivity),'label':label}
-        record['sentiment_score'] = sent
+        sent = {
+            'polarity':str(polarity), 
+            'subjectiviy':str(subjectivity),
+            'label':label
+        }
+      
+        
+        record = parser.status_parse(status,sent)
+        if record is None:
+            return
+        
+        print(record)
+        
+        """
+        
+        
         
         
         # save into couchdb
         db.save(db_name,record)
+        """
         return True

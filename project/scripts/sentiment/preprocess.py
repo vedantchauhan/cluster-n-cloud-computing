@@ -13,11 +13,35 @@ def tokenize(text):
 
 def lemmatize(text):
     wordnet_lemmatizer = WordNetLemmatizer()
-    text = [x.lower() for x in text]
+    #text = [x.lower() for x in text]
     text = [rmRepeatCharacters(x) for x in text]
-    text = [wordnet_lemmatizer.lemmatize(x) for x in text]
+    #text = [wordnet_lemmatizer.lemmatize(x) for x in text]
     text = [replaceTags(x) for x in text]
+    # Fix classic tweet lingo
+    text = [text_clean(x) for x in text]   
     return text
+
+
+def text_clean(text):
+    # Fix classic tweet lingo
+    text = re.sub(r'\bthats\b', 'that is', text)
+    text = re.sub(r'\bive\b', 'i have', text)
+    text = re.sub(r'\bim\b', 'i am', text)
+    text = re.sub(r'\bya\b', 'yeah', text)
+    text = re.sub(r'\bcant\b', 'can not', text)
+    text = re.sub(r'\bwont\b', 'will not', text)
+    text = re.sub(r'\bid\b', 'i would', text)
+    text = re.sub(r'wtf', 'what the fuck', text)
+    text = re.sub(r'\bwth\b', 'what the hell', text)
+    text = re.sub(r'\br\b', 'are', text)
+    text = re.sub(r'\bu\b', 'you', text)
+    text = re.sub(r'\bk\b', 'OK', text)
+    text = re.sub(r'\bsux\b', 'sucks', text)
+    text = re.sub(r'\bno+\b', 'no', text)
+    text = re.sub(r'\bcoo+\b', 'cool', text)
+    return text
+    
+
 
 def rmRepeatCharacters(word):
     # look for 2 or more repetitions of character and replace with the character itself
@@ -27,15 +51,13 @@ def rmRepeatCharacters(word):
 # replace tags such as mentioned tweeters(@), hashtags(#), URL
 def replaceTags(text):
         # Convert www.* or https?://* to URL
-    text = re.sub('^((www\.[^\s]+)|(https?://[^\s]+))', '<URL>', text)
+    text = re.sub('^((www\.[^\s]+)|(https?://[^\s]+))', '', text)
         # Convert @username to AT_USER
-    text = re.sub('^@[^\s]+', '<USER>', text)
+    text = re.sub('^@[^\s]+', '', text)
         # Replace hashtag #word with the word
-    text = re.sub(r'^#([^\s]+)', '<HASHTAG>', text)
+    text = re.sub(r'^#([^\s]+)', '', text)
         # Remove additional white spaces
     text = re.sub('^[\s]+', ' ', text)
-        # trim
-    text = text.strip('\'"')
     return text
     
 
@@ -55,10 +77,10 @@ def BOW_feature(text):
     for w in text:
         
         # strip puntuations
-        w = w.strip('\'"?,.')
         bow.append(w)
         
     parsed_text = ' '.join(bow)
+    #print(parsed_text)
     return parsed_text
            
     
@@ -74,17 +96,14 @@ def stop_word_dict(stopwords):
         
     print("stopwords lookup ready")
     return d
+
+
     
 
 
 class Preprocess():
     
-    stopwords = {}
-    
-    def __init__(self):
-        print("start preprocess tweets")
-        #wordlist = words.words()
-        #self.stopwords = stop_word_dict(wordlist)
+    stopwords = stop_word_dict(words.words())
     
     def process(self,text):
         try:
@@ -94,7 +113,7 @@ class Preprocess():
         
         text = lemmatize(text)
         
-        #text = rmStopword(text, self.stopwords)
+        text = rmStopword(text, self.stopwords)
         #print(text)
         
         text = BOW_feature(text)

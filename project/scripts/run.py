@@ -2,7 +2,6 @@ from crawler.harvestMode import HarvestSys
 
 
 def run_crawler(crawler):
-
     try:
         crawler.StreamMode()
     except:
@@ -14,3 +13,4 @@ def run_crawler(crawler):
 if __name__ == '__main__':
     crawler = HarvestSys()
     run_crawler(crawler)
+    
