@@ -14,6 +14,7 @@ import sentiment.classifier as classifier
 import json
 from database import database
 from crawler import streamHarvest
+from database.parser import Parser
 from crawler.config import app_auth,couchdb_uri,MELBOURNE_STR,MELBOURNE_SRC,db_name
 
 
@@ -50,6 +51,9 @@ class HarvestSys():
         # create sentiment analyser
         cl = classifier.Baseline()
         
+        # tweets parser
+        parser = Parser()
+        
         #set up
         user = 'jiyu'
         geotag = MELBOURNE_SRC
@@ -59,11 +63,15 @@ class HarvestSys():
         # query 100 tweets at a time
         while True: 
             query = twitter.search.tweets(q = "", geocode = "%f,%f,%dkm" % (geotag[0], geotag[1], geotag[2]), count = 100)
+
+
+            
             for result in query["statuses"]:
+                
+                print(result)
                 
                 # store tweets in json
                 record = {}
-                
     
                 try:
                         
@@ -72,23 +80,23 @@ class HarvestSys():
                         continue
                 except:
                     pass
-                    
-                user = result["user"]["screen_name"]
-                text = result["text"]
-                    
-                    
-                # store text
-                record['text'] = text
-                print(text)
                 
-                # perform sentiment analysis n store scores
-                polarity, subjectivity, label = cl.get_sent_score(text) 
-                sent = {'polarity':str(polarity), 'subjectiviy':str(subjectivity),'label':label}
-                record['sentiment_score'] = sent
+                # perform sentiment analysis n store scores to json
+                polarity, subjectivity, label = cl.get_sent_score(result["text"])
+                sent = {
+                    'polarity':str(polarity), 
+                    'subjectiviy':str(subjectivity),
+                    'label':label
+                }
+              
+                #result = json.dumps(result)
+                record = parser.query_parse(result,sent)
+                if record is None:
+                    return
                 
                 # save into couchdb
-                db.save(db_name,record)   
-                print(text)
+                db.save(db_name,record)                
+                
         
         
 

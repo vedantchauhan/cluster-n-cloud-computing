@@ -13,8 +13,8 @@ class Keys:
         self.asec = asec
 
 
-db_name = 'tweets'
-couchdb_uri = "http://127.0.0.1:5984"
+db_name = 'tweets'                         # name of the database
+couchdb_uri = "http://127.0.0.1:5984"      # couchdb address
 app_auth = {
     'jiyu': Keys(
         "se7dR9OJzvcJdG9nO6g9VVpKE",
@@ -22,6 +22,7 @@ app_auth = {
         "985778410898124800-kNVBSiLMIWRILWlGR71zk8HCl6IllEo",
         "ttLXW3R5rC3MMXMwbq7irCf9GcAhIOV9i3Pz1VhmS9IaP"
     )
+    # add other users access info here n change in harvestMode.py as well
 }
 
 MELBOURNE_STR = [144.6550006954,-38.5089967291,145.3498310249,-37.5916213868]  #http://boundingbox.klokantech.com
