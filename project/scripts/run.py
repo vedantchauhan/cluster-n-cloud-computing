@@ -1,9 +1,9 @@
-from crawler.harvestMode import HarvestSys
+from crawler.harvest import HarvestSys
 
 
 def run_crawler(crawler):
-    crawler.StreamMode()
-    
+    crawler.harvest()
+    #crawler.searchById("jiyu","869111488388022272")
     # search api have limit access, better use streamMode
     #crawler.SearchMode()
 

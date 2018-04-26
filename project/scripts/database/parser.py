@@ -5,13 +5,10 @@ class Parser():
     
     def status_parse(self,status,sentiment_score):
         
-        # filter out retweets
-        try:
-            if status.retweeted_status:
-                return None
-        except:
-            pass
-            
+        #filt out tweets outside aus
+        if status.place.country_code != 'AU':
+            return None
+        
         result = {
             "_id":status.id_str,
             "id_str":status.id_str,
@@ -25,40 +22,17 @@ class Parser():
                 "country_code":status.place.country_code,
                 "country":status.place.country
                 },
+            "user":{ 
+                "id": status.user.id,
+                "id_str": status.user.id_str,
+                "name": status.user.name,
+                "description":status.user.description        
+            },
             "lang":status.lang,
             "text":status.text,
             "sentiment":sentiment_score
         }
-        return result
-    
-    
-    def query_parse(self,status,sentiment_score):
-        
-        # filter out retweets
-        try:
-            if status.retweeted_status:
-                return None
-        except:
-            pass
-            
-        result = {
-            "_id":status["id_str"],
-            "id_str":status["id_str"],
-            "coordinates":status["coordinates"],
-            "place":{
-                "id":None,
-                "url":None,
-                "place_type":None,
-                "name":status["location"],
-                "full_name":status["location"],
-                "country_code":"AU",
-                "country":status["location"]
-                },
-            "lang":status["lang"],
-            "text":status["text"],
-            "sentiment":sentiment_score
-        }
-        return result    
+        return result   
         
         
         

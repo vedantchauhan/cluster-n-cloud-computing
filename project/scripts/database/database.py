@@ -29,6 +29,5 @@ class DButils():
         
         #prevent duplication
         if db.get(record["_id"]) is None:
-            
             # save into couchdb
             db.save(record)        
