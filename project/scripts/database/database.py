@@ -14,6 +14,7 @@ class DButils():
             self.couch = couchdb.Server(couchdb_uri)
         except:
             print("ERROR: couchDB is not running")
+            return
         
         
     def save(self, database, record):
@@ -25,9 +26,24 @@ class DButils():
         print(record)
     
         # locate database
-        db = self.couch[database]
+        try:
+            db = self.couch[database]
+        except couchdb.http.ResourceNotFound:
+            print("No database: "+database)
+            print("try to create database on: "+str(couchdb_uri))
+            try:
+                self.couch.create(database)
+                db = self.couch[database]
+            except couchdb.http.Unauthorized as e:
+                print("ERROR: unauthorized")
+                return
+              
+               
         
         #prevent duplication
         if db.get(record["_id"]) is None:
             # save into couchdb
-            db.save(record)        
+            try:
+                db.save(record)
+            except couchdb.HTTPError as e:
+                print("ERROR: duplicate")

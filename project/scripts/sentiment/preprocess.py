@@ -7,6 +7,7 @@ import re
 
 
 
+
 def tokenize(text):
     text = text.split()
     return text
@@ -39,6 +40,8 @@ def text_clean(text):
     text = re.sub(r'\bsux\b', 'sucks', text)
     text = re.sub(r'\bno+\b', 'no', text)
     text = re.sub(r'\bcoo+\b', 'cool', text)
+    text = re.sub(r'😻|😹|😺',':) ',text)
+    text = re.sub(r'😾|🙀|😿',':( ',text)
     return text
     
 

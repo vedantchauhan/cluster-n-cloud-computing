@@ -1,5 +1,6 @@
 from textblob import TextBlob
 from sentiment import preprocess
+import numpy
 
 
 class Baseline():
@@ -20,7 +21,8 @@ class Baseline():
         if polarity > 0:
             label = 'Positive'
         elif polarity == 0:
-            label = 'Neutral'
+            label = numpy.random.choice(['Positive','Negative'])
+            #label = 'Neutral'
         elif polarity < 0:
             label = 'Negative'
         
@@ -43,7 +45,8 @@ class MyClassifier():
         if polarity > 0:
             label = 'Positive'
         elif polarity == 0:
-            label = 'Neutral'
+            #label = 'Neutral'
+            label = numpy.random.choice(['Positive','Negative'])
         elif polarity < 0:
             label = 'Negative'
         

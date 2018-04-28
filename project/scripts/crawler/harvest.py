@@ -39,7 +39,11 @@ class HarvestSys():
         stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
         
         # start with streamMode filter by city
-        stream.filter(locations=MELBOURNE_STR,languages=["en"])    
+        try:
+            stream.filter(locations=MELBOURNE_STR,languages=["en"])
+        except ConnectionRefusedError:
+            print("ERROR: couchDB is not running")
+            return
         
  
         
