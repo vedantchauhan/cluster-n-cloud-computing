@@ -1,5 +1,5 @@
 # cluster-n-cloud-computing
--   implements:
+-   Implements:
     -	prevent duplicates
     -   set up baseline in sentiment analysis
     -   improved sentiment analysis design
@@ -9,6 +9,9 @@
     
 -   To-Dos
     -   pair with AURIN
+    -   topic filter
+    -   enviroment settings
+    -   test on cluster
 
 
 
