@@ -105,7 +105,7 @@ class AurinData():
 
         try:
             file = open(
-                "C:\Users\Dhruv\Desktop\unimelb\Subjects\Sem 2\Cloud Computing\Assignments\Assignment 2\citydata_birthcountries.json",
+                "citydata_birthcountries.json",
                 "r")
 
             data = json.load(file)
