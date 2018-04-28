@@ -13,7 +13,9 @@ class Keys:
         self.asec = asec
 
 
-db_name = 'dbtest'                         # name of the database
+
+db_name = 'tweets'                         # name of the database
+aurin_db_name = 'aurin'                    # name of aurin database
 couchdb_uri = "http://127.0.0.1:5984"      # couchdb address
 app_auth = {
     'jiyu': Keys(
