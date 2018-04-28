@@ -441,5 +441,6 @@ class AurinData():
                         total_males_can = city["properties"]["tot_m"]
                         total_persons_can = city["properties"]["tot_p"]
 
+
         except:
             print("ERROR: Error in while parsing Aurin data")

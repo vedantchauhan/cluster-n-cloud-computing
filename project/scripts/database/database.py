@@ -17,16 +17,23 @@ class DButils():
         
         
     def save(self, database, record):
-        
+
         #implement something to prevent duplication
         #
         #
         #
         print(record)
-    
+
         # locate database
-        db = self.couch[database]
-        
+        try:
+            if database not in self.couch:
+                self.couch.create(database)
+                db = self.couch[database]
+            else:
+                db = self.couch[database]
+        except:
+            print("Error: Finding the database")
+
         #prevent duplication
         if db.get(record["_id"]) is None:
             # save into couchdb
