@@ -13,8 +13,9 @@ class Keys:
         self.asec = asec
 
 
-db_name = 'tweets'                         # name of the database
-aurin_db_name = 'aurin'                    # name of aurin database
+db_name = 'tweets'
+aurin_db_name = 'aurin'
+# name of the database
 couchdb_uri = "http://127.0.0.1:5984"      # couchdb address
 app_auth = {
     'jiyu': Keys(
@@ -27,7 +28,14 @@ app_auth = {
 }
 
 MELBOURNE_STR = [144.6550006954,-38.5089967291,145.3498310249,-37.5916213868]  #http://boundingbox.klokantech.com
+SYD_STR = [150.9786666445,-34.0173030936,151.3082564883,-33.7048428499]
+BRIS_STR = [152.6685227,-27.7674409,153.3178702,-26.9968449]
+HOB_STR = [147.258116931,-42.9114151424,147.406089038,-42.8136762823]
+PER_STR = []
+CAN_STR = []
+DAR_STR = []
+ADE_STR = []
 
-MELBOURNE_SRC = [-37.8136276, 144.96305759999996, 5]
+
 # geographical centre of search  # geographical centre of search   # search range in kilometres
 
