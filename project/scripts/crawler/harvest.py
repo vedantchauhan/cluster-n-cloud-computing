@@ -15,7 +15,8 @@ import json
 from database import database
 from crawler import harvestUtil
 from database.parser import Parser
-from crawler.config import app_auth,couchdb_uri,MELBOURNE_STR,db_name
+from crawler.config import app_auth,couchdb_uri,AUS_STR,db_name
+
 
 
 
@@ -40,7 +41,7 @@ class HarvestSys():
         
         # start with streamMode filter by city
         try:
-            stream.filter(locations=MELBOURNE_STR,languages=["en"])
+            stream.filter(track=['north korea','nuclear','donald trump','donald','trump'],locations=AUS_STR)
         except ConnectionRefusedError:
             print("ERROR: couchDB is not running")
             return

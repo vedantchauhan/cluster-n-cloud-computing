@@ -19,7 +19,7 @@ def searchById(admin, userid):
     auth = tweepy.OAuthHandler(app_auth[user].ckey, app_auth[user].csec)
     auth.set_access_token(app_auth[user].atoken, app_auth[user].asec)
     api = tweepy.API(auth)
-    query = api.user_timeline(user_id=userid, count=5)
+    query = api.user_timeline(q = 'trump',user_id=userid, count=5)
     for status in query:
         
         # filter out retweets
@@ -40,14 +40,18 @@ def searchById(admin, userid):
             record = parser.status_parse(status,sent)
         except:
             pass
-        if status is None:
-            continue        
+        if record is None:
+            return        
                 
         # save into couchdb
         db.save(db_name,record)        
 
 # setting up stream listener
 class MyStreamListener(tweepy.StreamListener):
+    def on_error(self, status_code):
+        if status_code == 420:
+            #returning False in on_data disconnects the stream
+            return False    
 
     def on_status(self, status):
         #setup
