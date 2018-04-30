@@ -26,6 +26,9 @@ class AurinData():
         australia_melb = 0
         new_zealand_melb = 0
         born_elsewhere_melb = 0
+        median_age_melb=0
+        median_household_income_melb=0
+
         # sydney values
         total_females_syd = 0
         total_males_syd = 0
@@ -37,6 +40,9 @@ class AurinData():
         australia_syd = 0
         new_zealand_syd = 0
         born_elsewhere_syd = 0
+        median_age_syd = 0
+        median_household_income_syd = 0
+
         # brisbane values
         total_females_bris = 0
         total_males_bris = 0
@@ -48,6 +54,9 @@ class AurinData():
         australia_bris = 0
         new_zealand_bris = 0
         born_elsewhere_bris = 0
+        median_age_bris = 0
+        median_household_income_bris = 0
+
         # hobart values
         total_females_hob = 0
         total_males_hob = 0
@@ -59,6 +68,9 @@ class AurinData():
         australia_hob = 0
         new_zealand_hob = 0
         born_elsewhere_hob = 0
+        median_age_hob = 0
+        median_household_income_hob = 0
+
         # perth values
         total_females_per = 0
         total_males_per = 0
@@ -70,6 +82,9 @@ class AurinData():
         australia_per = 0
         new_zealand_per = 0
         born_elsewhere_per = 0
+        median_age_per = 0
+        median_household_income_per = 0
+
         # canberra values
         total_females_can = 0
         total_males_can = 0
@@ -81,6 +96,9 @@ class AurinData():
         australia_can = 0
         new_zealand_can = 0
         born_elsewhere_can = 0
+        median_age_can = 0
+        median_household_income_can = 0
+
         # darwin values
         total_females_dar = 0
         total_males_dar = 0
@@ -92,6 +110,9 @@ class AurinData():
         australia_dar = 0
         new_zealand_dar = 0
         born_elsewhere_dar = 0
+        median_age_dar = 0
+        median_household_income_dar = 0
+
         # adelaide values
         total_females_ade = 0
         total_males_ade = 0
@@ -103,8 +124,53 @@ class AurinData():
         australia_ade = 0
         new_zealand_ade = 0
         born_elsewhere_ade = 0
+        median_age_ade = 0
+        median_household_income_ade = 0
+
 
         try:
+            filejson=open("citydata_incomeage.json","r")
+            data_incomeage=json.load(filejson)
+
+            city_list_age=data_incomeage["features"]
+            for city in city_list_age:
+                for key, value in city["properties"].items():
+                    if (key == "sa4_name16" and str(value).__contains__("Melbourne")):
+                        median_age_melb=city["properties"]["med_age_psns_tot"]
+                        median_household_income_melb=city["properties"]["med_hhd_inc_wk_tot"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Sydney")):
+                        median_age_syd = city["properties"]["med_age_psns_tot"]
+                        median_household_income_syd = city["properties"]["med_hhd_inc_wk_tot"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Hobart")):
+                        median_age_hob = city["properties"]["med_age_psns_tot"]
+                        median_household_income_hob = city["properties"]["med_hhd_inc_wk_tot"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Perth")):
+                        median_age_per = city["properties"]["med_age_psns_tot"]
+                        median_household_income_per = city["properties"]["med_hhd_inc_wk_tot"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Brisbane")):
+                        median_age_bris = city["properties"]["med_age_psns_tot"]
+                        median_household_income_bris = city["properties"]["med_hhd_inc_wk_tot"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Darwin")):
+                        median_age_dar = city["properties"]["med_age_psns_tot"]
+                        median_household_income_dar = city["properties"]["med_hhd_inc_wk_tot"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Adelaide")):
+                        median_age_ade = city["properties"]["med_age_psns_tot"]
+                        median_household_income_ade = city["properties"]["med_hhd_inc_wk_tot"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Australian Capital Territory")):
+                        median_age_can = city["properties"]["med_age_psns_tot"]
+                        median_household_income_can = city["properties"]["med_hhd_inc_wk_tot"]
+
+
+
+
+
             file = open("citydata_birthcountries.json","r")
             data = json.load(file)
     
@@ -416,31 +482,32 @@ class AurinData():
             
             record = parser.parse_aurin("aurin1", "Melbourne", total_persons_melb, total_males_melb,
                                                 total_females_melb, asia_melb, europe_melb, australia_melb,
-                                                new_zealand_melb, africa_melb, north_america_melb, born_elsewhere_melb)
+                                                new_zealand_melb, africa_melb, north_america_melb, born_elsewhere_melb,
+                                                median_age_melb,median_household_income_melb)
             record1 = parser.parse_aurin("aurin2", "Sydney", total_persons_syd, total_males_syd, total_females_syd,
                                                  asia_syd, europe_syd, australia_syd, new_zealand_syd, africa_syd,
-                                                 north_america_syd, born_elsewhere_syd)
+                                                 north_america_syd, born_elsewhere_syd,median_age_syd,median_household_income_syd)
             record2 = parser.parse_aurin("aurin3", "Brisbane", total_persons_bris, total_males_bris,
                                                  total_females_bris,
                                                  asia_bris, europe_bris, australia_bris, new_zealand_bris, africa_bris,
-                                                 north_america_bris, born_elsewhere_bris)
+                                                 north_america_bris, born_elsewhere_bris,median_age_bris,median_household_income_bris)
             record3 = parser.parse_aurin("aurin4", "Darwin", total_persons_dar, total_males_dar, total_females_dar,
                                                  asia_dar, europe_dar, australia_dar, new_zealand_dar, africa_dar,
-                                                 north_america_dar, born_elsewhere_dar)
+                                                 north_america_dar, born_elsewhere_dar,median_age_dar,median_household_income_dar)
             record4 = parser.parse_aurin("aurin5", "Adelaide", total_persons_ade, total_males_ade,
                                                  total_females_ade,
                                                  asia_ade, europe_ade, australia_ade, new_zealand_ade, africa_ade,
-                                                 north_america_ade, born_elsewhere_ade)
+                                                 north_america_ade, born_elsewhere_ade,median_age_ade,median_household_income_ade)
             record5 = parser.parse_aurin("aurin6", "Hobart", total_persons_hob, total_males_hob, total_females_hob,
                                                  asia_hob, europe_hob, australia_hob, new_zealand_hob, africa_hob,
-                                                 north_america_hob, born_elsewhere_hob)
+                                                 north_america_hob, born_elsewhere_hob,median_age_hob,median_household_income_hob)
             record6 = parser.parse_aurin("aurin7", "Canberra", total_persons_can, total_males_can,
                                                  total_females_can,
                                                  asia_can, europe_can, australia_can, new_zealand_can, africa_can,
-                                                 north_america_can, born_elsewhere_can)
+                                                 north_america_can, born_elsewhere_can,median_age_can,median_household_income_can)
             record7 = parser.parse_aurin("aurin8", "Perth", total_persons_per, total_males_per, total_females_per,
                                                  asia_per, europe_per, australia_per, new_zealand_per, africa_per,
-                                                 north_america_per, born_elsewhere_per)
+                                                 north_america_per, born_elsewhere_per,median_age_per,median_household_income_per)
             
             #except:
                 #print("ERROR: Error while parsing the aurin data")
