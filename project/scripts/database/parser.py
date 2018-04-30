@@ -5,8 +5,11 @@ class Parser():
 
     def status_parse(self, status, sentiment_score):
         # filt out tweets outside aus
-        if status.place.country_code != 'AU':
-            return None
+        try:
+            if status.place.country_code != 'AU':
+                return None
+        except AttributeError:
+            return
 
         result = {
             "_id": status.id_str,
