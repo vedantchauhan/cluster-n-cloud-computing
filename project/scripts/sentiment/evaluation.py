@@ -1,4 +1,8 @@
-from nltk.corpus import twitter_samples
+import nltk
+try:
+        from nltk.corpus import twitter_samples
+except:
+        nltk.download("twitter_samples")
 import classifier as cl
 from sklearn import metrics
 import re
