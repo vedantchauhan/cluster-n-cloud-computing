@@ -6,6 +6,18 @@ from database import database
 from crawler.config import db_name
 from database.parser import Parser
 from crawler.config import app_auth
+import re
+
+
+def searchRTbyID(admin, userid):
+    db = database.DButils()
+    cl = classifier.Myclassifier()
+    parser = Parser()
+    user = admin
+    auth = tweepy.OAuthHandler(app_auth[user].ckey, app_auth[user].csec)
+    auth.set_access_token(app_auth[user].atoken, app_auth[user].asec)
+    api = tweepy.API(auth)    
+    
 
 
 def searchById(admin, userid):
@@ -19,7 +31,7 @@ def searchById(admin, userid):
     auth = tweepy.OAuthHandler(app_auth[user].ckey, app_auth[user].csec)
     auth.set_access_token(app_auth[user].atoken, app_auth[user].asec)
     api = tweepy.API(auth)
-    query = api.user_timeline(q = 'trump',user_id=userid, count=5)
+    query = api.user_timeline(user_id=userid, count=5)
     for status in query:
         
         # filter out retweets
@@ -64,7 +76,8 @@ class MyStreamListener(tweepy.StreamListener):
             if status.retweeted_status:
                 return None
         except:
-            pass        
+            pass
+                
         
         # perform sentiment analysis n store scores to json
         polarity, subjectivity, label = cl.get_sent_score(status.text)
@@ -83,6 +96,11 @@ class MyStreamListener(tweepy.StreamListener):
         db.save(db_name,record)
         
         #get all tweets from users timeline
-        searchById("jiyu",status.user.id)
+        try:
+            searchById("jiyu",status.user.id)
+        except Exception as e:
+            # access time limit handling
+            print(e)
+            time.sleep(20)
         print("finish search on user: "+str(status.user.id))
         return True
