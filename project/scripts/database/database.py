@@ -5,6 +5,7 @@ from couchdb import Session
 
 
 
+
 class DButils():
     
     couch = None
@@ -43,10 +44,6 @@ class DButils():
             except couchdb.http.Unauthorized as e:
                 print("ERROR: unauthorized")
                 return
-            
-    
-              
-               
         
         #prevent duplication
         if db.get(record["_id"]) is None:

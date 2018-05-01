@@ -6,7 +6,7 @@ from database import database
 from database.parser import Parser
 from crawler.config import aurin_db_name
 import aurin
-
+import sys
 
 class AurinData():
 
@@ -26,8 +26,8 @@ class AurinData():
         australia_melb = 0
         new_zealand_melb = 0
         born_elsewhere_melb = 0
-        median_age_melb=0
-        median_household_income_melb=0
+        median_age_melb = 0
+        median_household_income_melb = 0
 
         # sydney values
         total_females_syd = 0
@@ -88,7 +88,7 @@ class AurinData():
         # canberra values
         total_females_can = 0
         total_males_can = 0
-        total_cansons_can = 0
+        total_persons_can = 0
         north_america_can = 0
         africa_can = 0
         europe_can = 0
@@ -102,7 +102,7 @@ class AurinData():
         # darwin values
         total_females_dar = 0
         total_males_dar = 0
-        total_darsons_dar = 0
+        total_persons_dar = 0
         north_america_dar = 0
         africa_dar = 0
         europe_dar = 0
@@ -116,7 +116,7 @@ class AurinData():
         # adelaide values
         total_females_ade = 0
         total_males_ade = 0
-        total_adesons_ade = 0
+        total_persons_ade = 0
         north_america_ade = 0
         africa_ade = 0
         europe_ade = 0
@@ -127,17 +127,18 @@ class AurinData():
         median_age_ade = 0
         median_household_income_ade = 0
 
-
         try:
-            filejson=open("citydata_incomeage.json","r")
-            data_incomeage=json.load(filejson)
+            filejson = open(
+                sys.argv[0],
+                "r")
+            data_incomeage = json.load(filejson)
 
-            city_list_age=data_incomeage["features"]
+            city_list_age = data_incomeage["features"]
             for city in city_list_age:
                 for key, value in city["properties"].items():
                     if (key == "sa4_name16" and str(value).__contains__("Melbourne")):
-                        median_age_melb=city["properties"]["med_age_psns_tot"]
-                        median_household_income_melb=city["properties"]["med_hhd_inc_wk_tot"]
+                        median_age_melb = city["properties"]["med_age_psns_tot"]
+                        median_household_income_melb = city["properties"]["med_hhd_inc_wk_tot"]
 
                     elif (key == "sa4_name16" and str(value).__contains__("Sydney")):
                         median_age_syd = city["properties"]["med_age_psns_tot"]
@@ -167,13 +168,11 @@ class AurinData():
                         median_age_can = city["properties"]["med_age_psns_tot"]
                         median_household_income_can = city["properties"]["med_hhd_inc_wk_tot"]
 
-
-
-
-
-            file = open("citydata_birthcountries.json","r")
+            file = open(
+                sys.argv[1],
+                "r")
             data = json.load(file)
-    
+
             city_list = data["features"]
             for city in city_list:
                 for key, value in city["properties"].items():
@@ -196,7 +195,7 @@ class AurinData():
                                      "poland_p"] + \
                                  city["properties"]["fiji_p"] + city["properties"]["malta_p"]
                         europe_melb += europe
-    
+
                         asia = city["properties"]["china_excl_sars_taiwan_p"] + city["properties"]["vietnam_p"] + \
                                city["properties"]["sri_lanka_p"] + \
                                city["properties"]["japan_p"] + city["properties"]["singapore_p"] + city["properties"][
@@ -211,9 +210,9 @@ class AurinData():
                         total_females_melb = city["properties"]["tot_f"]
                         total_males_melb = city["properties"]["tot_m"]
                         total_persons_melb = city["properties"]["tot_p"]
-    
+
                     elif (key == "sa4_name16" and str(value).__contains__("Sydney")):
-    
+
                         north_america = city["properties"]["united_states_america_p"] + city["properties"]["canada_p"]
                         north_america_syd += north_america
                         africa = city["properties"]["egypt_p"] + city["properties"]["south_africa_p"] + \
@@ -232,7 +231,7 @@ class AurinData():
                                      "poland_p"] + \
                                  city["properties"]["fiji_p"] + city["properties"]["malta_p"]
                         europe_syd += europe
-    
+
                         asia = city["properties"]["china_excl_sars_taiwan_p"] + city["properties"]["vietnam_p"] + \
                                city["properties"][
                                    "sri_lanka_p"] + \
@@ -250,7 +249,7 @@ class AurinData():
                         total_males_syd = city["properties"]["tot_m"]
                         total_persons_syd = city["properties"]["tot_p"]
                     elif (key == "sa4_name16" and str(value).__contains__("Hobart")):
-    
+
                         north_america = city["properties"]["united_states_america_p"] + city["properties"]["canada_p"]
                         north_america_hob += north_america
                         africa = city["properties"]["egypt_p"] + city["properties"]["south_africa_p"] + \
@@ -269,7 +268,7 @@ class AurinData():
                                      "poland_p"] + \
                                  city["properties"]["fiji_p"] + city["properties"]["malta_p"]
                         europe_hob += europe
-    
+
                         asia = city["properties"]["china_excl_sars_taiwan_p"] + city["properties"]["vietnam_p"] + \
                                city["properties"][
                                    "sri_lanka_p"] + \
@@ -286,9 +285,9 @@ class AurinData():
                         total_females_hob = city["properties"]["tot_f"]
                         total_males_hob = city["properties"]["tot_m"]
                         total_persons_hob = city["properties"]["tot_p"]
-    
+
                     elif (key == "sa4_name16" and str(value).__contains__("Perth")):
-    
+
                         north_america = city["properties"]["united_states_america_p"] + city["properties"]["canada_p"]
                         north_america_per += north_america
                         africa = city["properties"]["egypt_p"] + city["properties"]["south_africa_p"] + \
@@ -307,7 +306,7 @@ class AurinData():
                                      "poland_p"] + \
                                  city["properties"]["fiji_p"] + city["properties"]["malta_p"]
                         europe_per += europe
-    
+
                         asia = city["properties"]["china_excl_sars_taiwan_p"] + city["properties"]["vietnam_p"] + \
                                city["properties"][
                                    "sri_lanka_p"] + \
@@ -324,9 +323,9 @@ class AurinData():
                         total_females_per = city["properties"]["tot_f"]
                         total_males_per = city["properties"]["tot_m"]
                         total_persons_per = city["properties"]["tot_p"]
-    
+
                     elif (key == "sa4_name16" and str(value).__contains__("Brisbane")):
-    
+
                         north_america = city["properties"]["united_states_america_p"] + city["properties"]["canada_p"]
                         north_america_bris += north_america
                         africa = city["properties"]["egypt_p"] + city["properties"]["south_africa_p"] + \
@@ -345,7 +344,7 @@ class AurinData():
                                      "poland_p"] + \
                                  city["properties"]["fiji_p"] + city["properties"]["malta_p"]
                         europe_bris += europe
-    
+
                         asia = city["properties"]["china_excl_sars_taiwan_p"] + city["properties"]["vietnam_p"] + \
                                city["properties"][
                                    "sri_lanka_p"] + \
@@ -362,9 +361,9 @@ class AurinData():
                         total_females_bris = city["properties"]["tot_f"]
                         total_males_bris = city["properties"]["tot_m"]
                         total_persons_bris = city["properties"]["tot_p"]
-    
+
                     elif (key == "sa4_name16" and str(value).__contains__("Darwin")):
-    
+
                         north_america = city["properties"]["united_states_america_p"] + city["properties"]["canada_p"]
                         north_america_dar += north_america
                         africa = city["properties"]["egypt_p"] + city["properties"]["south_africa_p"] + \
@@ -383,7 +382,7 @@ class AurinData():
                                      "poland_p"] + \
                                  city["properties"]["fiji_p"] + city["properties"]["malta_p"]
                         europe_dar += europe
-    
+
                         asia = city["properties"]["china_excl_sars_taiwan_p"] + city["properties"]["vietnam_p"] + \
                                city["properties"][
                                    "sri_lanka_p"] + \
@@ -400,9 +399,9 @@ class AurinData():
                         total_females_dar = city["properties"]["tot_f"]
                         total_males_dar = city["properties"]["tot_m"]
                         total_persons_dar = city["properties"]["tot_p"]
-    
+
                     elif (key == "sa4_name16" and str(value).__contains__("Adelaide")):
-    
+
                         north_america = city["properties"]["united_states_america_p"] + city["properties"]["canada_p"]
                         north_america_ade += north_america
                         africa = city["properties"]["egypt_p"] + city["properties"]["south_africa_p"] + \
@@ -421,7 +420,7 @@ class AurinData():
                                      "poland_p"] + \
                                  city["properties"]["fiji_p"] + city["properties"]["malta_p"]
                         europe_ade += europe
-    
+
                         asia = city["properties"]["china_excl_sars_taiwan_p"] + city["properties"]["vietnam_p"] + \
                                city["properties"][
                                    "sri_lanka_p"] + \
@@ -438,9 +437,9 @@ class AurinData():
                         total_females_ade = city["properties"]["tot_f"]
                         total_males_ade = city["properties"]["tot_m"]
                         total_persons_ade = city["properties"]["tot_p"]
-    
+
                     elif (key == "sa4_name16" and str(value).__contains__("Australian Capital Territory")):
-    
+
                         north_america = city["properties"]["united_states_america_p"] + city["properties"]["canada_p"]
                         north_america_can += north_america
                         africa = city["properties"]["egypt_p"] + city["properties"]["south_africa_p"] + \
@@ -459,7 +458,7 @@ class AurinData():
                                      "poland_p"] + \
                                  city["properties"]["fiji_p"] + city["properties"]["malta_p"]
                         europe_can += europe
-    
+
                         asia = city["properties"]["china_excl_sars_taiwan_p"] + city["properties"]["vietnam_p"] + \
                                city["properties"]["sri_lanka_p"] + \
                                city["properties"]["japan_p"] + city["properties"]["singapore_p"] + city["properties"][
@@ -474,54 +473,62 @@ class AurinData():
                         total_females_can = city["properties"]["tot_f"]
                         total_males_can = city["properties"]["tot_m"]
                         total_persons_can = city["properties"]["tot_p"]
-    
-            db = database.DButils()
-            parser = Parser()
-    
-            # parse aurin data
-            
-            record = parser.parse_aurin("aurin1", "Melbourne", total_persons_melb, total_males_melb,
-                                                total_females_melb, asia_melb, europe_melb, australia_melb,
-                                                new_zealand_melb, africa_melb, north_america_melb, born_elsewhere_melb,
-                                                median_age_melb,median_household_income_melb)
-            record1 = parser.parse_aurin("aurin2", "Sydney", total_persons_syd, total_males_syd, total_females_syd,
-                                                 asia_syd, europe_syd, australia_syd, new_zealand_syd, africa_syd,
-                                                 north_america_syd, born_elsewhere_syd,median_age_syd,median_household_income_syd)
-            record2 = parser.parse_aurin("aurin3", "Brisbane", total_persons_bris, total_males_bris,
-                                                 total_females_bris,
-                                                 asia_bris, europe_bris, australia_bris, new_zealand_bris, africa_bris,
-                                                 north_america_bris, born_elsewhere_bris,median_age_bris,median_household_income_bris)
-            record3 = parser.parse_aurin("aurin4", "Darwin", total_persons_dar, total_males_dar, total_females_dar,
-                                                 asia_dar, europe_dar, australia_dar, new_zealand_dar, africa_dar,
-                                                 north_america_dar, born_elsewhere_dar,median_age_dar,median_household_income_dar)
-            record4 = parser.parse_aurin("aurin5", "Adelaide", total_persons_ade, total_males_ade,
-                                                 total_females_ade,
-                                                 asia_ade, europe_ade, australia_ade, new_zealand_ade, africa_ade,
-                                                 north_america_ade, born_elsewhere_ade,median_age_ade,median_household_income_ade)
-            record5 = parser.parse_aurin("aurin6", "Hobart", total_persons_hob, total_males_hob, total_females_hob,
-                                                 asia_hob, europe_hob, australia_hob, new_zealand_hob, africa_hob,
-                                                 north_america_hob, born_elsewhere_hob,median_age_hob,median_household_income_hob)
-            record6 = parser.parse_aurin("aurin7", "Canberra", total_persons_can, total_males_can,
-                                                 total_females_can,
-                                                 asia_can, europe_can, australia_can, new_zealand_can, africa_can,
-                                                 north_america_can, born_elsewhere_can,median_age_can,median_household_income_can)
-            record7 = parser.parse_aurin("aurin8", "Perth", total_persons_per, total_males_per, total_females_per,
-                                                 asia_per, europe_per, australia_per, new_zealand_per, africa_per,
-                                                 north_america_per, born_elsewhere_per,median_age_per,median_household_income_per)
-            
-            #except:
-                #print("ERROR: Error while parsing the aurin data")
-    
-            # save into couchdb
-            db.save(aurin_db_name, record)
-            db.save(aurin_db_name, record1)
-            db.save(aurin_db_name, record2)
-            db.save(aurin_db_name, record3)
-            db.save(aurin_db_name, record4)
-            db.save(aurin_db_name, record5)
-            db.save(aurin_db_name, record6)
-            db.save(aurin_db_name, record7)            
-            
+
+
+
+            try:
+                db = database.DButils()
+                parser = Parser()
+                # parse aurin data
+                record = parser.parse_aurin("aurin1", "Melbourne", total_persons_melb, total_males_melb,
+                                            total_females_melb, asia_melb, europe_melb, australia_melb,
+                                            new_zealand_melb, africa_melb, north_america_melb, born_elsewhere_melb,
+                                            median_age_melb, median_household_income_melb)
+                record1 = parser.parse_aurin("aurin2", "Sydney", total_persons_syd, total_males_syd, total_females_syd,
+                                             asia_syd, europe_syd, australia_syd, new_zealand_syd, africa_syd,
+                                             north_america_syd, born_elsewhere_syd, median_age_syd,
+                                             median_household_income_syd)
+                record2 = parser.parse_aurin("aurin3", "Brisbane", total_persons_bris, total_males_bris,
+                                             total_females_bris,
+                                             asia_bris, europe_bris, australia_bris, new_zealand_bris, africa_bris,
+                                             north_america_bris, born_elsewhere_bris, median_age_bris,
+                                             median_household_income_bris)
+                record3 = parser.parse_aurin("aurin4", "Darwin", total_persons_dar, total_males_dar, total_females_dar,
+                                             asia_dar, europe_dar, australia_dar, new_zealand_dar, africa_dar,
+                                             north_america_dar, born_elsewhere_dar, median_age_dar,
+                                             median_household_income_dar)
+                record4 = parser.parse_aurin("aurin5", "Adelaide", total_persons_ade, total_males_ade,
+                                             total_females_ade,
+                                             asia_ade, europe_ade, australia_ade, new_zealand_ade, africa_ade,
+                                             north_america_ade, born_elsewhere_ade, median_age_ade,
+                                             median_household_income_ade)
+                record5 = parser.parse_aurin("aurin6", "Hobart", total_persons_hob, total_males_hob, total_females_hob,
+                                             asia_hob, europe_hob, australia_hob, new_zealand_hob, africa_hob,
+                                             north_america_hob, born_elsewhere_hob, median_age_hob,
+                                             median_household_income_hob)
+                record6 = parser.parse_aurin("aurin7", "Canberra", total_persons_can, total_males_can,
+                                             total_females_can,
+                                             asia_can, europe_can, australia_can, new_zealand_can, africa_can,
+                                             north_america_can, born_elsewhere_can, median_age_can,
+                                             median_household_income_can)
+                record7 = parser.parse_aurin("aurin8", "Perth", total_persons_per, total_males_per, total_females_per,
+                                             asia_per, europe_per, australia_per, new_zealand_per, africa_per,
+                                             north_america_per, born_elsewhere_per, median_age_per,
+                                             median_household_income_per)
+
+                # save into couchdb
+                db.save(aurin_db_name, record)
+                db.save(aurin_db_name, record1)
+                db.save(aurin_db_name, record2)
+                db.save(aurin_db_name, record3)
+                db.save(aurin_db_name, record4)
+                db.save(aurin_db_name, record5)
+                db.save(aurin_db_name, record6)
+                db.save(aurin_db_name, record7)
+
+            except:
+                print("ERROR: Error while saving the aurin data")
+
 
         except:
             print("ERROR: Error while parsing Aurin data")
