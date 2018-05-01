@@ -1,6 +1,7 @@
 import couchdb
-from crawler.config import couchdb_uri
+from crawler.config import couchdb_uri,db_admin,db_password
 from couchdb import Session
+
 
 
 
@@ -12,10 +13,16 @@ class DButils():
     def __init__(self):
         # connect to couchdb
         try:
-            self.couch = couchdb.Server(couchdb_uri)
+            self.couch = couchdb.Server(couchdb_uri)           
         except:
-            print("ERROR: couchDB is not running")
-            return
+            try:
+                auth = Session()
+                auth.name = db_admin
+                auth.password = db_password
+                self.couch = couchdb.Server(couchdb_uri,session=auth)
+            except Exception as e:
+                print(e)
+                return
         
         
     def save(self, database, record):
@@ -43,10 +50,6 @@ class DButils():
             except couchdb.http.Unauthorized as e:
                 print("ERROR: unauthorized")
                 return
-            
-    
-              
-               
         
         #prevent duplication
         if db.get(record["_id"]) is None:

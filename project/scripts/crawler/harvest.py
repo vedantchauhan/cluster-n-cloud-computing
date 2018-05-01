@@ -41,10 +41,16 @@ class HarvestSys():
         
         # start with streamMode filter by city
         try:
-            stream.filter(track=['north korea','nuclear','donald trump','donald','trump'],locations=AUS_STR)
+            #stream.filter(track=['ai','AI'])    #topics not working
+            stream.filter(locations=AUS_STR)  #location
+            
         except ConnectionRefusedError:
             print("ERROR: couchDB is not running")
             return
+        except Exception as e:
+            # access time limit handling
+            print(e)
+            time.sleep(20)
         
  
         
