@@ -16,6 +16,7 @@ from database import database
 from crawler import harvestUtil
 from database.parser import Parser
 from crawler.config import app_auth,couchdb_uri,AUS_STR,db_name
+import time
 
 
 
