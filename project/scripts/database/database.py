@@ -26,12 +26,6 @@ class DButils():
         
         
     def save(self, database, record):
-        
-        #implement something to prevent duplication
-        #
-        #
-        #
-        print(record)
     
         # locate database
         try:
@@ -55,6 +49,7 @@ class DButils():
         if db.get(record["_id"]) is None:
             # save into couchdb
             try:
+                print(record)
                 db.save(record)
             except couchdb.HTTPError as e:
                 print("ERROR: duplicate")

@@ -42,5 +42,5 @@ ADE_STR = [138.4733842067,-35.0853926738,138.7219498806,-34.7554676739]
 AUS_STR = MELBOURNE_STR+SYD_STR+BRIS_STR+HOB_STR+PER_STR+CAN_STR+DAR_STR+ADE_STR
            
 # topics
-politics = ['Donald Trump','donald trump','donald','trump','north korea','nuclear']
+topics_file = "/Users/alfredgordon/Documents/cluster/project/scripts/crawler/smoke_alcohol.txt"
 
