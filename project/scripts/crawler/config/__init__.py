@@ -15,6 +15,8 @@ class Keys:
 
 db_name = 'tweets'
 aurin_db_name = 'aurin'
+db_admin = 'fred'
+db_password = 'admin'
 # name of the database
 couchdb_uri = "http://127.0.0.1:5984"      # couchdb address
 app_auth = {
