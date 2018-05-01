@@ -128,9 +128,7 @@ class AurinData():
         median_household_income_ade = 0
 
         try:
-            filejson = open(
-                sys.argv[0],
-                "r")
+            filejson = open("/Users/alfredgordon/Documents/cluster/project/scripts/aurin/citydata_incomeage.json","r")
             data_incomeage = json.load(filejson)
 
             city_list_age = data_incomeage["features"]
@@ -168,9 +166,7 @@ class AurinData():
                         median_age_can = city["properties"]["med_age_psns_tot"]
                         median_household_income_can = city["properties"]["med_hhd_inc_wk_tot"]
 
-            file = open(
-                sys.argv[1],
-                "r")
+            file = open("/Users/alfredgordon/Documents/cluster/project/scripts/aurin/citydata_birthcountries.json","r")
             data = json.load(file)
 
             city_list = data["features"]
@@ -526,9 +522,9 @@ class AurinData():
                 db.save(aurin_db_name, record6)
                 db.save(aurin_db_name, record7)
 
-            except:
-                print("ERROR: Error while saving the aurin data")
+            except Exception as e:
+                print(e)
 
 
-        except:
-            print("ERROR: Error while parsing Aurin data")
+        except Exception as e:
+            print(e)
