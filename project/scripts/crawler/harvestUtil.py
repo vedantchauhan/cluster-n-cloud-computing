@@ -37,13 +37,20 @@ def searchById(admin, userid):
     parser = Parser()    
     user = admin
     auth = tweepy.OAuthHandler(app_auth[user].ckey, app_auth[user].csec)
+    #auth = tweepy.AppAuthHandler(app_auth[user].ckey, app_auth[user].csec)
     auth.set_access_token(app_auth[user].atoken, app_auth[user].asec)
-    api = tweepy.API(auth)
+    api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+    
+    if not api:
+        print("Can't Authenticate api key")
+        sys.exit(-1)
+    
     try:
-        query = api.user_timeline(user_id=userid, count=25)
+        query = api.user_timeline(user_id=userid, count=10, lang='en')
     except tweepy.TweepError:
         print("search API access time limited, searching sleeps n back soon ")
-        time.sleep(60*15)
+        time.sleep(16*60)
+        return
     for status in query:
         
         # filter out retweets
@@ -54,9 +61,9 @@ def searchById(admin, userid):
             pass
         
         #filter out tweets without interested topics
-        topics = loadTopicFiles()
-        if not containTopic(topics, status.text):
-            return
+       # topics = loadTopicFiles()
+       # if not containTopic(topics, status.text):
+       #     return
         
         # perform sentiment analysis n store scores to json
         polarity, subjectivity, label = cl.get_sent_score(status.text)
@@ -79,8 +86,10 @@ def searchById(admin, userid):
 # setting up stream listener
 class MyStreamListener(tweepy.StreamListener):
     def on_error(self, status_code):
+        print(status_code)
         if status_code == 420:
             #returning False in on_data disconnects the stream
+            print("ERROR: stream connection error")
             return False    
 
     def on_status(self, status):
@@ -97,10 +106,9 @@ class MyStreamListener(tweepy.StreamListener):
             pass
         
         #filter out unrelated topics
-        topics = loadTopicFiles()
-        
-        if not containTopic(topics, status.text):
-            return
+       # topics = loadTopicFiles()
+       # if not containTopic(topics, status.text):
+       #     return
                 
         
         # perform sentiment analysis n store scores to json
@@ -125,6 +133,5 @@ class MyStreamListener(tweepy.StreamListener):
         except Exception as e:
             # access time limit handling
             print(e)
-            time.sleep(20)
         print("finish search on user: "+str(status.user.id))
         return True
