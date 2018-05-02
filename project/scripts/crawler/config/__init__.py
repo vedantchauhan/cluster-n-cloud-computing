@@ -21,10 +21,10 @@ db_password = 'admin'
 couchdb_uri = "http://127.0.0.1:5984"      # couchdb address
 app_auth = {
     'jiyu': Keys(
-        "se7dR9OJzvcJdG9nO6g9VVpKE",
-        "0iJSVbUVN2OPOSPy3KJQdQP3Q0iGvyZfHAMQXKwce03tfO5PYk",
-        "985778410898124800-kNVBSiLMIWRILWlGR71zk8HCl6IllEo",
-        "ttLXW3R5rC3MMXMwbq7irCf9GcAhIOV9i3Pz1VhmS9IaP"
+        "ot4fXr9x3Nf0f94FUomFPieNH",
+        "x72WSDCWbF6EMsLViRp7gm1gKOnKK6HHG6xTk9zUKtlKrPrQc5",
+        "991571553073512448-mV5XDtoor6bpjH09lk1NNzn4GyMYMmW",
+        "UgqA6EfQzUugyhXSiPN0Sy6fARkiDGZR9ezirjiBw3H1G"
     )
     # add other users access info here n change in harvestMode.py as well
 }
