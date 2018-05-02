@@ -26,7 +26,7 @@ def create_instances(count=1):
         instance_list.append(
             conn.run_instances(DEFAULT_IMAGE_ID,
                                key_name=DEFAULT_KEY_PAIR,
-                               instance_type='m1.small',
+                               instance_type='m1.medium',
                                security_groups=['default'],
                                placement=DEFAULT_PLACE)
         )
