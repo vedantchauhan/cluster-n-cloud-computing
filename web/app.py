@@ -4,10 +4,13 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
 import datetime
 from couchdbkit import Document, StringProperty, DateTimeProperty
 import couchdbkit
+import pandas as pd
 
 
 # configuration
-DATABASE = 'web'
+from flask.json import jsonify
+
+DATABASE = 'aurin'
 DEBUG = True
 USERNAME = 'admin'
 PASSWORD = 'admin'
@@ -23,40 +26,30 @@ def connect_db():
     server = couchdbkit.Server()
     return server.get_or_create_db(app.config['DATABASE'])
 
-
-def init_db():
-    """Creates the database views."""
-    db = connect_db()
-    loader = couchdbkit.loaders.FileSystemDocsLoader('_design')
-    loader.sync(db, verbose=True)
-
-
-class Entry(Document):
-    author = StringProperty()
-    date = DateTimeProperty()
-    title = StringProperty()
-    text = StringProperty()
-
-
-
-@app.before_request
-def before_request():
-    """Make sure we are connected to the database each request."""
-    g.db = connect_db()
-    Entry.set_db(g.db)
-
-@app.route('/')
+@app.route('/show_entries', methods=['GET','POST'])
 def show_entries():
-    # ? entries = Entry.view('entry/all')
-    entries = g.db.view('entry/all', schema=Entry)
-    #app.logger.debug(entries.all())
-    return render_template('show_entries.html', entries=entries)
+    db = connect_db()
+    rows = db.view('_all_docs', include_docs=True)
+    data = [row['doc'] for row in rows]
+    df = pd.DataFrame(data)
+    response = {
+        "city": df['city'],
+        "median_age": df['median_age']
+    }
+    return render_template('show_entries.html', test=response)
 
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out')
-    return redirect(url_for('show_entries'))
+'''@app.route('/', methods=['GET','POST'])
+def show_entries():
+    db = connect_db()
+    rows = db.view('_all_docs', include_docs=True)
+    data = [row['doc'] for row in rows]
+    df = pd.DataFrame(data)
+    response = {
+        "city": df['city'],
+        "median_age": df['median_age']
+    }
+    city = ["Melbourne", "Sydney"]
+    return render_template('show_entries.html', **locals())'''
 
 if __name__ == '__main__':
     app.run()
