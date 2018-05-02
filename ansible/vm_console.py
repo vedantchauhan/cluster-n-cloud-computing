@@ -2,11 +2,11 @@ import argparse
 import time
 
 from boto.ec2.connection import EC2Connection
-from boto.ec2.regioninfo import RegionInfo
+from boto.ec2.regioninfo import *
 
 EC2_ACCESS_KEY = '165fa5aece714e9bb74581a41ca22a24'
 EC2_SECRET_KEY = '45b4010809404ecc843377733ff53ddd'
-DEFAULT_IMAGE_ID = 'ami-000022b3'
+DEFAULT_IMAGE_ID = 'ami-fe917e46'
 DEFAULT_KEY_PAIR = 'Default-cloud'
 DEFAULT_PLACE = 'melbourne-np'
 
@@ -20,7 +20,6 @@ conn = EC2Connection(aws_access_key_id=EC2_ACCESS_KEY,
 
 
 def create_instances(count=1):
-    # ami-000022b3 NeCTAR Ubuntu 14.04 (Trusty) amd64
     instance_list = []
     for c in range(count):
         instance_list.append(
