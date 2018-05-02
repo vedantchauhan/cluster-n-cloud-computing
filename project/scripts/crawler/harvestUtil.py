@@ -5,13 +5,13 @@ from database import database
 
 from crawler.config import db_name
 from database.parser import Parser
-from crawler.config import app_auth,topics_file
+from crawler.config import app_auth,smoke_file,crime_file
 import re
 import time
 
 
-def loadTopicFiles():
-    file = open(topics_file,"r")
+def loadTopicFiles(param):
+    file = open(param,"r")
     topics = []
     for topic in file:
         topics.append(topic.strip())
@@ -61,9 +61,16 @@ def searchById(admin, userid):
             pass
         
         #filter out tweets without interested topics
-       # topics = loadTopicFiles()
-       # if not containTopic(topics, status.text):
-       #     return
+        topics = loadTopicFiles(smoke_file)
+        topic = ""
+        if not containTopic(topics, status.text):
+            topics= loadTopicFiles(crime_file)
+            if not containTopic(topics,status.text):
+                return
+            else:
+                topic = "crime"
+        else:
+            topic = "Tobacco"
         
         # perform sentiment analysis n store scores to json
         polarity, subjectivity, label = cl.get_sent_score(status.text)
@@ -74,7 +81,7 @@ def searchById(admin, userid):
         } 
         #parse tweets
         try:
-            record = parser.status_parse(status,sent)
+            record = parser.status_parse(status,sent,topic)
         except:
             pass
         if record is None:
@@ -106,9 +113,16 @@ class MyStreamListener(tweepy.StreamListener):
             pass
         
         #filter out unrelated topics
-       # topics = loadTopicFiles()
-       # if not containTopic(topics, status.text):
-       #     return
+        topics = loadTopicFiles(smoke_file)
+        topic = ""
+        if not containTopic(topics, status.text):
+            topics= loadTopicFiles(crime_file)
+            if not containTopic(topics,status.text):
+                return
+            else:
+                topic = "crime"
+        else:
+            topic = "Tobacco"
                 
         
         # perform sentiment analysis n store scores to json
@@ -120,18 +134,18 @@ class MyStreamListener(tweepy.StreamListener):
         }
         
         #parse tweets
-        record = parser.status_parse(status,sent)
+        record = parser.status_parse(status,sent,topic)
         if record is None:
             return        
          
         # save into couchdb
         db.save(db_name,record)
         
-        #get all tweets from users timeline
+        #search tweets from one typical users timeline
         try:
             searchById("jiyu",status.user.id)
         except Exception as e:
-            # access time limit handling
             print(e)
+            return
         print("finish search on user: "+str(status.user.id))
         return True
