@@ -14,7 +14,8 @@ class DButils():
         # connect to couchdb
         try:
             self.couch = couchdb.Server(couchdb_uri)           
-        except:
+        except Exception as e:
+            print(e)
             try:
                 auth = Session()
                 auth.name = db_admin
