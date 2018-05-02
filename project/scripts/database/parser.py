@@ -3,7 +3,7 @@ import json
 
 class Parser():
 
-    def status_parse(self, status, sentiment_score):
+    def status_parse(self, status, sentiment_score,topic):
         # filt out tweets outside aus
         try:
             if status.place.country_code != 'AU':
@@ -36,7 +36,7 @@ class Parser():
             "lang": status.lang,
             "text": status.text,
             "sentiment": sentiment_score,
-            "topic":"alcoholnTobacoo"
+            "topic":topic
         }
         return result
 

@@ -25,12 +25,19 @@ class DButils():
                 print(e)
                 return
         
+    
+        
+        
         
     def save(self, database, record):
     
         # locate database
         try:
-            db = self.couch[database]
+            # check whether the database is created in Server
+            if database in self.couch:
+                db = self.couch[database]
+            else:
+                db = self.couch.create(database)
         except couchdb.http.ResourceNotFound:
             print("No database: "+database)
             print("try to create database on: "+str(couchdb_uri))
@@ -43,7 +50,7 @@ class DButils():
                 self.couch.create(database)
                 db = self.couch[database]                
             except couchdb.http.Unauthorized as e:
-                print("ERROR: unauthorized")
+                print("ERROR: unauthorized couchdb access")
                 return
         
         #prevent duplication
@@ -54,3 +61,6 @@ class DButils():
                 db.save(record)
             except couchdb.HTTPError as e:
                 print("ERROR: duplicate")
+            except Exception as e:
+                # ouput other exceptions
+                print(e)
