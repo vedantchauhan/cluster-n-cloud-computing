@@ -1,0 +1,56 @@
+{
+  "_id": "984254206860255232",
+  "_rev": "1-f78f79342559e34be702aff9d02cb2b8",
+  "id_str": "984254206860255232",
+  "coordinates": {
+    "type": "Point",
+    "coordinates": [
+      151.21574,
+      -33.87769
+    ]
+  },
+  "place": {
+    "place_type": "city",
+    "name": "Sydney",
+    "bounding_box": {
+      "coordinates": [
+        [
+          [
+            150.520928608,
+            -34.1183470085
+          ],
+          [
+            151.343020992,
+            -34.1183470085
+          ],
+          [
+            151.343020992,
+            -33.578140996
+          ],
+          [
+            150.520928608,
+            -33.578140996
+          ]
+        ]
+      ],
+      "type": "Polygon"
+    },
+    "full_name": "Sydney, New South Wales",
+    "country_code": "AU",
+    "country": "Australia"
+  },
+  "user": {
+    "id": 4315837572,
+    "id_str": "4315837572",
+    "name": "white carrots cafe",
+    "description": "Monday-Friday:7am-4pm Sat-Sun : 8am-4pm"
+  },
+  "lang": "en",
+  "text": "#whitecarrots #next #love #goodfood #goodcoffee #quality #tasty we cater for everyone ,high end… https://t.co/2kPUD0UFOc",
+  "sentiment": {
+    "polarity": "0.16",
+    "subjectiviy": "0.5399999999999999",
+    "label": "Positive"
+  },
+  "topic": "null"
+}

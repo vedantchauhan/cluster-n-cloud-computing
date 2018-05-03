@@ -37,6 +37,7 @@ class DButils():
             if database in self.couch:
                 db = self.couch[database]
             else:
+                
                 db = self.couch.create(database)
         except couchdb.http.ResourceNotFound:
             print("No database: "+database)
@@ -52,6 +53,7 @@ class DButils():
             except couchdb.http.Unauthorized as e:
                 print("ERROR: unauthorized couchdb access")
                 return
+            
         
         #prevent duplication
         if db.get(record["_id"]) is None:
@@ -64,3 +66,6 @@ class DButils():
             except Exception as e:
                 # ouput other exceptions
                 print(e)
+        else:
+            print("duplicate tweets")
+            return

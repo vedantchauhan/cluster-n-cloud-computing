@@ -9,15 +9,13 @@ class Parser():
             if status.place.country_code != 'AU':
                 return None
         except AttributeError:
-            return
+            return None
 
         result = {
             "_id": status.id_str,
             "id_str": status.id_str,
             "coordinates": status.coordinates,
             "place": {
-                "id": status.place.id,
-                "url": status.place.url,
                 "place_type": status.place.place_type,
                 "name": status.place.name,
                 "bounding_box":{"coordinates":status.place.bounding_box.coordinates,
