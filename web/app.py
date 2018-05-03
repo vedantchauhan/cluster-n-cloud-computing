@@ -49,11 +49,11 @@ def analysis_one():
     return render_template('analysis_one.html')
 
 @app.route('/analysis_two')
-def analysis_one():
+def analysis_two():
     return render_template('analysis_two.html')
 
 @app.route('/analysis_three')
-def analysis_one():
+def analysis_three():
     return render_template('analysis_three.html')
 
 if __name__ == '__main__':

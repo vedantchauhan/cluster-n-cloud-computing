@@ -1,10 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet" />
+<link href="../static/css/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../static/css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages': ['geochart']});
+        google.charts.setOnLoadCallback(drawRegionsMap);
+
+        function drawRegionsMap() {
+            var data = google.visualization.arrayToDataTable([
+                ['City', 'Age'],
+                ['Melb', 34]
+            ]);
+            var options = {
+                region: 'AU',
+                displayMode: 'markers'
+            };
+            var chart = new google.visualization.GeoChart(document.getElementById('geochart'));
+            chart.draw(data, options);
+        }
+    </script>
 </head>
 <body>
+<div id="header-wrapper">
+	<div id="header" class="container">
+		<div id="logo">
+			<h1><a href="index"><u>Citylights</u>.</a></h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><a href="index" accesskey="1" title="">Homepage</a></li>
+				<li><a href="analysis_one" accesskey="2" title="">Analysis One</a></li>
+				<li><a href="analysis_two" accesskey="3" title="">Analysis Two</a></li>
+				<li class="active"><a href="analysis_three" accesskey="4" title="">Analysis Three</a></li>
+			</ul>
+		</div>
+	</div>
 
+</div>
+<div id="wrapper">
+	<div id="three-column" class="container">
+
+		<div class="title">
+		<h3>Map Representing the data</h3><br>
+			<center><div id="geochart" style="width: 1200px; height: 400px ;"></div><center>
+		</div>
+	</div>
+</div>
+<div id="copyright" class="container">
+	<p>&copy; Comp90024 Group 49. All rights reserved.</p>
+</div>
 </body>
 </html>
