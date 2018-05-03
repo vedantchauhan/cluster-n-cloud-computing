@@ -1,9 +1,6 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <!---- >
-    <!-- https://developers.google.com/chart/interactive/docs/gallery/geochart#full -->
-    <!---->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -11,11 +8,15 @@
         google.charts.setOnLoadCallback(drawRegionsMap);
 
         function drawRegionsMap() {
+            var response = JSON.parse('{{ response | tojson | safe}}');
+
+            for (var i = 0; i < response.length; i++) {
+                document.getElementById('username').innerHTML = response[i].city + " " + response[i].median_age;
+            }
 
             var data = google.visualization.arrayToDataTable([
-                ['City', 'Popularity'],
-                ["Melbourne", 200],
-                ["Sydney", 300]
+                ['City', 'Age'],
+                [response.city, response.median_age]
             ]);
             var options = {
                 region: 'AU',
@@ -30,5 +31,6 @@
 </head>
 <body>
 <div id="geochart" style="width: 900px; height: 500px ;"></div>
+<span id="username"></span>
 </body>
 </html>

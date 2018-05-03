@@ -5,6 +5,7 @@ import datetime
 from couchdbkit import Document, StringProperty, DateTimeProperty
 import couchdbkit
 import pandas as pd
+import json
 
 
 # configuration
@@ -26,30 +27,34 @@ def connect_db():
     server = couchdbkit.Server()
     return server.get_or_create_db(app.config['DATABASE'])
 
-@app.route('/show_entries', methods=['GET','POST'])
-def show_entries():
-    db = connect_db()
-    rows = db.view('_all_docs', include_docs=True)
-    data = [row['doc'] for row in rows]
-    df = pd.DataFrame(data)
-    response = {
-        "city": df['city'],
-        "median_age": df['median_age']
-    }
-    return render_template('show_entries.html', test=response)
 
-'''@app.route('/', methods=['GET','POST'])
+@app.route('/',methods=['GET','POST'])
 def show_entries():
     db = connect_db()
     rows = db.view('_all_docs', include_docs=True)
     data = [row['doc'] for row in rows]
-    df = pd.DataFrame(data)
-    response = {
-        "city": df['city'],
-        "median_age": df['median_age']
-    }
-    city = ["Melbourne", "Sydney"]
-    return render_template('show_entries.html', **locals())'''
+    #df = pd.DataFrame(data)
+    response = {}
+    for d in data:
+        response.update({d['city']: d['median_age']})
+    return render_template('show_entries.html', response=response)
+
+
+@app.route('/index')
+def index():
+    return render_template('index.html')
+
+@app.route('/analysis_one')
+def analysis_one():
+    return render_template('analysis_one.html')
+
+@app.route('/analysis_two')
+def analysis_one():
+    return render_template('analysis_two.html')
+
+@app.route('/analysis_three')
+def analysis_one():
+    return render_template('analysis_three.html')
 
 if __name__ == '__main__':
     app.run()
