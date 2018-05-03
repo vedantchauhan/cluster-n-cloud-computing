@@ -29,7 +29,13 @@ app_auth = {
         "Iaqwf1819wWMj8Xrt9qk129KZBBQUs7wckOXQs2gprxIl59GdU",
         "985778410898124800-84JVlrPgFenZGbiBoGeMjyzzNP90gQA",
         "XWoTuCqnuIPrHlC4LHlsu5f10wTtmQyo2PZfbq3e7bPBe"
-    )
+    ),
+    'siddharth':Keys(
+        "61Hb2X6Cq5rRdDSJ3HxAbZhM8",
+        "R5d01xu9YPp2UiDY4zY1ixUBa9dBg1hlPnk0OWiRSqum4oLCGz",
+        "179173817-Ds28Er9eVIFO5MkZXsKwm11fuNbICHvDLYRnlOkk",
+        "WbC3e0EaOEr0E83OInQgEIXaYw1xlot9uYhLqPzwksHGr"
+    )    
     # add other users access info here n change in harvestMode.py as well
 }
 
