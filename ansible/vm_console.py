@@ -79,6 +79,11 @@ if __name__ == '__main__':
                 print instance.id, instance.ip_address, instance.state
             else:
                 print 'create %s failed.' % ins.id
+
+        for ins_id in get_all_instance_ids():
+            vol_req = conn.create_volume(60, 'melbourne-np', '', 'melbourne')
+            conn.attach_volume(vol_req.id, ins_id, '/dev/vdc')
+
     elif args.o.lower() == 'terminate':
         # Terminating all instances
         for ins_id in get_all_instance_ids():
