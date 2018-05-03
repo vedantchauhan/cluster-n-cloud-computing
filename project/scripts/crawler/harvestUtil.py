@@ -46,19 +46,22 @@ def searchById(admin, userid):
         sys.exit(-1)
     
     try:
-        query = api.user_timeline(user_id=userid, count=10, lang='en')
+        query = api.user_timeline(user_id=userid, count=100, lang='en')
     except tweepy.TweepError:
         print("search API access time limited, searching sleeps n back soon ")
         time.sleep(16*60)
         return
-    for status in query:
+    for status in query[1:]:
         
         # filter out retweets
         try:
             if status.retweeted_status:
                 return None
+            if not status.coordinates:
+                return None
         except:
             pass
+        
         
         #filter out tweets without interested topics
         topics = loadTopicFiles(smoke_file)
@@ -66,11 +69,13 @@ def searchById(admin, userid):
         if not containTopic(topics, status.text):
             topics= loadTopicFiles(crime_file)
             if not containTopic(topics,status.text):
-                return
+                topic = "null"
             else:
                 topic = "crime"
         else:
             topic = "Tobacco"
+        
+        
         
         # perform sentiment analysis n store scores to json
         polarity, subjectivity, label = cl.get_sent_score(status.text)
@@ -83,10 +88,10 @@ def searchById(admin, userid):
         try:
             record = parser.status_parse(status,sent,topic)
         except:
+            record = None
             pass
         if record is None:
             return        
-                
         # save into couchdb
         db.save(db_name,record)        
 
@@ -112,18 +117,26 @@ class MyStreamListener(tweepy.StreamListener):
         except:
             pass
         
+        try:
+            if not status.coordinates:
+                return None
+        except:
+            pass
+        
+        
         #filter out unrelated topics
         topics = loadTopicFiles(smoke_file)
         topic = ""
         if not containTopic(topics, status.text):
             topics= loadTopicFiles(crime_file)
             if not containTopic(topics,status.text):
-                return
+                topic = "null"
             else:
                 topic = "crime"
         else:
             topic = "Tobacco"
-                
+        
+        
         
         # perform sentiment analysis n store scores to json
         polarity, subjectivity, label = cl.get_sent_score(status.text)
