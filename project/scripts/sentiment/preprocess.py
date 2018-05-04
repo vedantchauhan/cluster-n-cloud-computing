@@ -1,9 +1,7 @@
+
 import nltk
-from nltk.stem import WordNetLemmatizer  
-try:
-    from nltk.corpus import words
-except:
-    nltk.download("words")
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import words
 import re
 
 

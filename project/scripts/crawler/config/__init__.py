@@ -17,9 +17,9 @@ class Keys:
 # couchdb
 db_name = 'tweets'
 aurin_db_name = 'aurin'
-db_admin = 'admin'
+db_admin = 'fred'
 db_password = 'admin'
-couchdb_uri = "http://127.0.0.1:5984"      # couchdb address
+couchdb_uri = "http://fred:admin@127.0.0.1:5984"      # couchdb address
 
 
 # twitter api
@@ -54,5 +54,5 @@ AUS_STR = MELBOURNE_STR+SYD_STR+BRIS_STR+HOB_STR+PER_STR+CAN_STR+DAR_STR+ADE_STR
 
            
 # topics
-smoke_file = "/Users/alfredgordon/Documents/cluster/project/scripts/crawler/smoke_alcohol.txt"
-crime_file = "/Users/alfredgordon/Documents/cluster/project/scripts/crawler/crime.txt"
+smoke_file = "//Users/alfredchen/Documents/GitHub/cluster-n-cloud-computing/project/scripts/crawler/smoke_alcohol.txt"
+crime_file = "/Users/alfredchen/Documents/GitHub/cluster-n-cloud-computing/project/scripts/crawler/crime.txt"
