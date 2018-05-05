@@ -54,5 +54,7 @@ AUS_STR = MELBOURNE_STR+SYD_STR+BRIS_STR+HOB_STR+PER_STR+CAN_STR+DAR_STR+ADE_STR
 
            
 # topics
-smoke_file = "//Users/alfredchen/Documents/GitHub/cluster-n-cloud-computing/project/scripts/crawler/smoke_alcohol.txt"
-crime_file = "/Users/alfredchen/Documents/GitHub/cluster-n-cloud-computing/project/scripts/crawler/crime.txt"
+smoke_file = "//Users/alfredchen/Documents/GitHub/cluster-n-cloud-computing/project/scripts/crawler/topic_glossary/smoke_alcohol.txt"
+crime_file = "/Users/alfredchen/Documents/GitHub/cluster-n-cloud-computing/project/scripts/crawler/topic_glossary/crime.txt"
+cricket_file = "/Users/alfredchen/Documents/GitHub/cluster-n-cloud-computing/project/scripts/crawler/topic_glossary/cricket.txt"
+afl_file = "/Users/alfredchen/Documents/GitHub/cluster-n-cloud-computing/project/scripts/crawler/topic_glossary/afl.txt"

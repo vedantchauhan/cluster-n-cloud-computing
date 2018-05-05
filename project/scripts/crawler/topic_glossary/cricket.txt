@@ -1,0 +1,17 @@
+cricket
+bat
+batsman
+boundary
+bowl
+bowling
+googly
+gully
+howzat
+lbw
+MCG
+MCC
+oval
+sledging
+spinner
+stump
+wicket

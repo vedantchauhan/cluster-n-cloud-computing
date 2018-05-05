@@ -5,7 +5,7 @@ from database import database
 
 from crawler.config import db_name
 from database.parser import Parser
-from crawler.config import app_auth,smoke_file,crime_file
+from crawler.config import app_auth,smoke_file,crime_file,cricket_file,afl_file
 import re
 import time
 
@@ -57,8 +57,6 @@ def searchById(admin, userid):
         try:
             if status.retweeted_status:
                 return None
-            if not status.coordinates:
-                return None
         except:
             pass
         
@@ -69,11 +67,20 @@ def searchById(admin, userid):
         if not containTopic(topics, status.text):
             topics= loadTopicFiles(crime_file)
             if not containTopic(topics,status.text):
-                topic = "null"
+                topics = loadTopicFiles(cricket_file)
+                if not containTopic(topics, status.text):
+                    topics = loadTopicFiles(afl_file)
+                    if not containTopic(topics,status.text):
+                        topic = "null"
+                    else:
+                        topic = "afl"
+                else:
+                    topic = "cricket"
+
             else:
                 topic = "crime"
         else:
-            topic = "Tobacco"
+            topic = "tobacco"
         
         
         
@@ -117,24 +124,29 @@ class MyStreamListener(tweepy.StreamListener):
         except:
             pass
         
-        try:
-            if not status.coordinates:
-                return None
-        except:
-            pass
+
         
         
         #filter out unrelated topics
         topics = loadTopicFiles(smoke_file)
         topic = ""
         if not containTopic(topics, status.text):
-            topics= loadTopicFiles(crime_file)
-            if not containTopic(topics,status.text):
-                topic = "null"
+            topics = loadTopicFiles(crime_file)
+            if not containTopic(topics, status.text):
+                topics = loadTopicFiles(cricket_file)
+                if not containTopic(topics, status.text):
+                    topics = loadTopicFiles(afl_file)
+                    if not containTopic(topics, status.text):
+                        topic = "null"
+                    else:
+                        topic = "afl"
+                else:
+                    topic = "cricket"
+
             else:
                 topic = "crime"
         else:
-            topic = "Tobacco"
+            topic = "tobacco"
         
         
         
