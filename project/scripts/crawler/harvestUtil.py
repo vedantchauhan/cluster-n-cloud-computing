@@ -46,10 +46,11 @@ def searchById(admin, userid):
         sys.exit(-1)
     
     try:
-        query = api.user_timeline(user_id=userid, count=100, lang='en')
+        query = api.user_timeline(user_id=userid, count=10, lang='en')
     except tweepy.TweepError:
         print("search API access time limited, searching sleeps n back soon ")
         time.sleep(16*60)
+        print("crawler back to work")
         return
     for status in query[1:]:
         
