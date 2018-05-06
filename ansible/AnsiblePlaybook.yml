@@ -1,4 +1,15 @@
 ---
+- name: install and configure couch cluster
+  hosts: servers
+  remote_user: ubuntu
+  become: yes
+  become_user: root
+  
+  vars:
+   ansible_ssh_private_key_file: /Users/siddharth/Documents/GitHub/cluster-n-cloud-computing/ansible/Default-cloud.key
+   host_key_checking: False
+   command_warnings: False
+   
 - hosts: myhost
   tasks:
    - name: install git 
@@ -6,16 +17,11 @@
    
    - name: install python 3
      apt: name=python3 state=present
-    
+
    - name: install pip
      apt: name=python-pip state=present
    
-   - name: Install pip
-     easy_install: name=pip
-     become: yes
-     become_user: root
-     remote_user: administrator
-
+   
  
        
 
