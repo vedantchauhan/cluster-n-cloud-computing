@@ -19,10 +19,12 @@ def loadTopicFiles(param):
     return topics
 
 def containTopic(topics,text):
-    text = text.split(' ')
+    #text = text.split(' ')
+    text = [word.replace(",", "").replace(".", "").replace("!","").replace("?","")
+     for word in text.split(' ')]
+
     for word in text:
         if word in topics:
-            print(word)
             return True
     return False
     
@@ -63,16 +65,15 @@ def searchById(admin, userid):
         
         
         #filter out tweets without interested topics
-        topics = loadTopicFiles(smoke_file)
-        topic = ""
+        topics = loadTopicFiles(smoke_file)              #smoke
         if not containTopic(topics, status.text):
-            topics= loadTopicFiles(crime_file)
+            topics= loadTopicFiles(crime_file)           #crime
             if not containTopic(topics,status.text):
-                topics = loadTopicFiles(cricket_file)
+                topics = loadTopicFiles(cricket_file)    #cricket
                 if not containTopic(topics, status.text):
-                    topics = loadTopicFiles(afl_file)
+                    topics = loadTopicFiles(afl_file)    #footy
                     if not containTopic(topics,status.text):
-                        topic = "null"
+                        topic = ""
                     else:
                         topic = "afl"
                 else:
@@ -130,7 +131,6 @@ class MyStreamListener(tweepy.StreamListener):
         
         #filter out unrelated topics
         topics = loadTopicFiles(smoke_file)
-        topic = ""
         if not containTopic(topics, status.text):
             topics = loadTopicFiles(crime_file)
             if not containTopic(topics, status.text):
@@ -138,7 +138,7 @@ class MyStreamListener(tweepy.StreamListener):
                 if not containTopic(topics, status.text):
                     topics = loadTopicFiles(afl_file)
                     if not containTopic(topics, status.text):
-                        topic = "null"
+                        topic = ""
                     else:
                         topic = "afl"
                 else:
