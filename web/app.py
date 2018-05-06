@@ -1,11 +1,10 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
+    render_template, flash
 
 import datetime
 from couchdbkit import Document, StringProperty, DateTimeProperty
 import couchdbkit
 import json
-
 
 # configuration
 from flask.json import jsonify
@@ -22,7 +21,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
-#variables
+# variables
 count_pos_melb = 0
 count_neg_melb = 0
 melb_score = 0
@@ -47,6 +46,18 @@ hob_score = 0
 count_pos_can = 0
 count_neg_can = 0
 can_score = 0
+# tweets value
+total_pos = 0
+total_neg = 0
+# sports value
+melb_sports = 0
+syd_sports = 0
+per_sports = 0
+ade_sports = 0
+can_sports = 0
+hob_sports = 0
+bri_sports = 0
+dar_sports = 0
 
 
 # connecting to couchdb
@@ -54,9 +65,11 @@ def connect_db():
     server = couchdbkit.Server()
     return server.get_or_create_db(app.config['DATABASE'])
 
+
 def connect_db_tweets():
     server = couchdbkit.Server()
     return server.get_or_create_db(app.config['DATABASE_TWEETS'])
+
 
 def tweets():
     try:
@@ -109,16 +122,64 @@ def tweets():
             count_neg_dar = item["rows"]["value"]
         dar_score = count_pos_dar / count_neg_dar
 
+        for item in db_tweets.view('group49/pos', include_docs=True):
+            total_pos = item["rows"]["value"]
+        for item in db_tweets.view('group49/neg', include_docs=True):
+            total_neg = item["rows"]["value"]
+
     except Exception as e:
         print(e)
 
 
-@app.route('/',methods=['GET','POST'])
+def tweets_sports():
+    try:
+        db_tweets = connect_db_tweets()
+        for item in db_tweets.view('group49/melb_sports', include_docs=True):
+            melb_sports = item["rows"]["value"]
+
+        for item in db_tweets.view('group49/syd_sports', include_docs=True):
+            syd_sports = item["rows"]["value"]
+
+        for item in db_tweets.view('group49/bri_sports', include_docs=True):
+            bri_sports = item["rows"]["value"]
+
+        for item in db_tweets.view('group49/can_sports', include_docs=True):
+            can_sports = item["rows"]["value"]
+
+        for item in db_tweets.view('group49/ade_sports', include_docs=True):
+            ade_sports = item["rows"]["value"]
+
+        for item in db_tweets.view('group49/hob_sports', include_docs=True):
+            hob_sports = item["rows"]["value"]
+
+        for item in db_tweets.view('group49/per_sports', include_docs=True):
+            count_pos_per = item["rows"]["value"]
+
+        for item in db_tweets.view('group49/dar_sports', include_docs=True):
+            dar_sports = item["rows"]["value"]
+
+    except Exception as e:
+        print(e)
+
+
+def aurinData():
+    response = {}
+    try:
+        db = connect_db()
+        rows = db.view('_all_docs', include_docs=True)
+        data = [row['doc'] for row in rows]
+        for d in data:
+            response.update({d['city']: d['median_income']})
+    except Exception as e:
+        print(e)
+
+
+@app.route('/', methods=['GET', 'POST'])
 def show_entries():
     db = connect_db()
     rows = db.view('_all_docs', include_docs=True)
     data = [row['doc'] for row in rows]
-    #df = pd.DataFrame(data)
+    # df = pd.DataFrame(data)
     response = {}
     for d in data:
         response.update({d['city']: d['median_income']})
@@ -129,17 +190,55 @@ def show_entries():
 def index():
     return render_template('index.html')
 
+
 @app.route('/analysis_one')
 def analysis_one():
     return render_template('analysis_one.html')
 
+
+response_sports = {}
+response_gamble = {}
+response_score = {}
 @app.route('/analysis_two')
 def analysis_two():
-    return render_template('analysis_two.html')
+    try:
+        tweets_sports()
+        response_sports.update({
+            "Melbourne": melb_sports,
+            "Sydney": syd_sports,
+            "Darwin": dar_sports,
+            "Hobart": hob_sports,
+            "Adelaide": ade_sports,
+            "Brisbane": bri_sports,
+            "Perth": per_sports,
+            "Canberra": can_sports
+        })
+        tweets()
+        response_score.update({
+            "Melbourne": melb_score,
+            "Sydney": syd_score,
+            "Darwin": dar_score,
+            "Hobart": hob_score,
+            "Adelaide": ade_score,
+            "Brisbane": bri_score,
+            "Perth": per_score,
+            "Canberra": can_score
+        })
+        db = connect_db()
+        rows = db.view('_all_docs', include_docs=True)
+        data = [row['doc'] for row in rows]
+        for d in data:
+            response_gamble.update({d['city']: d['gambling_activities']})
+    except Exception as e:
+        print(e)
+    return render_template('analysis_two.html', response_gamble=response_gamble, response_sports=response_sports,
+                           response_score=response_score)
+
 
 @app.route('/analysis_three')
 def analysis_three():
     return render_template('analysis_three.html')
+
 
 if __name__ == '__main__':
     app.run()
