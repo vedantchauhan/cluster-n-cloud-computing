@@ -4,12 +4,7 @@
   remote_user: ubuntu
   become: yes
   become_user: root
-  
-  vars:
-   ansible_ssh_private_key_file: /Users/siddharth/Documents/GitHub/cluster-n-cloud-computing/ansible/Default-cloud.key
-   host_key_checking: False
-   command_warnings: False
-   
+
 - hosts: myhost
   tasks:
    - name: install git 
@@ -60,12 +55,32 @@
 
    - name: add node source
      shell: "curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -"
-     
+
    - name: install npm
      apt: name={{ item }} update_cache=yes state=latest
      with_items:
         - build-essential
         - nodejs
+
+   - name: install npm in global mode
+     npm:
+        name:  npm
+        global: yes
+   - name: install add-cors-to-couchdb module
+     npm: 
+        name: add-cors-to-couchdb
+        global: yes
+   - name: add cors to couchdb
+     shell: "add-cors-to-couchdb http://localhost:5984 -u admin -p admin"
+   - name: clone cluster repo
+     git:
+        repo: https://github.com/redgeoff/redgeoff-couchdb-docker
+        clone: yes
+        dest: /root/redgeoff-couchdb-docker
+   - name: add nodes to cluster
+     shell: /root/redgeoff-couchdb-docker/create-cluster.sh admin admin 5984 5986 "{{ item }} {{ inventory_hostname }}"
+     with_items: "{{ groups['servers'] }}"
+     when: inventory_hostname == groups['servers'][0] and inventory_hostname != item
     
 
    
