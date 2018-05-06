@@ -19,7 +19,7 @@ db_name = 'tweets'
 aurin_db_name = 'aurin'
 db_admin = 'fred'
 db_password = 'admin'
-couchdb_uri = "http://fred:admin@127.0.0.1:5984"      # couchdb address
+couchdb_uri = "http://admin:admin@172.17.0.3:5984"      # couchdb address
 
 
 # twitter api
@@ -54,7 +54,7 @@ AUS_STR = MELBOURNE_STR+SYD_STR+BRIS_STR+HOB_STR+PER_STR+CAN_STR+DAR_STR+ADE_STR
 
            
 # topics
-smoke_file = "//Users/alfredchen/Documents/GitHub/cluster-n-cloud-computing/project/scripts/crawler/topic_glossary/smoke_alcohol.txt"
-crime_file = "/Users/alfredchen/Documents/GitHub/cluster-n-cloud-computing/project/scripts/crawler/topic_glossary/crime.txt"
-cricket_file = "/Users/alfredchen/Documents/GitHub/cluster-n-cloud-computing/project/scripts/crawler/topic_glossary/cricket.txt"
-afl_file = "/Users/alfredchen/Documents/GitHub/cluster-n-cloud-computing/project/scripts/crawler/topic_glossary/afl.txt"
+smoke_file = "../scripts/crawler/topic_glossary/smoke_alcohol.txt"
+crime_file = "../scripts/crawler/topic_glossary/crime.txt"
+cricket_file = "../scripts/crawler/topic_glossary/cricket.txt"
+afl_file = "../scripts/crawler/topic_glossary/afl.txt"
