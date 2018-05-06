@@ -1,56 +1,51 @@
 {
-  "_id": "984254206860255232",
-  "_rev": "1-f78f79342559e34be702aff9d02cb2b8",
-  "id_str": "984254206860255232",
-  "coordinates": {
-    "type": "Point",
-    "coordinates": [
-      151.21574,
-      -33.87769
-    ]
-  },
+  "_id": "985551370064248832",
+  "_rev": "1-41e8aabda76ee784decc9fe74431714d",
+  "id_str": "985551370064248832",
+  "coordinates": null,
   "place": {
     "place_type": "city",
-    "name": "Sydney",
+    "name": "Ellenbrook",
     "bounding_box": {
       "coordinates": [
         [
           [
-            150.520928608,
-            -34.1183470085
+            115.954642304,
+            -31.8037279815
           ],
           [
-            151.343020992,
-            -34.1183470085
+            116.023731488,
+            -31.8037279815
           ],
           [
-            151.343020992,
-            -33.578140996
+            116.023731488,
+            -31.7418732315
           ],
           [
-            150.520928608,
-            -33.578140996
+            115.954642304,
+            -31.7418732315
           ]
         ]
       ],
       "type": "Polygon"
     },
-    "full_name": "Sydney, New South Wales",
+    "full_name": "Ellenbrook, Western Australia",
     "country_code": "AU",
     "country": "Australia"
   },
   "user": {
-    "id": 4315837572,
-    "id_str": "4315837572",
-    "name": "white carrots cafe",
-    "description": "Monday-Friday:7am-4pm Sat-Sun : 8am-4pm"
+    "id": 319634696,
+    "id_str": "319634696",
+    "name": "Wayne Harper",
+    "description": "Family Man | Realist | Urban Planning Critic | #RaiseHell | Comments are my own."
   },
-  "lang": "en",
-  "text": "#whitecarrots #next #love #goodfood #goodcoffee #quality #tasty we cater for everyone ,high end… https://t.co/2kPUD0UFOc",
+  "lang": "nl",
+  "text": "@danielricciardo Damn Daniel: https://t.co/1qHeGs71Po. Top drive.",
   "sentiment": {
-    "polarity": "0.16",
-    "subjectiviy": "0.5399999999999999",
+    "polarity": "0.5",
+    "subjectiviy": "0.5",
     "label": "Positive"
   },
-  "topic": "null"
+  "topic": "null",
+  "hashtag": []
 }

@@ -5,7 +5,7 @@ from database import database
 
 from crawler.config import db_name
 from database.parser import Parser
-from crawler.config import app_auth,smoke_file,crime_file
+from crawler.config import app_auth,smoke_file,crime_file,cricket_file,afl_file
 import re
 import time
 
@@ -19,10 +19,12 @@ def loadTopicFiles(param):
     return topics
 
 def containTopic(topics,text):
-    text = text.split(' ')
+    #text = text.split(' ')
+    text = [word.replace(",", "").replace(".", "").replace("!","").replace("?","")
+     for word in text.split(' ')]
+
     for word in text:
         if word in topics:
-            print(word)
             return True
     return False
     
@@ -46,10 +48,11 @@ def searchById(admin, userid):
         sys.exit(-1)
     
     try:
-        query = api.user_timeline(user_id=userid, count=100, lang='en')
+        query = api.user_timeline(user_id=userid, count=10, lang='en')
     except tweepy.TweepError:
         print("search API access time limited, searching sleeps n back soon ")
         time.sleep(16*60)
+        print("crawler back to work")
         return
     for status in query[1:]:
         
@@ -57,23 +60,29 @@ def searchById(admin, userid):
         try:
             if status.retweeted_status:
                 return None
-            if not status.coordinates:
-                return None
         except:
             pass
         
         
         #filter out tweets without interested topics
-        topics = loadTopicFiles(smoke_file)
-        topic = ""
+        topics = loadTopicFiles(smoke_file)              #smoke
         if not containTopic(topics, status.text):
-            topics= loadTopicFiles(crime_file)
+            topics= loadTopicFiles(crime_file)           #crime
             if not containTopic(topics,status.text):
-                topic = "null"
+                topics = loadTopicFiles(cricket_file)    #cricket
+                if not containTopic(topics, status.text):
+                    topics = loadTopicFiles(afl_file)    #footy
+                    if not containTopic(topics,status.text):
+                        topic = ""
+                    else:
+                        topic = "afl"
+                else:
+                    topic = "cricket"
+
             else:
                 topic = "crime"
         else:
-            topic = "Tobacco"
+            topic = "tobacco"
         
         
         
@@ -117,24 +126,28 @@ class MyStreamListener(tweepy.StreamListener):
         except:
             pass
         
-        try:
-            if not status.coordinates:
-                return None
-        except:
-            pass
+
         
         
         #filter out unrelated topics
         topics = loadTopicFiles(smoke_file)
-        topic = ""
         if not containTopic(topics, status.text):
-            topics= loadTopicFiles(crime_file)
-            if not containTopic(topics,status.text):
-                topic = "null"
+            topics = loadTopicFiles(crime_file)
+            if not containTopic(topics, status.text):
+                topics = loadTopicFiles(cricket_file)
+                if not containTopic(topics, status.text):
+                    topics = loadTopicFiles(afl_file)
+                    if not containTopic(topics, status.text):
+                        topic = ""
+                    else:
+                        topic = "afl"
+                else:
+                    topic = "cricket"
+
             else:
                 topic = "crime"
         else:
-            topic = "Tobacco"
+            topic = "tobacco"
         
         
         

@@ -9,7 +9,6 @@
 
 
 import tweepy
-from twitter import *
 import sentiment.classifier as classifier
 import json
 from database import database

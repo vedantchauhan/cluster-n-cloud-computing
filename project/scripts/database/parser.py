@@ -1,4 +1,5 @@
 import json
+import re
 
 
 class Parser():
@@ -10,6 +11,8 @@ class Parser():
                 return None
         except AttributeError:
             return None
+
+        hashtag = [part[1:] for part in status.text.split() if part.startswith('#')]
 
         result = {
             "_id": status.id_str,
@@ -34,7 +37,8 @@ class Parser():
             "lang": status.lang,
             "text": status.text,
             "sentiment": sentiment_score,
-            "topic":topic
+            "topic":topic,
+            "hashtag":hashtag
         }
         return result
 

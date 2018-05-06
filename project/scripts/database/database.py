@@ -13,17 +13,13 @@ class DButils():
     def __init__(self):
         # connect to couchdb
         try:
-            self.couch = couchdb.Server(couchdb_uri)           
+            auth = Session()
+            auth.name = db_admin
+            auth.password = db_password
+            self.couch = couchdb.Server(couchdb_uri,session=auth)
         except Exception as e:
             print(e)
-            try:
-                auth = Session()
-                auth.name = db_admin
-                auth.password = db_password
-                self.couch = couchdb.Server(couchdb_uri,session=auth)
-            except Exception as e:
-                print(e)
-                return
+            return
         
     
         
@@ -37,7 +33,6 @@ class DButils():
             if database in self.couch:
                 db = self.couch[database]
             else:
-                
                 db = self.couch.create(database)
         except couchdb.http.ResourceNotFound:
             print("No database: "+database)
@@ -59,13 +54,13 @@ class DButils():
         if db.get(record["_id"]) is None:
             # save into couchdb
             try:
-                print(record)
                 db.save(record)
+                print(record)
             except couchdb.HTTPError as e:
                 print("ERROR: duplicate")
             except Exception as e:
                 # ouput other exceptions
                 print(e)
         else:
-            print("duplicate tweets")
+            print("ignore duplicate tweets")
             return
