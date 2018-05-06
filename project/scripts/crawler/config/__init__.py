@@ -19,7 +19,7 @@ db_name = 'tweets'
 aurin_db_name = 'aurin'
 db_admin = 'fred'
 db_password = 'admin'
-couchdb_uri = "http://admin:admin@172.17.0.3:5984"      # couchdb address
+couchdb_uri = "http://fred:admin@127.0.0.1:5984"      # couchdb address
 
 
 # twitter api
@@ -31,10 +31,10 @@ app_auth = {
         "XWoTuCqnuIPrHlC4LHlsu5f10wTtmQyo2PZfbq3e7bPBe"
     ),
     'siddharth':Keys(
-        "657L7YvYPT9kDO80g5ZvY15kS",
-        "TQFT7qN2HeiZVRGwZ5IjombuF80JXDDu9ZRdqiPWyo2ppvVRrw",
-        "985778410898124800-jCEajgONY4s00wxKJCMOeVuRZMeJEib",
-        "cnyY0r54DSCkm3jJ5UsjuzsZbrVnvMN7fCh1xBAwIanjq"
+        "bXsWEKkTUgKXENxyxfT7O0BTy",
+        "Y0ZAXr2GPVZFN3hBCsiuPBqppNUavDO7IlT9XZLkg3y4bJluPU",
+        "179173817-gQOMylVUcfprD6xHtJxWZO6sL6GdVrSyxdMGZffL",
+        "5qrgPwUuTBB35W2KqnodwFpspdzWp3KpFs64HOc3o5yEZ"
     )    
     # add other users access info here n change in harvestMode.py as well
 }
