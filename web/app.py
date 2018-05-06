@@ -2,8 +2,8 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
 
 import datetime
-from couchdbkit import Document, StringProperty, DateTimeProperty
-import couchdbkit
+#from couchdbkit import Document, StringProperty, DateTimeProperty
+import couchdb
 import json
 
 # configuration
@@ -62,12 +62,12 @@ dar_sports = 0
 
 # connecting to couchdb
 def connect_db():
-    server = couchdbkit.Server()
-    return server.get_or_create_db(app.config['DATABASE'])
+    server = couchdb.Server("http://fred:admin@127.0.0.1:5984")
+    return server
 
 
 def connect_db_tweets():
-    server = couchdbkit.Server()
+    server = couchdb.Server()
     return server.get_or_create_db(app.config['DATABASE_TWEETS'])
 
 
@@ -133,30 +133,32 @@ def tweets():
 
 def tweets_sports():
     try:
-        db_tweets = connect_db_tweets()
-        for item in db_tweets.view('group49/melb_sports', include_docs=True):
-            melb_sports = item["rows"]["value"]
+        server = connect_db()
+        db_tweets = server["tweets"]
 
-        for item in db_tweets.view('group49/syd_sports', include_docs=True):
-            syd_sports = item["rows"]["value"]
+        for item in db_tweets.view('group49/melb_sports'):
+            melb_sports = item["value"]
 
-        for item in db_tweets.view('group49/bri_sports', include_docs=True):
-            bri_sports = item["rows"]["value"]
+        for item in db_tweets.view('group49/syd_sports'):
+            syd_sports = item["value"]
 
-        for item in db_tweets.view('group49/can_sports', include_docs=True):
-            can_sports = item["rows"]["value"]
+        for item in db_tweets.view('group49/bri_sports'):
+            bri_sports = item["value"]
 
-        for item in db_tweets.view('group49/ade_sports', include_docs=True):
-            ade_sports = item["rows"]["value"]
+        for item in db_tweets.view('group49/can_sports'):
+            can_sports = item["value"]
 
-        for item in db_tweets.view('group49/hob_sports', include_docs=True):
-            hob_sports = item["rows"]["value"]
+        for item in db_tweets.view('group49/ade_sports'):
+            ade_sports = item["value"]
 
-        for item in db_tweets.view('group49/per_sports', include_docs=True):
-            count_pos_per = item["rows"]["value"]
+        for item in db_tweets.view('group49/hob_sports'):
+            hob_sports = item["value"]
 
-        for item in db_tweets.view('group49/dar_sports', include_docs=True):
-            dar_sports = item["rows"]["value"]
+        for item in db_tweets.view('group49/per_sports'):
+            count_pos_per = item["value"]
+
+        for item in db_tweets.view('group49/dar_sports'):
+            dar_sports = item["value"]
 
     except Exception as e:
         print(e)
@@ -213,7 +215,7 @@ def analysis_two():
             "Perth": per_sports,
             "Canberra": can_sports
         })
-        tweets()
+        #tweets()
         response_score.update({
             "Melbourne": melb_score,
             "Sydney": syd_score,
@@ -224,11 +226,12 @@ def analysis_two():
             "Perth": per_score,
             "Canberra": can_score
         })
-        db = connect_db()
-        rows = db.view('_all_docs', include_docs=True)
-        data = [row['doc'] for row in rows]
-        for d in data:
-            response_gamble.update({d['city']: d['gambling_activities']})
+        #db = connect_db()
+        #db1 = db["aurin"]
+        #rows = db1.view('_all_docs', include_docs=True)
+        #data = [row['doc'] for row in rows]
+        #for d in data:
+            #response_gamble.update({d['city']: d['gambling_activities']})
     except Exception as e:
         print(e)
     return render_template('analysis_two.html', response_gamble=response_gamble, response_sports=response_sports,
