@@ -43,7 +43,7 @@ class Parser():
         return result
 
     def parse_aurin(self, id, city, tot_p, tot_m, tot_f, asians, europeans, australians, newzealanders, africans,
-                    northamericans, bornelsewhere, median_age, median_income):
+                    northamericans, bornelsewhere, median_age, median_income,gambling_activities):
         result = {
             "_id": id,
             "city": city,
@@ -58,6 +58,7 @@ class Parser():
             "northamericans": northamericans,
             "bornelsewhere": bornelsewhere,
             "median_age": median_age,
-            "median_income": median_income
+            "median_income": median_income,
+            "gambling_activities":gambling_activities
         }
         return result
