@@ -37,6 +37,8 @@
     google.charts.load("current", {packages:["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
+        var response = JSON.parse('{{ response | tojson | safe}}');
+
       var data = google.visualization.arrayToDataTable([
         ['City', 'Positive tweets', 'Negative tweets', { role: 'annotation' } ],
         ['Melbourne', 10, 24, ''],

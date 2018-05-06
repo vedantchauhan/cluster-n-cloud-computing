@@ -1,0 +1,25 @@
+---
+- hosts: myhost
+  tasks:
+   - name: install git 
+     apt: name=git state=present
+   
+   - name: install python 3
+     apt: name=python3 state=present
+    
+   - name: install pip
+     apt: name=python-pip state=present
+   
+   - name: Install pip
+     easy_install: name=pip
+     become: yes
+     become_user: root
+     remote_user: administrator
+
+ 
+       
+
+
+
+
+   
