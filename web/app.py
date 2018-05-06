@@ -27,7 +27,7 @@ def connect_db():
     return server
 
 
-def tweets():
+'''def tweets():
     try:
         # variables
         count_pos_melb = 0
@@ -110,7 +110,7 @@ def tweets():
         })
         #return response_tweet_score
     except Exception as e:
-        print(e)
+        print(e)'''
 
 @app.route('/', methods=['GET', 'POST'])
 def show_entries():
@@ -210,11 +210,9 @@ def analysis_one():
             "Perth": per_score,
             "Canberra": can_score
         })
-        return render_template('analysis_one.html')
+        return render_template('analysis_one.html', response_tweet_score=response_tweet_score)
     except Exception as e:
         print(e)
-
-
 
 @app.route('/analysis_two')
 def analysis_two():
@@ -285,4 +283,4 @@ def analysis_three():
 
 
 if __name__ == '__main__':
-    app.run(host='115.146.95.94', port=5015)
+    app.run(host='115.146.95.94', port=5016)

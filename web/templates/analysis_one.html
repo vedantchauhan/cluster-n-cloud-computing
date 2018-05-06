@@ -16,47 +16,27 @@
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
+          var response_tweet_score = JSON.parse('{{ response_tweet_score | tojson | safe}}');
+
         var data = google.visualization.arrayToDataTable([
-          ['Total tweets', 'Total Positive tweets', 'Total negative tweets'],
-		  [900, 500, 400]
+          ['Time', 'Melbourne', 'Sydney', 'Perth', 'Adelaide', 'Darwin', 'Hobart', 'Canberra', 'Brisbane'],
+			['Morning',  ],
+			['Afternoon', ],
+			['Evening', ],
+			['Midnight', ]
         ]);
 
-         var options = {
-          title: 'Tweet Count',
-          legend: { position: 'top', maxLines: 2 },
-		  colors: ['#5C3292', '#1A8763', '#871B47', '#999999'],
-		  interpolateNulls: false,
+        var options = {
+          title: 'City with most gambling in afl and cricket',
+          curveType: 'function',
+          legend: { position: 'bottom' }
         };
 
-        var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
         chart.draw(data, options);
       }
     </script>
-
-	<script type="text/javascript">
-    google.charts.load("current", {packages:["corechart"]});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var response = JSON.parse('{{ response | tojson | safe}}');
-
-      var data = google.visualization.arrayToDataTable([
-        ['City', 'Positive tweets', 'Negative tweets', { role: 'annotation' } ],
-        ['Melbourne', 10, 24, ''],
-        ['Sydeny', 16, 22, ''],
-        ['Perth', 28, 19, '']
-      ]);
-
-      var options = {
-        width: 600,
-        height: 400,
-        legend: { position: 'top', maxLines: 3 },
-        bar: { groupWidth: '40%' },
-        isStacked: true
-      };
-      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
-      chart.draw(data, options);
-  }
-  </script>
 </head>
 <body>
 <div id="header-wrapper">
@@ -80,9 +60,7 @@
 
 		<div class="title">
 			<h3>Chart Representing the total tweets harvested</h3>
-			<center><div id="chart_div" style="width: 900px; height: 400px"></div></center>
-			<h3>Chart Representing the emotion based on tweets</h3>
-			<center><div id="barchart_values" style="width: 900px; height: 400px;"></div></center>
+			<center><div id="curve_chart" style="width: 900px; height: 500px"></div></center>
 		</div>
 	</div>
 </div>
