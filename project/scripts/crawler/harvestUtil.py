@@ -169,7 +169,7 @@ class MyStreamListener(tweepy.StreamListener):
         
         #search tweets from one typical users timeline
         try:
-            searchById("jiyu",status.user.id)
+            searchById("siddharth",status.user.id)
         except Exception as e:
             print(e)
             return
