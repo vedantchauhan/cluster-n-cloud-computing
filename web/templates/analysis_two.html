@@ -35,8 +35,12 @@
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
+          var response_gamble = JSON.parse('{{ response_gamble | tojson | safe}}');
+          var response_sports = JSON.parse('{{ response_sports | tojson | safe}}');
+          var response_score = JSON.parse('{{ response_score | tojson | safe}}');
+
         var data = google.visualization.arrayToDataTable([
-          ['City', 'Income', 'Score'],
+          ['City', 'Gambling', 'Sports'],
          ['Melbourne',  1136,  0.6],
 			['Sydney',  1326, 1.26],
 			['Perth',  2136, 0.33],
