@@ -1,13 +1,7 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
-
-import datetime
-#from couchdbkit import Document, StringProperty, DateTimeProperty
 import couchdb
 import json
-
-# configuration
-from flask.json import jsonify
 
 DATABASE = 'aurin'
 DATABASE_TWEETS = 'tweets'
@@ -66,66 +60,58 @@ def connect_db():
     return server
 
 
-def connect_db_tweets():
-    server = couchdb.Server()
-    return server.get_or_create_db(app.config['DATABASE_TWEETS'])
-
-
 def tweets():
     try:
-        db_tweets = connect_db_tweets()
-        for item in db_tweets.view('group49/melb_pos', include_docs=True):
-            count_pos_melb = item["rows"]["value"]
-        for item in db_tweets.view('group49/melb_neg', include_docs=True):
-            count_neg_melb = item["rows"]["value"]
+        server = connect_db()
+        db_tweets = server[DATABASE_TWEETS]
+
+        for item in db_tweets.view('group49/melb_pos'):
+            count_pos_melb = item["value"]
+        for item in db_tweets.view('group49/melb_neg'):
+            count_neg_melb = item["value"]
         melb_score = count_pos_melb / count_neg_melb
 
-        for item in db_tweets.view('group49/syd_pos', include_docs=True):
-            count_pos_syd = item["rows"]["value"]
-        for item in db_tweets.view('group49/syd_neg', include_docs=True):
-            count_neg_syd = item["rows"]["value"]
+        for item in db_tweets.view('group49/syd_pos'):
+            count_pos_syd = item["value"]
+        for item in db_tweets.view('group49/syd_neg'):
+            count_neg_syd = item["value"]
         syd_score = count_pos_syd / count_neg_syd
 
-        for item in db_tweets.view('group49/bri_pos', include_docs=True):
-            count_pos_bri = item["rows"]["value"]
-        for item in db_tweets.view('group49/bri_neg', include_docs=True):
-            count_neg_bri = item["rows"]["value"]
+        for item in db_tweets.view('group49/bri_pos'):
+            count_pos_bri = item["value"]
+        for item in db_tweets.view('group49/bri_neg'):
+            count_neg_bri = item["value"]
         bri_score = count_pos_bri / count_neg_bri
 
-        for item in db_tweets.view('group49/can_pos', include_docs=True):
-            count_pos_can = item["rows"]["value"]
-        for item in db_tweets.view('group49/can_neg', include_docs=True):
-            count_neg_can = item["rows"]["value"]
+        for item in db_tweets.view('group49/can_pos'):
+            count_pos_can = item["value"]
+        for item in db_tweets.view('group49/can_neg'):
+            count_neg_can = item["value"]
         can_score = count_pos_can / count_neg_can
 
-        for item in db_tweets.view('group49/ade_pos', include_docs=True):
-            count_pos_ade = item["rows"]["value"]
-        for item in db_tweets.view('group49/ade_neg', include_docs=True):
-            count_neg_ade = item["rows"]["value"]
+        for item in db_tweets.view('group49/ade_pos'):
+            count_pos_ade = item["value"]
+        for item in db_tweets.view('group49/ade_neg'):
+            count_neg_ade = item["value"]
         ade_score = count_pos_ade / count_neg_ade
 
-        for item in db_tweets.view('group49/hob_pos', include_docs=True):
-            count_pos_hob = item["rows"]["value"]
-        for item in db_tweets.view('group49/hob_neg', include_docs=True):
-            count_neg_hob = item["rows"]["value"]
+        for item in db_tweets.view('group49/hob_pos'):
+            count_pos_hob = item["value"]
+        for item in db_tweets.view('group49/hob_neg'):
+            count_neg_hob = item["value"]
         hob_score = count_pos_hob / count_neg_hob
 
-        for item in db_tweets.view('group49/per_pos', include_docs=True):
-            count_pos_per = item["rows"]["value"]
-        for item in db_tweets.view('group49/per_neg', include_docs=True):
-            count_neg_per = item["rows"]["value"]
+        for item in db_tweets.view('group49/per_pos'):
+            count_pos_per = item["value"]
+        for item in db_tweets.view('group49/per_neg'):
+            count_neg_per = item["value"]
         per_score = count_pos_per / count_neg_per
 
-        for item in db_tweets.view('group49/dar_pos', include_docs=True):
-            count_pos_dar = item["rows"]["value"]
-        for item in db_tweets.view('group49/dar_neg', include_docs=True):
-            count_neg_dar = item["rows"]["value"]
+        for item in db_tweets.view('group49/dar_pos'):
+            count_pos_dar = item["value"]
+        for item in db_tweets.view('group49/dar_neg'):
+            count_neg_dar = item["value"]
         dar_score = count_pos_dar / count_neg_dar
-
-        for item in db_tweets.view('group49/pos', include_docs=True):
-            total_pos = item["rows"]["value"]
-        for item in db_tweets.view('group49/neg', include_docs=True):
-            total_neg = item["rows"]["value"]
 
     except Exception as e:
         print(e)
@@ -134,7 +120,7 @@ def tweets():
 def tweets_sports():
     try:
         server = connect_db()
-        db_tweets = server["tweets"]
+        db_tweets = server[DATABASE_TWEETS]
 
         for item in db_tweets.view('group49/melb_sports'):
             melb_sports = item["value"]
@@ -162,19 +148,6 @@ def tweets_sports():
 
     except Exception as e:
         print(e)
-
-
-def aurinData():
-    response = {}
-    try:
-        db = connect_db()
-        rows = db.view('_all_docs', include_docs=True)
-        data = [row['doc'] for row in rows]
-        for d in data:
-            response.update({d['city']: d['median_income']})
-    except Exception as e:
-        print(e)
-
 
 @app.route('/', methods=['GET', 'POST'])
 def show_entries():
@@ -215,7 +188,7 @@ def analysis_two():
             "Perth": per_sports,
             "Canberra": can_sports
         })
-        #tweets()
+        tweets()
         response_score.update({
             "Melbourne": melb_score,
             "Sydney": syd_score,
@@ -226,12 +199,12 @@ def analysis_two():
             "Perth": per_score,
             "Canberra": can_score
         })
-        #db = connect_db()
-        #db1 = db["aurin"]
-        #rows = db1.view('_all_docs', include_docs=True)
-        #data = [row['doc'] for row in rows]
-        #for d in data:
-            #response_gamble.update({d['city']: d['gambling_activities']})
+        server = connect_db()
+        db = server[DATABASE]
+        rows = db.view('_all_docs', include_docs=True)
+        data = [row['doc'] for row in rows]
+        for d in data:
+            response_gamble.update({d['city']: d['gambling_activities']})
     except Exception as e:
         print(e)
     return render_template('analysis_two.html', response_gamble=response_gamble, response_sports=response_sports,
