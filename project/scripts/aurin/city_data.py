@@ -28,6 +28,7 @@ class AurinData():
         born_elsewhere_melb = 0
         median_age_melb = 0
         median_household_income_melb = 0
+        gambling_activities_melb=0
 
         # sydney values
         total_females_syd = 0
@@ -42,6 +43,7 @@ class AurinData():
         born_elsewhere_syd = 0
         median_age_syd = 0
         median_household_income_syd = 0
+        gambling_activities_syd = 0
 
         # brisbane values
         total_females_bris = 0
@@ -56,6 +58,7 @@ class AurinData():
         born_elsewhere_bris = 0
         median_age_bris = 0
         median_household_income_bris = 0
+        gambling_activities_bris = 0
 
         # hobart values
         total_females_hob = 0
@@ -70,6 +73,7 @@ class AurinData():
         born_elsewhere_hob = 0
         median_age_hob = 0
         median_household_income_hob = 0
+        gambling_activities_hob = 0
 
         # perth values
         total_females_per = 0
@@ -84,6 +88,7 @@ class AurinData():
         born_elsewhere_per = 0
         median_age_per = 0
         median_household_income_per = 0
+        gambling_activities_per = 0
 
         # canberra values
         total_females_can = 0
@@ -98,6 +103,7 @@ class AurinData():
         born_elsewhere_can = 0
         median_age_can = 0
         median_household_income_can = 0
+        gambling_activities_can = 0
 
         # darwin values
         total_females_dar = 0
@@ -112,6 +118,7 @@ class AurinData():
         born_elsewhere_dar = 0
         median_age_dar = 0
         median_household_income_dar = 0
+        gambling_activities_dar = 0
 
         # adelaide values
         total_females_ade = 0
@@ -126,9 +133,41 @@ class AurinData():
         born_elsewhere_ade = 0
         median_age_ade = 0
         median_household_income_ade = 0
+        gambling_activities_ade = 0
 
         try:
-            filejson = open("/Users/alfredgordon/Documents/cluster/project/scripts/aurin/citydata_incomeage.json","r")
+
+            filejson_gambling = open("../scripts/aurin/citydata_gambling.json", "r")
+            data_gambling = json.load(filejson_gambling)
+
+            city_list_gambling = data_gambling["features"]
+            for city in city_list_gambling:
+                for key, value in city["properties"].items():
+                    if (key == "sa4_name16" and str(value).__contains__("Melbourne")):
+                        gambling_activities_melb = city["properties"]["artsr_gambling_ac_p"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Sydney")):
+                        gambling_activities_syd = city["properties"]["artsr_gambling_ac_p"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Hobart")):
+                        gambling_activities_hob = city["properties"]["artsr_gambling_ac_p"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Perth")):
+                        gambling_activities_per = city["properties"]["artsr_gambling_ac_p"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Brisbane")):
+                        gambling_activities_bris = city["properties"]["artsr_gambling_ac_p"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Darwin")):
+                        gambling_activities_dar = city["properties"]["artsr_gambling_ac_p"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Adelaide")):
+                        gambling_activities_ade = city["properties"]["artsr_gambling_ac_p"]
+
+                    elif (key == "sa4_name16" and str(value).__contains__("Australian Capital Territory")):
+                        gambling_activities_can = city["properties"]["artsr_gambling_ac_p"]
+
+            filejson = open("../scripts/aurin/citydata_incomeage.json","r")
             data_incomeage = json.load(filejson)
 
             city_list_age = data_incomeage["features"]
@@ -166,7 +205,7 @@ class AurinData():
                         median_age_can = city["properties"]["med_age_psns_tot"]
                         median_household_income_can = city["properties"]["med_hhd_inc_wk_tot"]
 
-            file = open("/Users/alfredgordon/Documents/cluster/project/scripts/aurin/citydata_birthcountries.json","r")
+            file = open("../scripts/aurin/citydata_birthcountries.json","r")
             data = json.load(file)
 
             city_list = data["features"]
@@ -479,38 +518,38 @@ class AurinData():
                 record = parser.parse_aurin("aurin1", "Melbourne", total_persons_melb, total_males_melb,
                                             total_females_melb, asia_melb, europe_melb, australia_melb,
                                             new_zealand_melb, africa_melb, north_america_melb, born_elsewhere_melb,
-                                            median_age_melb, median_household_income_melb)
+                                            median_age_melb, median_household_income_melb,gambling_activities_melb)
                 record1 = parser.parse_aurin("aurin2", "Sydney", total_persons_syd, total_males_syd, total_females_syd,
                                              asia_syd, europe_syd, australia_syd, new_zealand_syd, africa_syd,
                                              north_america_syd, born_elsewhere_syd, median_age_syd,
-                                             median_household_income_syd)
+                                             median_household_income_syd,gambling_activities_syd)
                 record2 = parser.parse_aurin("aurin3", "Brisbane", total_persons_bris, total_males_bris,
                                              total_females_bris,
                                              asia_bris, europe_bris, australia_bris, new_zealand_bris, africa_bris,
                                              north_america_bris, born_elsewhere_bris, median_age_bris,
-                                             median_household_income_bris)
+                                             median_household_income_bris,gambling_activities_bris)
                 record3 = parser.parse_aurin("aurin4", "Darwin", total_persons_dar, total_males_dar, total_females_dar,
                                              asia_dar, europe_dar, australia_dar, new_zealand_dar, africa_dar,
                                              north_america_dar, born_elsewhere_dar, median_age_dar,
-                                             median_household_income_dar)
+                                             median_household_income_dar,gambling_activities_dar)
                 record4 = parser.parse_aurin("aurin5", "Adelaide", total_persons_ade, total_males_ade,
                                              total_females_ade,
                                              asia_ade, europe_ade, australia_ade, new_zealand_ade, africa_ade,
                                              north_america_ade, born_elsewhere_ade, median_age_ade,
-                                             median_household_income_ade)
+                                             median_household_income_ade,gambling_activities_ade)
                 record5 = parser.parse_aurin("aurin6", "Hobart", total_persons_hob, total_males_hob, total_females_hob,
                                              asia_hob, europe_hob, australia_hob, new_zealand_hob, africa_hob,
                                              north_america_hob, born_elsewhere_hob, median_age_hob,
-                                             median_household_income_hob)
+                                             median_household_income_hob,gambling_activities_hob)
                 record6 = parser.parse_aurin("aurin7", "Canberra", total_persons_can, total_males_can,
                                              total_females_can,
                                              asia_can, europe_can, australia_can, new_zealand_can, africa_can,
                                              north_america_can, born_elsewhere_can, median_age_can,
-                                             median_household_income_can)
+                                             median_household_income_can,gambling_activities_can)
                 record7 = parser.parse_aurin("aurin8", "Perth", total_persons_per, total_males_per, total_females_per,
                                              asia_per, europe_per, australia_per, new_zealand_per, africa_per,
                                              north_america_per, born_elsewhere_per, median_age_per,
-                                             median_household_income_per)
+                                             median_household_income_per,gambling_activities_per)
 
                 # save into couchdb
                 db.save(aurin_db_name, record)
