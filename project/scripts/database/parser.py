@@ -87,12 +87,12 @@ class Parser():
             "bornelsewhere": bornelsewhere,
             "median_age": median_age,
             "median_income": median_income,
-            "gambling_activities":gambling_activities,
-            "married_females":married_females,
-            "unmarried_females":unmarried_females,
-            "married_males":married_males,
-            "unmarried_males":unmarried_males,
-            "married_persons":married_persons,
-            "unmarried_persons":unmarried_persons
+            "gambling_activities": gambling_activities,
+            "married_females": married_females,
+            "unmarried_females": unmarried_females,
+            "married_males": married_males,
+            "unmarried_males": unmarried_males,
+            "married_persons": married_persons,
+            "unmarried_persons": unmarried_persons
         }
         return result
