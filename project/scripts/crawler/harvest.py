@@ -42,7 +42,7 @@ class HarvestSys():
         
         # start with streamMode filter by city
         try:
-            stream.filter(locations=AUS_STR)  #location
+            stream.filter(locations=AUS_STR,languages=["en"])  #location
             
         except ConnectionRefusedError:
             print("ERROR: couchDB is not running")
