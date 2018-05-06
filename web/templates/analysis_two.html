@@ -18,8 +18,8 @@
 
         function drawRegionsMap() {
             var data = google.visualization.arrayToDataTable([
-                ['City', 'Age'],
-                ['Melb', 34]
+                ['City', 'Score(P/N)', 'Income'],
+                ['Melb', 34, 1000]
             ]);
             var options = {
                 region: 'AU',
@@ -29,6 +29,36 @@
             chart.draw(data, options);
         }
     </script>
+
+	 <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['City', 'Income', 'Score'],
+         ['Melbourne',  1136,  0.6],
+			['Sydney',  1326, 1.26],
+			['Perth',  2136, 0.33],
+			['Adelaide',  2436, 0.32],
+			['Darwin',  1306,  2.45],
+			['Hobart',  1369, 0.56],
+			['Canberra',  1350, 0.5],
+			['Brisbane',  3336, 2.6],
+        ]);
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
 </head>
 <body>
 <div id="header-wrapper">
@@ -51,8 +81,10 @@
 	<div id="three-column" class="container">
 
 		<div class="title">
-		<h3>Map Representing the data</h3><br>
+			<h3>Map Representing the data</h3><br>
 			<center><div id="geochart" style="width: 1200px; height: 400px ;"></div></center>
+			<h4>Chart Representing the data</h4>
+			<center><div id="curve_chart" style="width: 900px; height: 500px"></div></center>
 		</div>
 	</div>
 </div>
