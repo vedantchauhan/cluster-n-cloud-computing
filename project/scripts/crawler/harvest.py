@@ -28,7 +28,7 @@ class HarvestSys():
     def harvest(self):
         print("harvester started...")
         #default
-        user = 'jiyu'
+        user = 'siddharth'
         
         # set up
         auth = tweepy.OAuthHandler(app_auth[user].ckey, app_auth[user].csec)
