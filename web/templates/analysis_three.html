@@ -18,20 +18,19 @@
 
         function drawRegionsMap() {
 
-            var response_neg_score = JSON.parse('{{ response_neg_score | tojson | safe}}');
             var response_married = JSON.parse('{{ response_married | tojson | safe}}');
             var response_tot_persons_score = JSON.parse('{{ response_tot_persons_score | tojson | safe}}');
 
             var data = google.visualization.arrayToDataTable([
                 ['City', '%age of people married'],
-         	['Melbourne',  ((response_married.Melbourne/response_tot_persons_score.Melbourne) * 100 )],
-			['Sydney',  ((response_married.Sydney/response_tot_persons_score.Sydney)* 100 )],
-			['Perth',   ((response_married.Perth/response_tot_persons_score.Perth)* 100 )],
-			['Adelaide', ((response_married.Adelaide/response_tot_persons_score.Adelaide)* 100 )],
-			['Darwin',    ((response_married.Darwin/response_tot_persons_score.Darwin)* 100 )],
-			['Hobart',  ((response_married.Hobart/response_tot_persons_score.Hobart)* 100 )],
-			['Canberra',  ((response_married.Canberra/response_tot_persons_score.Canberra)* 100 )],
-			['Brisbane',  ((response_married.Brisbane/response_tot_persons_score.Brisbane)* 100 )]
+         	    ['Melbourne',  ((response_married.Melbourne/response_tot_persons_score.Melbourne) * 100 )],
+			    ['Sydney',  ((response_married.Sydney/response_tot_persons_score.Sydney)* 100 )],
+			    ['Perth',   ((response_married.Perth/response_tot_persons_score.Perth)* 100 )],
+			    ['Adelaide', ((response_married.Adelaide/response_tot_persons_score.Adelaide)* 100 )],
+			    ['Darwin',    ((response_married.Darwin/response_tot_persons_score.Darwin)* 100 )],
+			    ['Hobart',  ((response_married.Hobart/response_tot_persons_score.Hobart)* 100 )],
+			    ['Canberra',  ((response_married.Canberra/response_tot_persons_score.Canberra)* 100 )],
+			    ['Brisbane',  ((response_married.Brisbane/response_tot_persons_score.Brisbane)* 100 )]
             ]);
             var options = {
                 region: 'AU',
@@ -52,15 +51,15 @@
           var response_tot_persons_score = JSON.parse('{{ response_tot_persons_score | tojson | safe}}');
 
         var data = google.visualization.arrayToDataTable([
-          ['City', 'Married people in city', 'Sentiment Score'],
-                ['Melbourne',  ((response_married.Melbourne/response_tot_persons_score.Melbourne) * 100 ),  (response_neg_score.Melbourne / 100)],
-			['Sydney', ((response_married.Sydney/response_tot_persons_score.Sydney)* 100 ) , response_neg_score.Sydney],
-			['Perth', ((response_married.Perth/response_tot_persons_score.Perth)* 100 ) , response_neg_score.Perth],
-			['Adelaide', ((response_married.Adelaide/response_tot_persons_score.Adelaide)* 100 ) , response_neg_score.Adelaide],
-			['Darwin', ((response_married.Darwin/response_tot_persons_score.Darwin)* 100 ) ,  response_neg_score.Darwin],
-			['Hobart',  ((response_married.Hobart/response_tot_persons_score.Hobart)* 100 ) , response_neg_score.Hobart],
-			['Canberra', ((response_married.Canberra/response_tot_persons_score.Canberra)* 100 ) , response_neg_score.Canberra],
-			['Brisbane', ((response_married.Brisbane/response_tot_persons_score.Brisbane)* 100 ) , response_neg_score.Brisbane]
+          ['City','Sentiment Score', 'Married people in city'],
+            ['Melbourne', response_neg_score.Melbourne, ((response_married.Melbourne/response_tot_persons_score.Melbourne) * 100 )],
+			['Sydney', response_neg_score.Sydney, ((response_married.Sydney/response_tot_persons_score.Sydney)* 100 )],
+			['Perth', response_neg_score.Perth, ((response_married.Perth/response_tot_persons_score.Perth)* 100 )],
+			['Adelaide', response_neg_score.Adelaide, ((response_married.Adelaide/response_tot_persons_score.Adelaide)* 100 )],
+			['Darwin', response_neg_score.Darwin, ((response_married.Darwin/response_tot_persons_score.Darwin)* 100 )],
+			['Hobart',  response_neg_score.Hobart, ((response_married.Hobart/response_tot_persons_score.Hobart)* 100 )],
+			['Canberra', response_neg_score.Canberra, ((response_married.Canberra/response_tot_persons_score.Canberra)* 100 )],
+			['Brisbane', response_neg_score.Brisbane, ((response_married.Brisbane/response_tot_persons_score.Brisbane)* 100 )]
         ]);
 
         var options = {

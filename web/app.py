@@ -270,43 +270,75 @@ def analysis_three():
         count_neg_bri = 0
         count_neg_hob = 0
         count_neg_can = 0
+        count_pos_melb = 0
+        count_pos_syd = 0
+        count_pos_dar = 0
+        count_pos_per = 0
+        count_pos_ade = 0
+        count_pos_bri = 0
+        count_pos_hob = 0
+        count_pos_can = 0
 
         server = connect_db()
         db_tweets = server["tweets"]
 
+        for item in db_tweets.view('group49/melb_pos'):
+            count_pos_melb = item["value"]
         for item in db_tweets.view('group49/melb_neg'):
             count_neg_melb = item["value"]
+        melb_score = count_pos_melb / count_neg_melb
 
+        for item in db_tweets.view('group49/syd_pos'):
+            count_pos_syd = item["value"]
         for item in db_tweets.view('group49/syd_neg'):
             count_neg_syd = item["value"]
+        syd_score = count_pos_syd / count_neg_syd
 
+        for item in db_tweets.view('group49/bri_pos'):
+            count_pos_bri = item["value"]
         for item in db_tweets.view('group49/bri_neg'):
             count_neg_bri = item["value"]
+        bri_score = count_pos_bri / count_neg_bri
 
+        for item in db_tweets.view('group49/can_pos'):
+            count_pos_can = item["value"]
         for item in db_tweets.view('group49/can_neg'):
             count_neg_can = item["value"]
+        can_score = count_pos_can / count_neg_can
 
+        for item in db_tweets.view('group49/ade_pos'):
+            count_pos_ade = item["value"]
         for item in db_tweets.view('group49/ade_neg'):
             count_neg_ade = item["value"]
+        ade_score = count_pos_ade / count_neg_ade
 
+        for item in db_tweets.view('group49/hob_pos'):
+            count_pos_hob = item["value"]
         for item in db_tweets.view('group49/hob_neg'):
             count_neg_hob = item["value"]
+        hob_score = count_pos_hob / count_neg_hob
 
+        for item in db_tweets.view('group49/per_pos'):
+            count_pos_per = item["value"]
         for item in db_tweets.view('group49/per_neg'):
             count_neg_per = item["value"]
+        per_score = count_pos_per / count_neg_per
 
+        for item in db_tweets.view('group49/dar_pos'):
+            count_pos_dar = item["value"]
         for item in db_tweets.view('group49/dar_neg'):
             count_neg_dar = item["value"]
+        dar_score = count_pos_dar / count_neg_dar
 
         response_neg_score.update({
-            "Melbourne": count_neg_melb,
-            "Sydney": count_neg_syd,
-            "Darwin": count_neg_dar,
-            "Hobart": count_neg_hob,
-            "Adelaide": count_neg_ade,
-            "Brisbane": count_neg_bri,
-            "Perth": count_neg_per,
-            "Canberra": count_neg_can
+            "Melbourne": melb_score,
+            "Sydney": syd_score,
+            "Darwin": dar_score,
+            "Hobart": hob_score,
+            "Adelaide": ade_score,
+            "Brisbane": bri_score,
+            "Perth": per_score,
+            "Canberra": can_score
         })
         # aurin data for married people
         db = server["aurin"]
@@ -322,4 +354,4 @@ def analysis_three():
 
 
 if __name__ == '__main__':
-    app.run(host='115.146.95.94', port=5003)
+    app.run(host='115.146.95.94', port=5004)
