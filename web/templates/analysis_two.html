@@ -18,12 +18,11 @@
 
         function drawRegionsMap() {
             var response_gamble = JSON.parse('{{ response_gamble | tojson | safe}}');
-          	var response_sports = JSON.parse('{{ response_sports | tojson | safe}}');
           	var response_tot_persons = JSON.parse('{{ response_tot_persons | tojson | safe}}');
 
             var data = google.visualization.arrayToDataTable([
                 ['City', '%age of people gamble'],
-         ['Melbourne',  ((response_gamble.Melbourne/response_tot_persons.Melbourne) * 100 )],
+         	['Melbourne',  ((response_gamble.Melbourne/response_tot_persons.Melbourne) * 100 )],
 			['Sydney',  ((response_gamble.Sydney/response_tot_persons.Sydney)* 100 )],
 			['Perth',   ((response_gamble.Perth/response_tot_persons.Perth)* 100 )],
 			['Adelaide', ((response_gamble.Adelaide/response_tot_persons.Adelaide)* 100 )],

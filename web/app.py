@@ -132,83 +132,147 @@ def index():
 @app.route('/analysis_one')
 def analysis_one():
     try:
-        count_pos_melb = 0
-        count_neg_melb = 0
-        count_pos_syd = 0
-        count_neg_syd = 0
-        count_pos_dar = 0
-        count_neg_dar = 0
-        count_pos_per = 0
-        count_neg_per = 0
-        count_pos_ade = 0
-        count_neg_ade = 0
-        count_pos_bri = 0
-        count_neg_bri = 0
-        count_pos_hob = 0
-        count_neg_hob = 0
-        count_pos_can = 0
-        count_neg_can = 0
+        melb_neg_mor = 0
+        melb_neg_mid = 0
+        melb_neg_aft = 0
+        melb_neg_eve = 0
+        dar_neg_mor = 0
+        dar_neg_mid = 0
+        dar_neg_aft = 0
+        dar_neg_eve = 0
+        syd_neg_mor = 0
+        syd_neg_mid = 0
+        syd_neg_aft = 0
+        syd_neg_eve = 0
+        bri_neg_mor = 0
+        bri_neg_mid = 0
+        bri_neg_aft = 0
+        bri_neg_eve = 0
+        can_neg_mor = 0
+        can_neg_mid = 0
+        can_neg_aft = 0
+        can_neg_eve = 0
+        per_neg_mor = 0
+        per_neg_mid = 0
+        per_neg_aft = 0
+        per_neg_eve = 0
+        hob_neg_mor = 0
+        hob_neg_mid = 0
+        hob_neg_aft = 0
+        hob_neg_eve = 0
+        ade_neg_mor = 0
+        ade_neg_mid = 0
+        ade_neg_aft = 0
+        ade_neg_eve = 0
 
         server = connect_db()
         db_tweets = server["tweets"]
 
-        for item in db_tweets.view('group49/melb_pos'):
-            count_pos_melb = item["value"]
-        for item in db_tweets.view('group49/melb_neg'):
-            count_neg_melb = item["value"]
-        melb_score = count_pos_melb / count_neg_melb
+        for item in db_tweets.view('group49/melb_neg_morn'):
+            melb_neg_mor = item["value"]
+        for item in db_tweets.view('group49/melb_neg_afternoon'):
+            melb_neg_aft = item["value"]
+        for item in db_tweets.view('group49/melb_neg_even'):
+            melb_neg_eve = item["value"]
+        for item in db_tweets.view('group49/melb_neg_midnight'):
+            melb_neg_mid = item["value"]
 
-        for item in db_tweets.view('group49/syd_pos'):
-            count_pos_syd = item["value"]
-        for item in db_tweets.view('group49/syd_neg'):
-            count_neg_syd = item["value"]
-        syd_score = count_pos_syd / count_neg_syd
+        for item in db_tweets.view('group49/syd_neg_morn'):
+            syd_neg_mor = item["value"]
+        for item in db_tweets.view('group49/syd_neg_afternoon'):
+            syd_neg_aft = item["value"]
+        for item in db_tweets.view('group49/syd_neg_even'):
+            syd_neg_eve = item["value"]
+        for item in db_tweets.view('group49/syd_neg_midnight'):
+            syd_neg_mid = item["value"]
 
-        for item in db_tweets.view('group49/bri_pos'):
-            count_pos_bri = item["value"]
-        for item in db_tweets.view('group49/bri_neg'):
-            count_neg_bri = item["value"]
-        bri_score = count_pos_bri / count_neg_bri
+        for item in db_tweets.view('group49/dar_neg_morn'):
+            dar_neg_mor = item["value"]
+        for item in db_tweets.view('group49/dar_neg_afternoon'):
+            dar_neg_aft = item["value"]
+        for item in db_tweets.view('group49/dar_neg_even'):
+            dar_neg_eve = item["value"]
+        for item in db_tweets.view('group49/dar_neg_midnight'):
+            dar_neg_mid = item["value"]
 
-        for item in db_tweets.view('group49/can_pos'):
-            count_pos_can = item["value"]
-        for item in db_tweets.view('group49/can_neg'):
-            count_neg_can = item["value"]
-        can_score = count_pos_can / count_neg_can
+        for item in db_tweets.view('group49/hob_neg_morn'):
+            hob_neg_mor = item["value"]
+        for item in db_tweets.view('group49/hob_neg_afternoon'):
+            hob_neg_aft = item["value"]
+        for item in db_tweets.view('group49/hob_neg_even'):
+            hob_neg_eve = item["value"]
+        for item in db_tweets.view('group49/hob_neg_midnight'):
+            hob_neg_mid = item["value"]
 
-        for item in db_tweets.view('group49/ade_pos'):
-            count_pos_ade = item["value"]
-        for item in db_tweets.view('group49/ade_neg'):
-            count_neg_ade = item["value"]
-        ade_score = count_pos_ade / count_neg_ade
+        for item in db_tweets.view('group49/per_neg_morn'):
+            per_neg_mor = item["value"]
+        for item in db_tweets.view('group49/per_neg_afternoon'):
+            per_neg_aft = item["value"]
+        for item in db_tweets.view('group49/per_neg_even'):
+            per_neg_eve = item["value"]
+        for item in db_tweets.view('group49/per_neg_midnight'):
+            per_neg_mid = item["value"]
 
-        for item in db_tweets.view('group49/hob_pos'):
-            count_pos_hob = item["value"]
-        for item in db_tweets.view('group49/hob_neg'):
-            count_neg_hob = item["value"]
-        hob_score = count_pos_hob / count_neg_hob
+        for item in db_tweets.view('group49/ade_neg_morn'):
+            ade_neg_mor = item["value"]
+        for item in db_tweets.view('group49/ade_neg_afternoon'):
+            ade_neg_aft = item["value"]
+        for item in db_tweets.view('group49/ade_neg_even'):
+            ade_neg_eve = item["value"]
+        for item in db_tweets.view('group49/ade_neg_midnight'):
+            ade_neg_mid = item["value"]
 
-        for item in db_tweets.view('group49/per_pos'):
-            count_pos_per = item["value"]
-        for item in db_tweets.view('group49/per_neg'):
-            count_neg_per = item["value"]
-        per_score = count_pos_per / count_neg_per
+        for item in db_tweets.view('group49/bri_neg_morn'):
+            bri_neg_mor = item["value"]
+        for item in db_tweets.view('group49/bri_neg_afternoon'):
+            bri_neg_aft = item["value"]
+        for item in db_tweets.view('group49/bri_neg_even'):
+            bri_neg_eve = item["value"]
+        for item in db_tweets.view('group49/bri_neg_midnight'):
+            bri_neg_mid = item["value"]
 
-        for item in db_tweets.view('group49/dar_pos'):
-            count_pos_dar = item["value"]
-        for item in db_tweets.view('group49/dar_neg'):
-            count_neg_dar = item["value"]
-        dar_score = count_pos_dar / count_neg_dar
+        for item in db_tweets.view('group49/can_neg_morn'):
+            can_neg_mor = item["value"]
+        for item in db_tweets.view('group49/can_neg_afternoon'):
+            can_neg_aft = item["value"]
+        for item in db_tweets.view('group49/can_neg_even'):
+            can_neg_eve = item["value"]
+        for item in db_tweets.view('group49/can_neg_midnight'):
+            can_neg_mid = item["value"]
 
         response_tweet_score.update({
-            "Melbourne": melb_score,
-            "Sydney": syd_score,
-            "Darwin": dar_score,
-            "Hobart": hob_score,
-            "Adelaide": ade_score,
-            "Brisbane": bri_score,
-            "Perth": per_score,
-            "Canberra": can_score
+            "melb_mor": melb_neg_mor,
+            "melb_aft": melb_neg_aft,
+            "melb_eve": melb_neg_eve,
+            "melb_mid": melb_neg_mid,
+            "syd_mor": syd_neg_mor,
+            "syd_aft": syd_neg_aft,
+            "syd_eve": syd_neg_eve,
+            "syd_mid": syd_neg_mid,
+            "dar_mor": dar_neg_mor,
+            "dar_aft": dar_neg_aft,
+            "dar_eve": dar_neg_eve,
+            "dar_mid": dar_neg_mid,
+            "hob_mor": hob_neg_mor,
+            "hob_aft": hob_neg_aft,
+            "hob_eve": hob_neg_eve,
+            "hob_mid": hob_neg_mid,
+            "bri_mor": bri_neg_mor,
+            "bri_aft": bri_neg_aft,
+            "bri_eve": bri_neg_eve,
+            "bri_mid": bri_neg_mid,
+            "per_mor": per_neg_mor,
+            "per_aft": per_neg_aft,
+            "per_eve": per_neg_eve,
+            "per_mid": per_neg_mid,
+            "can_mor": can_neg_mor,
+            "can_aft": can_neg_aft,
+            "can_eve": can_neg_eve,
+            "can_mid": can_neg_mid,
+            "ade_mor": ade_neg_mor,
+            "ade_aft": ade_neg_aft,
+            "ade_eve": ade_neg_eve,
+            "ade_mid": ade_neg_mid
         })
         return render_template('analysis_one.html', response_tweet_score=response_tweet_score)
     except Exception as e:
@@ -279,8 +343,11 @@ def analysis_two():
 
 @app.route('/analysis_three')
 def analysis_three():
-    return render_template('analysis_three.html')
+    try:
+        return render_template('analysis_three.html')
+    except Exception as e:
+        print(e)
 
 
 if __name__ == '__main__':
-    app.run(host='115.146.95.94', port=5016)
+    app.run(host='115.146.95.94', port=5002)
