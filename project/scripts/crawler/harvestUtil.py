@@ -8,6 +8,7 @@ from database.parser import Parser
 from crawler.config import app_auth,smoke_file,crime_file,cricket_file,afl_file
 import re
 import time
+import sys
 
 
 def loadTopicFiles(param):
@@ -169,7 +170,7 @@ class MyStreamListener(tweepy.StreamListener):
         
         #search tweets from one typical users timeline
         try:
-            searchById("siddharth",status.user.id)
+            searchById(sys.argv[1],status.user.id)
         except Exception as e:
             print(e)
             return

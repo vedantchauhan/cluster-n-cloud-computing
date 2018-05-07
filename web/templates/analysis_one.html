@@ -2,92 +2,72 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title></title>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-<link href="http://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet" />
-<link href="../static/css/default.css" rel="stylesheet" type="text/css" media="all" />
-<link href="../static/css/fonts.css" rel="stylesheet" type="text/css" media="all" />
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <link href="http://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet"/>
+    <link href="../static/css/default.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="../static/css/fonts.css" rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+    <script type="text/javascript">
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Total tweets', 'Total Positive tweets', 'Total negative tweets'],
-		  [900, 500, 400]
-        ]);
+        function drawChart() {
+            var response_tweet_score = JSON.parse('{{ response_tweet_score | tojson | safe}}');
 
-         var options = {
-          title: 'Tweet Count',
-          legend: { position: 'top', maxLines: 2 },
-		  colors: ['#5C3292', '#1A8763', '#871B47', '#999999'],
-		  interpolateNulls: false,
-        };
+            var data = google.visualization.arrayToDataTable([
+                ['Time', 'Melbourne', 'Sydney', 'Perth', 'Adelaide', 'Darwin', 'Hobart', 'Canberra', 'Brisbane'],
+                ['00.00 - 05.59', response_tweet_score.melb_mor, response_tweet_score.syd_mor, response_tweet_score.per_mor, response_tweet_score.ade_mor, response_tweet_score.dar_mor, response_tweet_score.hob_mor, response_tweet_score.can_mor, response_tweet_score.bri_mor],
+                ['06.00 - 11.59', response_tweet_score.melb_aft, response_tweet_score.syd_aft, response_tweet_score.per_aft, response_tweet_score.ade_aft, response_tweet_score.dar_aft, response_tweet_score.hob_aft, response_tweet_score.can_aft, response_tweet_score.bri_aft],
+                ['12.00 - 17.59', response_tweet_score.melb_eve, response_tweet_score.syd_eve, response_tweet_score.per_eve, response_tweet_score.ade_eve, response_tweet_score.dar_eve, response_tweet_score.hob_eve, response_tweet_score.can_eve, response_tweet_score.bri_eve],
+                ['18.00 - 23.59', response_tweet_score.melb_mid, response_tweet_score.syd_mid, response_tweet_score.per_mid, response_tweet_score.ade_mid, response_tweet_score.dar_mid, response_tweet_score.hob_mid, response_tweet_score.can_mid, response_tweet_score.bri_mid]
+            ]);
 
-        var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
+            var options = {
+                title: 'People sad what time of day',
+                curveType: 'function',
+                legend: {position: 'bottom'}
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+            chart.draw(data, options);
+        }
     </script>
-
-	<script type="text/javascript">
-    google.charts.load("current", {packages:["corechart"]});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var response = JSON.parse('{{ response | tojson | safe}}');
-
-      var data = google.visualization.arrayToDataTable([
-        ['City', 'Positive tweets', 'Negative tweets', { role: 'annotation' } ],
-        ['Melbourne', 10, 24, ''],
-        ['Sydeny', 16, 22, ''],
-        ['Perth', 28, 19, '']
-      ]);
-
-      var options = {
-        width: 600,
-        height: 400,
-        legend: { position: 'top', maxLines: 3 },
-        bar: { groupWidth: '40%' },
-        isStacked: true
-      };
-      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
-      chart.draw(data, options);
-  }
-  </script>
 </head>
 <body>
 <div id="header-wrapper">
-	<div id="header" class="container">
-		<div id="logo">
-			<h1><a href="index"><u>Citylights</u>.</a></h1>
-		</div>
-		<div id="menu">
-			<ul>
-				<li><a href="index" accesskey="1" title="">Homepage</a></li>
-				<li class="active"><a href="analysis_one" accesskey="2" title="">Analysis One</a></li>
-				<li><a href="analysis_two" accesskey="3" title="">Analysis Two</a></li>
-				<li><a href="analysis_three" accesskey="4" title="">Analysis Three</a></li>
-			</ul>
-		</div>
-	</div>
+    <div id="header" class="container">
+        <div id="logo">
+            <h1><a href="index"><u>Citylights</u>.</a></h1>
+        </div>
+        <div id="menu">
+            <ul>
+                <li><a href="index" accesskey="1" title="">Homepage</a></li>
+                <li class="active"><a href="analysis_one" accesskey="2" title="">Analysis One</a></li>
+                <li><a href="analysis_two" accesskey="3" title="">Analysis Two</a></li>
+                <li><a href="analysis_three" accesskey="4" title="">Analysis Three</a></li>
+            </ul>
+        </div>
+    </div>
 
 </div>
 <div id="wrapper">
-	<div id="three-column" class="container">
+    <div id="three-column" class="container">
 
-		<div class="title">
-			<h3>Chart Representing the total tweets harvested</h3>
-			<center><div id="chart_div" style="width: 900px; height: 400px"></div></center>
-			<h3>Chart Representing the emotion based on tweets</h3>
-			<center><div id="barchart_values" style="width: 900px; height: 400px;"></div></center>
-		</div>
-	</div>
+        <div class="title">
+            <h3>Chart Representing the total tweets harvested</h3>
+            <center>
+                <div id="curve_chart" style="width: 900px; height: 500px"></div>
+            </center>
+        </div>
+    </div>
 </div>
 <div id="copyright" class="container">
-	<p>&copy; Comp90024 Group 49. All rights reserved.</p>
+    <p>&copy; Comp90024 Group 49. All rights reserved.</p>
 </div>
 </body>
 </html>

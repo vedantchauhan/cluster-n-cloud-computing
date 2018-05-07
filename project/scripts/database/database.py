@@ -47,7 +47,13 @@ class DButils():
                 db = self.couch[database]                
             except couchdb.http.Unauthorized as e:
                 print("ERROR: unauthorized couchdb access")
-                return
+                exit(-1)
+        except ConnectionRefusedError:
+            print("ERROR: cannot not connect to remote couchdb Server")
+            exit(-1)
+        except Exception as e:
+            print(e)
+            exit(-1)
             
         
         #prevent duplication

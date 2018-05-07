@@ -17,9 +17,19 @@
         google.charts.setOnLoadCallback(drawRegionsMap);
 
         function drawRegionsMap() {
+            var response_gamble = JSON.parse('{{ response_gamble | tojson | safe}}');
+          	var response_tot_persons = JSON.parse('{{ response_tot_persons | tojson | safe}}');
+
             var data = google.visualization.arrayToDataTable([
-                ['City', 'Score(P/N)', 'Income'],
-                ['Melb', 34, 1000]
+                ['City', '%age of people gamble'],
+         	['Melbourne',  ((response_gamble.Melbourne/response_tot_persons.Melbourne) * 100 )],
+			['Sydney',  ((response_gamble.Sydney/response_tot_persons.Sydney)* 100 )],
+			['Perth',   ((response_gamble.Perth/response_tot_persons.Perth)* 100 )],
+			['Adelaide', ((response_gamble.Adelaide/response_tot_persons.Adelaide)* 100 )],
+			['Darwin',    ((response_gamble.Darwin/response_tot_persons.Darwin)* 100 )],
+			['Hobart',  ((response_gamble.Hobart/response_tot_persons.Hobart)* 100 )],
+			['Canberra',  ((response_gamble.Canberra/response_tot_persons.Canberra)* 100 )],
+			['Brisbane',  ((response_gamble.Brisbane/response_tot_persons.Brisbane)* 100 )]
             ]);
             var options = {
                 region: 'AU',
@@ -37,22 +47,22 @@
       function drawChart() {
           var response_gamble = JSON.parse('{{ response_gamble | tojson | safe}}');
           var response_sports = JSON.parse('{{ response_sports | tojson | safe}}');
-          var response_score = JSON.parse('{{ response_score | tojson | safe}}');
+          var response_tot_persons = JSON.parse('{{ response_tot_persons | tojson | safe}}');
 
         var data = google.visualization.arrayToDataTable([
-          ['City', 'Gambling', 'Sports'],
-         ['Melbourne',  1136,  response_sports.Adelaide],
-			['Sydney',  1326, 1.26],
-			['Perth',  2136, 0.33],
-			['Adelaide',  2436, 0.32],
-			['Darwin',  1306,  2.45],
-			['Hobart',  1369, 0.56],
-			['Canberra',  1350, 0.5],
-			['Brisbane',  3336, 2.6],
+          ['City', 'Gambling done in sports', 'Sports(AFL, Cricket)'],
+                ['Melbourne',  ((response_gamble.Melbourne/response_tot_persons.Melbourne) * 100 ),  response_sports.Melbourne],
+			['Sydney', ((response_gamble.Sydney/response_tot_persons.Sydney)* 100 ) , response_sports.Sydney],
+			['Perth', ((response_gamble.Perth/response_tot_persons.Perth)* 100 ) , response_sports.Perth],
+			['Adelaide', ((response_gamble.Adelaide/response_tot_persons.Adelaide)* 100 ) , response_sports.Adelaide],
+			['Darwin', ((response_gamble.Darwin/response_tot_persons.Darwin)* 100 ) ,  response_sports.Darwin],
+			['Hobart',  ((response_gamble.Hobart/response_tot_persons.Hobart)* 100 ) , response_sports.Hobart],
+			['Canberra', ((response_gamble.Canberra/response_tot_persons.Canberra)* 100 ) , response_sports.Canberra],
+			['Brisbane', ((response_gamble.Brisbane/response_tot_persons.Brisbane)* 100 ) , response_sports.Brisbane]
         ]);
 
         var options = {
-          title: 'Company Performance',
+          title: 'City with most gambling in afl and cricket',
           curveType: 'function',
           legend: { position: 'bottom' }
         };

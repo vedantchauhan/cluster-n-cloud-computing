@@ -17,9 +17,9 @@ class Keys:
 # couchdb
 db_name = 'tweets'
 aurin_db_name = 'aurin'
-db_admin = 'fred'
+db_admin = 'admin'
 db_password = 'admin'
-couchdb_uri = "http://fred:admin@127.0.0.1:5984"      # couchdb address
+couchdb_uri = "http://admin:admin@172.17.0.2:5984"      # couchdb address
 
 
 # twitter api
@@ -35,7 +35,13 @@ app_auth = {
         "Y0ZAXr2GPVZFN3hBCsiuPBqppNUavDO7IlT9XZLkg3y4bJluPU",
         "179173817-gQOMylVUcfprD6xHtJxWZO6sL6GdVrSyxdMGZffL",
         "5qrgPwUuTBB35W2KqnodwFpspdzWp3KpFs64HOc3o5yEZ"
-    )    
+    ),
+    'vedant':Keys(
+        "",
+        "",
+        "",
+        ""
+    )
     # add other users access info here n change in harvestMode.py as well
 }
 
