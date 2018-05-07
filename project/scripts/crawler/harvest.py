@@ -31,7 +31,12 @@ class HarvestSys():
         print("harvester started...")
         #default
         user = sys.argv[1]
-        #print(sys.argv[1])
+        if user != 'jiyu' or \
+            user != 'siddharth' or \
+            user != 'vedant':
+            print("ERROR: wrong admin information")
+            exit(-1)
+
         
         # set up
         auth = tweepy.OAuthHandler(app_auth[user].ckey, app_auth[user].csec)
