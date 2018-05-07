@@ -15,102 +15,19 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
-# sports value
+# responses to ui
 response_sports = {}
 response_gamble = {}
 response_tot_persons = {}
 response_tweet_score = {}
+response_neg_score = {}
+response_married = {}
+response_tot_persons_score = {}
 
 # connecting to couchdb
 def connect_db():
     server = couchdb.Server(url)
     return server
-
-
-'''def tweets():
-    try:
-        # variables
-        count_pos_melb = 0
-        count_neg_melb = 0
-        count_pos_syd = 0
-        count_neg_syd = 0
-        count_pos_dar = 0
-        count_neg_dar = 0
-        count_pos_per = 0
-        count_neg_per = 0
-        count_pos_ade = 0
-        count_neg_ade = 0
-        count_pos_bri = 0
-        count_neg_bri = 0
-        count_pos_hob = 0
-        count_neg_hob = 0
-        count_pos_can = 0
-        count_neg_can = 0
-
-        server = connect_db()
-        db_tweets = server["tweets"]
-
-        for item in db_tweets.view('group49/melb_pos'):
-            count_pos_melb = item["value"]
-        for item in db_tweets.view('group49/melb_neg'):
-            count_neg_melb = item["value"]
-        melb_score = count_pos_melb / count_neg_melb
-
-        for item in db_tweets.view('group49/syd_pos'):
-            count_pos_syd = item["value"]
-        for item in db_tweets.view('group49/syd_neg'):
-            count_neg_syd = item["value"]
-        syd_score = count_pos_syd / count_neg_syd
-
-        for item in db_tweets.view('group49/bri_pos'):
-            count_pos_bri = item["value"]
-        for item in db_tweets.view('group49/bri_neg'):
-            count_neg_bri = item["value"]
-        bri_score = count_pos_bri / count_neg_bri
-
-        for item in db_tweets.view('group49/can_pos'):
-            count_pos_can = item["value"]
-        for item in db_tweets.view('group49/can_neg'):
-            count_neg_can = item["value"]
-        can_score = count_pos_can / count_neg_can
-
-        for item in db_tweets.view('group49/ade_pos'):
-            count_pos_ade = item["value"]
-        for item in db_tweets.view('group49/ade_neg'):
-            count_neg_ade = item["value"]
-        ade_score = count_pos_ade / count_neg_ade
-
-        for item in db_tweets.view('group49/hob_pos'):
-            count_pos_hob = item["value"]
-        for item in db_tweets.view('group49/hob_neg'):
-            count_neg_hob = item["value"]
-        hob_score = count_pos_hob / count_neg_hob
-
-        for item in db_tweets.view('group49/per_pos'):
-            count_pos_per = item["value"]
-        for item in db_tweets.view('group49/per_neg'):
-            count_neg_per = item["value"]
-        per_score = count_pos_per / count_neg_per
-
-        for item in db_tweets.view('group49/dar_pos'):
-            count_pos_dar = item["value"]
-        for item in db_tweets.view('group49/dar_neg'):
-            count_neg_dar = item["value"]
-        dar_score = count_pos_dar / count_neg_dar
-
-        response_tweet_score.update({
-            "Melbourne": melb_score,
-            "Sydney": syd_score,
-            "Darwin": dar_score,
-            "Hobart": hob_score,
-            "Adelaide": ade_score,
-            "Brisbane": bri_score,
-            "Perth": per_score,
-            "Canberra": can_score
-        })
-        #return response_tweet_score
-    except Exception as e:
-        print(e)'''
 
 @app.route('/', methods=['GET', 'POST'])
 def show_entries():
@@ -344,10 +261,65 @@ def analysis_two():
 @app.route('/analysis_three')
 def analysis_three():
     try:
-        return render_template('analysis_three.html')
+        # variables passed to ui
+        count_neg_melb = 0
+        count_neg_syd = 0
+        count_neg_dar = 0
+        count_neg_per = 0
+        count_neg_ade = 0
+        count_neg_bri = 0
+        count_neg_hob = 0
+        count_neg_can = 0
+
+        server = connect_db()
+        db_tweets = server["tweets"]
+
+        for item in db_tweets.view('group49/melb_neg'):
+            count_neg_melb = item["value"]
+
+        for item in db_tweets.view('group49/syd_neg'):
+            count_neg_syd = item["value"]
+
+        for item in db_tweets.view('group49/bri_neg'):
+            count_neg_bri = item["value"]
+
+        for item in db_tweets.view('group49/can_neg'):
+            count_neg_can = item["value"]
+
+        for item in db_tweets.view('group49/ade_neg'):
+            count_neg_ade = item["value"]
+
+        for item in db_tweets.view('group49/hob_neg'):
+            count_neg_hob = item["value"]
+
+        for item in db_tweets.view('group49/per_neg'):
+            count_neg_per = item["value"]
+
+        for item in db_tweets.view('group49/dar_neg'):
+            count_neg_dar = item["value"]
+
+        response_neg_score.update({
+            "Melbourne": count_neg_melb,
+            "Sydney": count_neg_syd,
+            "Darwin": count_neg_dar,
+            "Hobart": count_neg_hob,
+            "Adelaide": count_neg_ade,
+            "Brisbane": count_neg_bri,
+            "Perth": count_neg_per,
+            "Canberra": count_neg_can
+        })
+        # aurin data for married people
+        db = server["aurin"]
+        rows = db.view('_all_docs', include_docs=True)
+        data = [row['doc'] for row in rows]
+        for d in data:
+            response_married.update({d['city']: d['married_persons']})
+        for d1 in data:
+            response_tot_persons_score.update({d1['city']: d1['total_persons']})
+        return render_template('analysis_three.html', response_neg_score=response_neg_score, response_married=response_married, response_tot_persons_score=response_tot_persons_score)
     except Exception as e:
         print(e)
 
 
 if __name__ == '__main__':
-    app.run(host='115.146.95.94', port=5002)
+    app.run(host='115.146.95.94', port=5003)
