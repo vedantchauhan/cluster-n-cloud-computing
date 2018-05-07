@@ -37,10 +37,10 @@ app_auth = {
         "5qrgPwUuTBB35W2KqnodwFpspdzWp3KpFs64HOc3o5yEZ"
     ),
     'vedant':Keys(
-        "",
-        "",
-        "",
-        ""
+        "ot4fXr9x3Nf0f94FUomFPieNH",
+        "x72WSDCWbF6EMsLViRp7gm1gKOnKK6HHG6xTk9zUKtlKrPrQc5",
+        "991571553073512448-mV5XDtoor6bpjH09lk1NNzn4GyMYMmW",
+        "UgqA6EfQzUugyhXSiPN0Sy6fARkiDGZR9ezirjiBw3H1G"
     )
     # add other users access info here n change in harvestMode.py as well
 }
