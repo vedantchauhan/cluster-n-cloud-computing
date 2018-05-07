@@ -39,13 +39,8 @@ def show_entries():
     for d in data:
         response.update({d['city']: d['median_income']})
     return render_template('show_entries.html', response=response)
-<<<<<<< HEAD
 
 
-=======
-
-
->>>>>>> ca55d76c32a3948476b9cdfc71868b3963533929
 @app.route('/index')
 def index():
     return render_template('index.html')
@@ -239,17 +234,6 @@ def analysis_two():
         for item in db_tweets.view('group49/dar_sports'):
             dar_sports = item["value"]
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    except Exception as e:
-        print(e)
-
-
-def aurinData():
-    response = {}
-    try:
-        db = connect_db()
-=======
         response_sports.update({
             "Melbourne": melb_sports,
             "Sydney": syd_sports,
@@ -262,7 +246,6 @@ def aurinData():
         })
         # aurin data for gambling
         db = server["aurin"]
->>>>>>> ca55d76c32a3948476b9cdfc71868b3963533929
         rows = db.view('_all_docs', include_docs=True)
         data = [row['doc'] for row in rows]
         for d in data:
@@ -323,29 +306,6 @@ def analysis_three():
             count_neg_can = item["value"]
         can_score = count_pos_can / count_neg_can
 
-<<<<<<< HEAD
-response_sports = {}
-response_gamble = {}
-response_score = {}
-@app.route('/analysis_two')
-def analysis_two():
-    try:
-
-        tweets_sports()
-=======
->>>>>>> a393eb48ecf944192cc2025c3a434fc7eb4de317
-        response_sports.update({
-            "Melbourne": melb_sports,
-            "Sydney": syd_sports,
-            "Darwin": dar_sports,
-            "Hobart": hob_sports,
-            "Adelaide": ade_sports,
-            "Brisbane": bri_sports,
-            "Perth": per_sports,
-            "Canberra": can_sports
-        })
-        # aurin data for gambling
-=======
         for item in db_tweets.view('group49/ade_pos'):
             count_pos_ade = item["value"]
         for item in db_tweets.view('group49/ade_neg'):
@@ -381,72 +341,6 @@ def analysis_two():
             "Canberra": can_score
         })
         # aurin data for married people
->>>>>>> ca55d76c32a3948476b9cdfc71868b3963533929
-        db = server["aurin"]
-        rows = db.view('_all_docs', include_docs=True)
-        data = [row['doc'] for row in rows]
-        for d in data:
-<<<<<<< HEAD
-            response_gamble.update({d['city']: d['gambling_activities']})
-        for d1 in data:
-            response_tot_persons.update({d1['city']: d1['total_persons']})
-        return render_template('analysis_two.html', response_sports=response_sports,
-                               response_tot_persons=response_tot_persons, response_gamble=response_gamble)
-    except Exception as e:
-        print(e)
-
-
-@app.route('/analysis_three')
-def analysis_three():
-    try:
-        # variables passed to ui
-        count_neg_melb = 0
-        count_neg_syd = 0
-        count_neg_dar = 0
-        count_neg_per = 0
-        count_neg_ade = 0
-        count_neg_bri = 0
-        count_neg_hob = 0
-        count_neg_can = 0
-
-        server = connect_db()
-        db_tweets = server["tweets"]
-
-        for item in db_tweets.view('group49/melb_neg'):
-            count_neg_melb = item["value"]
-
-        for item in db_tweets.view('group49/syd_neg'):
-            count_neg_syd = item["value"]
-
-        for item in db_tweets.view('group49/bri_neg'):
-            count_neg_bri = item["value"]
-
-        for item in db_tweets.view('group49/can_neg'):
-            count_neg_can = item["value"]
-
-        for item in db_tweets.view('group49/ade_neg'):
-            count_neg_ade = item["value"]
-
-        for item in db_tweets.view('group49/hob_neg'):
-            count_neg_hob = item["value"]
-
-        for item in db_tweets.view('group49/per_neg'):
-            count_neg_per = item["value"]
-
-        for item in db_tweets.view('group49/dar_neg'):
-            count_neg_dar = item["value"]
-
-        response_neg_score.update({
-            "Melbourne": count_neg_melb,
-            "Sydney": count_neg_syd,
-            "Darwin": count_neg_dar,
-            "Hobart": count_neg_hob,
-            "Adelaide": count_neg_ade,
-            "Brisbane": count_neg_bri,
-            "Perth": count_neg_per,
-            "Canberra": count_neg_can
-        })
-        # aurin data for married people
         db = server["aurin"]
         rows = db.view('_all_docs', include_docs=True)
         data = [row['doc'] for row in rows]
@@ -460,16 +354,5 @@ def analysis_three():
 
 
 if __name__ == '__main__':
-    app.run(host='115.146.95.94', port=5003)
-=======
-            response_married.update({d['city']: d['married_persons']})
-        for d1 in data:
-            response_tot_persons_score.update({d1['city']: d1['total_persons']})
-        return render_template('analysis_three.html', response_neg_score=response_neg_score, response_married=response_married, response_tot_persons_score=response_tot_persons_score)
-    except Exception as e:
-        print(e)
+    app.run(host='115.146.95.94', port=5000)
 
-
-if __name__ == '__main__':
-    app.run(host='115.146.95.94', port=5004)
->>>>>>> ca55d76c32a3948476b9cdfc71868b3963533929
