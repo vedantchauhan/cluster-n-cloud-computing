@@ -1,10 +1,10 @@
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-    render_template, flash
-import couchdb
-import json
+# vedant
+# comp90024
 
-DATABASE = 'aurin'
-DATABASE_TWEETS = 'tweets'
+from flask import Flask, render_template
+import couchdb
+
+# configuration
 DEBUG = True
 USERNAME = 'admin'
 PASSWORD = 'admin'
@@ -24,31 +24,27 @@ response_neg_score = {}
 response_married = {}
 response_tot_persons_score = {}
 
+
 # connecting to couchdb
 def connect_db():
-    server = couchdb.Server(url)
-    return server
-
-@app.route('/', methods=['GET', 'POST'])
-def show_entries():
-    db = connect_db()
-    rows = db.view('_all_docs', include_docs=True)
-    data = [row['doc'] for row in rows]
-    # df = pd.DataFrame(data)
-    response = {}
-    for d in data:
-        response.update({d['city']: d['median_income']})
-    return render_template('show_entries.html', response=response)
+    try:
+        server = couchdb.Server(url)
+        return server
+    except Exception as e:
+        print(e)
 
 
+# index page
 @app.route('/index')
 def index():
     return render_template('index.html')
 
 
+# first scenario
 @app.route('/analysis_one')
 def analysis_one():
     try:
+        # variable for ui
         melb_neg_mor = 0
         melb_neg_mid = 0
         melb_neg_aft = 0
@@ -85,6 +81,7 @@ def analysis_one():
         server = connect_db()
         db_tweets = server["tweets"]
 
+        # collecting views
         for item in db_tweets.view('group49/melb_neg_morn'):
             melb_neg_mor = item["value"]
         for item in db_tweets.view('group49/melb_neg_afternoon'):
@@ -195,6 +192,8 @@ def analysis_one():
     except Exception as e:
         print(e)
 
+
+# second scenario
 @app.route('/analysis_two')
 def analysis_two():
     try:
@@ -210,6 +209,7 @@ def analysis_two():
         server = connect_db()
         db_tweets = server["tweets"]
 
+        # collecting views
         for item in db_tweets.view('group49/melb_sports'):
             melb_sports = item["value"]
 
@@ -244,7 +244,7 @@ def analysis_two():
             "Perth": per_sports,
             "Canberra": can_sports
         })
-        # aurin data for gambling
+        # aurin data for gambling and population
         db = server["aurin"]
         rows = db.view('_all_docs', include_docs=True)
         data = [row['doc'] for row in rows]
@@ -258,6 +258,7 @@ def analysis_two():
         print(e)
 
 
+# third scenario
 @app.route('/analysis_three')
 def analysis_three():
     try:
@@ -282,6 +283,7 @@ def analysis_three():
         server = connect_db()
         db_tweets = server["tweets"]
 
+        # collecting views
         for item in db_tweets.view('group49/melb_pos'):
             count_pos_melb = item["value"]
         for item in db_tweets.view('group49/melb_neg'):
@@ -340,7 +342,7 @@ def analysis_three():
             "Perth": per_score,
             "Canberra": can_score
         })
-        # aurin data for married people
+        # aurin data for married people and population
         db = server["aurin"]
         rows = db.view('_all_docs', include_docs=True)
         data = [row['doc'] for row in rows]
@@ -348,11 +350,12 @@ def analysis_three():
             response_married.update({d['city']: d['married_persons']})
         for d1 in data:
             response_tot_persons_score.update({d1['city']: d1['total_persons']})
-        return render_template('analysis_three.html', response_neg_score=response_neg_score, response_married=response_married, response_tot_persons_score=response_tot_persons_score)
+        return render_template('analysis_three.html', response_neg_score=response_neg_score,
+                               response_married=response_married, response_tot_persons_score=response_tot_persons_score)
     except Exception as e:
         print(e)
 
 
+# main
 if __name__ == '__main__':
     app.run(host='115.146.95.94', port=5000)
-
