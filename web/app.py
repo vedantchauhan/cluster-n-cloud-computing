@@ -25,6 +25,7 @@ response_neg_score = {}
 response_married = {}
 response_tot_persons_score = {}
 response_income = {}
+response_sports_four = {}
 
 
 # connecting to couchdb
@@ -415,7 +416,7 @@ def analysis_four():
         for d in data:
             response_income.update({d['city']: d['median_income']})
 
-        return render_template('analysis_two.html', response_sports=response_sports, response_income=response_income)
+        return render_template('analysis_four.html', response_sports=response_sports, response_income=response_income)
     except Exception as e:
         print(e)
 
