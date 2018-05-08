@@ -20,20 +20,28 @@
 
             var response_married = JSON.parse('{{ response_married | tojson | safe}}');
             var response_tot_persons_score = JSON.parse('{{ response_tot_persons_score | tojson | safe}}');
+			var melb = ((response_married.Melbourne/response_tot_persons_score.Melbourne) * 10 );
+			var syd = ((response_married.Sydney/response_tot_persons_score.Sydney)* 10 );
+			var per = ((response_married.Perth/response_tot_persons_score.Perth)* 10 );
+			var ade = ((response_married.Adelaide/response_tot_persons_score.Adelaide)* 10 );
+			var dar = ((response_married.Darwin/response_tot_persons_score.Darwin)* 10 );
+			var hob = ((response_married.Hobart/response_tot_persons_score.Hobart)* 10 );
+			var can = ((response_married.Canberra/response_tot_persons_score.Canberra)* 10 );
+			var bri = ((response_married.Brisbane/response_tot_persons_score.Brisbane)* 10 );
 
             var data = google.visualization.arrayToDataTable([
                 ['City', '%age of people married'],
-         	    ['Melbourne',  ((response_married.Melbourne/response_tot_persons_score.Melbourne) * 100 )],
-			    ['Sydney',  ((response_married.Sydney/response_tot_persons_score.Sydney)* 100 )],
-			    ['Perth',   ((response_married.Perth/response_tot_persons_score.Perth)* 100 )],
-			    ['Adelaide', ((response_married.Adelaide/response_tot_persons_score.Adelaide)* 100 )],
-			    ['Darwin',    ((response_married.Darwin/response_tot_persons_score.Darwin)* 100 )],
-			    ['Hobart',  ((response_married.Hobart/response_tot_persons_score.Hobart)* 100 )],
-			    ['Canberra',  ((response_married.Canberra/response_tot_persons_score.Canberra)* 100 )],
-			    ['Brisbane',  ((response_married.Brisbane/response_tot_persons_score.Brisbane)* 100 )]
+         	    ['Melbourne', melb],
+			    ['Sydney', syd],
+			    ['Perth', per],
+			    ['Adelaide', ade],
+			    ['Darwin', dar],
+			    ['Hobart', hob],
+			    ['Canberra', can],
+			    ['Brisbane', bri]
             ]);
             var options = {
-                region: 'AU',
+                region: '053',  //AU
                 displayMode: 'markers'
             };
             var chart = new google.visualization.GeoChart(document.getElementById('geochart'));
@@ -52,18 +60,18 @@
 
         var data = google.visualization.arrayToDataTable([
           ['City','Sentiment Score', 'Married people in city'],
-            ['Melbourne', response_neg_score.Melbourne, ((response_married.Melbourne/response_tot_persons_score.Melbourne) * 100 )],
-			['Sydney', response_neg_score.Sydney, ((response_married.Sydney/response_tot_persons_score.Sydney)* 100 )],
-			['Perth', response_neg_score.Perth, ((response_married.Perth/response_tot_persons_score.Perth)* 100 )],
-			['Adelaide', response_neg_score.Adelaide, ((response_married.Adelaide/response_tot_persons_score.Adelaide)* 100 )],
-			['Darwin', response_neg_score.Darwin, ((response_married.Darwin/response_tot_persons_score.Darwin)* 100 )],
-			['Hobart',  response_neg_score.Hobart, ((response_married.Hobart/response_tot_persons_score.Hobart)* 100 )],
-			['Canberra', response_neg_score.Canberra, ((response_married.Canberra/response_tot_persons_score.Canberra)* 100 )],
-			['Brisbane', response_neg_score.Brisbane, ((response_married.Brisbane/response_tot_persons_score.Brisbane)* 100 )]
+            ['Melbourne', response_neg_score.Melbourne, ((response_married.Melbourne/response_tot_persons_score.Melbourne) * 10 )],
+			['Sydney', response_neg_score.Sydney, ((response_married.Sydney/response_tot_persons_score.Sydney)* 10 )],
+			['Perth', response_neg_score.Perth, ((response_married.Perth/response_tot_persons_score.Perth)* 10 )],
+			['Adelaide', response_neg_score.Adelaide, ((response_married.Adelaide/response_tot_persons_score.Adelaide)* 10 )],
+			['Darwin', response_neg_score.Darwin, ((response_married.Darwin/response_tot_persons_score.Darwin)* 10 )],
+			['Hobart',  response_neg_score.Hobart, ((response_married.Hobart/response_tot_persons_score.Hobart)* 10 )],
+			['Canberra', response_neg_score.Canberra, ((response_married.Canberra/response_tot_persons_score.Canberra)* 10 )],
+			['Brisbane', response_neg_score.Brisbane, ((response_married.Brisbane/response_tot_persons_score.Brisbane)* 10 )]
         ]);
 
         var options = {
-          title: 'City with most gambling in afl and cricket',
+          title: 'City with married people sad',
           curveType: 'function',
           legend: { position: 'bottom' }
         };

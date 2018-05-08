@@ -8,7 +8,7 @@ import couchdb
 DEBUG = True
 USERNAME = 'admin'
 PASSWORD = 'admin'
-url = 'http://admin:admin@172.17.0.3:5984'
+url = 'http://admin:admin@172.17.0.2:5984'
 
 # create our application
 app = Flask(__name__)
@@ -358,4 +358,4 @@ def analysis_three():
 
 # main
 if __name__ == '__main__':
-    app.run(host='115.146.95.94', port=5000)
+    app.run(host='115.146.92.98', port=5000)
