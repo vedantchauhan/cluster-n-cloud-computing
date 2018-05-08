@@ -3,6 +3,7 @@
 
 from flask import Flask, render_template
 import couchdb
+import argparse
 
 # configuration
 DEBUG = True
@@ -358,4 +359,8 @@ def analysis_three():
 
 # main
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-ip', type=str, help='start or terminate')
+    parser.add_argument('-p', type=int, default=1, help='instance count')
+    args = parser.parse_args()
+    app.run(host=args.ip, port=args.p)
