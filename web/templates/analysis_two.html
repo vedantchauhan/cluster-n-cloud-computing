@@ -38,7 +38,8 @@
             ]);
             var options = {
                 region: 'AU',
-                displayMode: 'markers'
+                displayMode: 'markers',
+				backgroundColor: '#81d4fa'
             };
             var chart = new google.visualization.GeoChart(document.getElementById('geochart'));
             chart.draw(data, options);
