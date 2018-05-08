@@ -1,7 +1,7 @@
 # cluster-n-cloud-computing
 
 -   Report Link:
-    https://docs.google.com/document/d/1dJF1EgMXPmMfqC9yWXPCIW3rzDlHfW9ouBXVAeBKgzw/edit?usp=sharing
+    check microsoft 365 invitation link in your email box
 
 -   Docs:
     -   To run crawler:
