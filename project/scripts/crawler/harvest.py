@@ -17,13 +17,16 @@ from database.parser import Parser
 from crawler.config import app_auth,couchdb_uri,AUS_STR,db_name
 import time
 import sys
+import nltk
 
 
 
 
 class HarvestSys():
     def __init__(self):
-        pass
+        nltk.download('words')
+        nltk.download('twitter_samples')
+
     
     
     def harvest(self):
@@ -31,17 +34,16 @@ class HarvestSys():
         print("harvester started...")
         #default
         user = sys.argv[1]
-        if user != 'jiyu' or \
-            user != 'siddharth' or \
-            user != 'vedant':
-            print("ERROR: wrong admin information")
-            exit(-1)
-
-        
         # set up
-        auth = tweepy.OAuthHandler(app_auth[user].ckey, app_auth[user].csec)
+        try:
+            auth = tweepy.OAuthHandler(app_auth[user].ckey, app_auth[user].csec)
         #auth = tweepy.AppAuthHandler(app_auth[user].ckey, app_auth[user].csec)
-        auth.set_access_token(app_auth[user].atoken, app_auth[user].asec)
+            auth.set_access_token(app_auth[user].atoken, app_auth[user].asec)
+            print("connection started...")
+            print(sys.argv[1]+" start crawling")
+        except KeyError as e:
+            print("ERROR: wrong admin name: "+sys.argv[1])
+            exit(-1)
         
         # create an api object to pull data from twitter
         api = tweepy.API(auth,wait_on_rate_limit=True, wait_on_rate_limit_notify=True)

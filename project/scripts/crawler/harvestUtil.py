@@ -32,7 +32,7 @@ def containTopic(topics,text):
 
 
 def searchById(admin, userid):
-    print("on search...")
+    print("start searching "+str(userid)+" timeline")
 
     #set up
     db = database.DButils()
@@ -174,5 +174,5 @@ class MyStreamListener(tweepy.StreamListener):
         except Exception as e:
             print(e)
             return
-        print("finish search on user: "+str(status.user.id))
+        print("finish searching on user: "+str(status.user.id))
         return True
