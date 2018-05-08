@@ -358,4 +358,4 @@ def analysis_three():
 
 # main
 if __name__ == '__main__':
-    app.run(host='115.146.92.98', port=5000)
+    app.run(host='127.0.0.1', port=5000)

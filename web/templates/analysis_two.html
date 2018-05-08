@@ -56,7 +56,7 @@
           var response_tot_persons = JSON.parse('{{ response_tot_persons | tojson | safe}}');
 
         var data = google.visualization.arrayToDataTable([
-          ['City', 'Gambling done in sports', 'Sports(AFL, Cricket)'],
+          ['City', 'Gambling done in sports', 'Sports'],
                 ['Melbourne',  ((response_gamble.Melbourne/response_tot_persons.Melbourne) * 100 ),  response_sports.Melbourne],
 			['Sydney', ((response_gamble.Sydney/response_tot_persons.Sydney)* 100 ) , response_sports.Sydney],
 			['Perth', ((response_gamble.Perth/response_tot_persons.Perth)* 100 ) , response_sports.Perth],
