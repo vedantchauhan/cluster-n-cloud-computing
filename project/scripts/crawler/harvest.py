@@ -17,13 +17,16 @@ from database.parser import Parser
 from crawler.config import app_auth,couchdb_uri,AUS_STR,db_name
 import time
 import sys
+import nltk
 
 
 
 
 class HarvestSys():
     def __init__(self):
-        pass
+        nltk.download('words')
+        nltk.download('twitter_samples')
+
     
     
     def harvest(self):
