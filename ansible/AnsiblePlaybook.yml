@@ -79,8 +79,8 @@
         dest: /root/redgeoff-couchdb-docker
    - name: add nodes to cluster
      shell: /root/redgeoff-couchdb-docker/create-cluster.sh admin admin 5984 5986 "{{ item }} {{ inventory_hostname }}"
-     with_items: "{{ groups['servers'] }}"
-     when: inventory_hostname == groups['servers'][0] and inventory_hostname != item
+     with_items: "{{ groups['myhost'] }}"
+     when: inventory_hostname == groups['myhost'][0] and inventory_hostname != item
     
 
    
