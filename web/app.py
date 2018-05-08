@@ -24,6 +24,7 @@ response_tweet_score = {}
 response_neg_score = {}
 response_married = {}
 response_tot_persons_score = {}
+response_income = {}
 
 
 # connecting to couchdb
@@ -355,6 +356,69 @@ def analysis_three():
                                response_married=response_married, response_tot_persons_score=response_tot_persons_score)
     except Exception as e:
         print(e)
+
+# fourth scenario
+@app.route('/analysis_four')
+def analysis_four():
+    try:
+        # tweets based on sports
+        melb_sports = 0
+        syd_sports = 0
+        per_sports = 0
+        ade_sports = 0
+        can_sports = 0
+        hob_sports = 0
+        bri_sports = 0
+        dar_sports = 0
+        server = connect_db()
+        db_tweets = server["tweets"]
+
+        # collecting views
+        for item in db_tweets.view('group49/melb_sports'):
+            melb_sports = item["value"]
+
+        for item in db_tweets.view('group49/syd_sports'):
+            syd_sports = item["value"]
+
+        for item in db_tweets.view('group49/bri_sports'):
+            bri_sports = item["value"]
+
+        for item in db_tweets.view('group49/can_sports'):
+            can_sports = item["value"]
+
+        for item in db_tweets.view('group49/ade_sports'):
+            ade_sports = item["value"]
+
+        for item in db_tweets.view('group49/hob_sports'):
+            hob_sports = item["value"]
+
+        for item in db_tweets.view('group49/per_sports'):
+            per_sports = item["value"]
+
+        for item in db_tweets.view('group49/dar_sports'):
+            dar_sports = item["value"]
+
+        response_sports.update({
+            "Melbourne": melb_sports,
+            "Sydney": syd_sports,
+            "Darwin": dar_sports,
+            "Hobart": hob_sports,
+            "Adelaide": ade_sports,
+            "Brisbane": bri_sports,
+            "Perth": per_sports,
+            "Canberra": can_sports
+        })
+        # aurin data for income
+        db = server["aurin"]
+        rows = db.view('_all_docs', include_docs=True)
+        data = [row['doc'] for row in rows]
+        for d in data:
+            response_income.update({d['city']: d['median_income']})
+
+        return render_template('analysis_two.html', response_sports=response_sports, response_income=response_income)
+    except Exception as e:
+        print(e)
+
 
 
 # main
