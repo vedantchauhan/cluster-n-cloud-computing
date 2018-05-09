@@ -5,7 +5,6 @@ import time
 
 def in_time_range(now):
     new_now = ''
-    print(now)
     for s in now:
         if s != ':':
             new_now += s
@@ -15,10 +14,9 @@ def in_time_range(now):
         timestamp = "morning"
     elif time.strptime("130000","%H%M%S") <= now <=time.strptime("185959","%H%M%S"):
         timestamp = "afternoon"
-    elif time.strptime("190000","%H%M%S") <= now <= time.strptime("235959","%H%M%S"):
+    elif time.strptime("190000","%H%M%S") <= now <= time.strptime("005959","%H%M%S"):
         timestamp = "evening"
-        print(now)
-    elif time.strptime("000000","%H%M%S") <= now <= time.strptime("075959","%H%M%S"):
+    elif time.strptime("010000","%H%M%S") <= now <= time.strptime("075959","%H%M%S"):
         timestamp = "midnight"
     return timestamp
 
@@ -39,9 +37,6 @@ class Parser():
         #print(timestamp[1])
         timestamp = in_time_range(timestamp[1])
         #print(timestamp)
-
-        if timestamp != "evening":
-            return
 
 
 

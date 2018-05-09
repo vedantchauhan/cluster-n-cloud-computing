@@ -19,7 +19,7 @@ db_name = 'tweets'
 aurin_db_name = 'aurin'
 db_admin = 'admin'
 db_password = 'admin'
-couchdb_uri = "http://fred:admin@127.0.0.1:5984"      # couchdb address
+couchdb_uri = "http://admin:admin@172.17.0.2:5984"      # couchdb address
 
 
 # twitter api
