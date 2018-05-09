@@ -5,14 +5,6 @@
   become: yes
   become_user: root
 
-- name: copy pub key to authorized_keys
-  copy:
-    src: "/Users/siddharth/.ssh/id_rsa.pub"
-    dest: "/home/{{ item.username }}/.ssh/authorized_keys"
-    mode: "0644"
-    remote_src: True
-  with_items: "{{ users }}"
-
 - hosts: myhost
   tasks:
    - name: install git 
@@ -28,7 +20,25 @@
      apt: name=python3-pip state=present
 
    - name: install tweepy
-     apt: name=tweepy state=present
+     pip: name=tweepy state=present
+
+   - name: install couchdb
+     pip: name=couchdb state=present
+
+   - name: install textblob
+     pip: name=textblob state=present
+
+   - name: install numpy
+     pip: name=numpy state=present
+
+   - name: install nltk
+     pip: name=nltk state=present     
+
+   - name: install sklearn
+     pip: name=sklearn state=present  
+
+   - name: install flask
+     pip: name=flask state=present  
 
    - name: clone docker repo into root folder
      git: 
@@ -80,17 +90,21 @@
      npm:
         name:  npm
         global: yes
+
    - name: install add-cors-to-couchdb module
      npm: 
         name: add-cors-to-couchdb
         global: yes
+
    - name: add cors to couchdb
      shell: "add-cors-to-couchdb http://localhost:5984 -u admin -p admin"
+
    - name: clone cluster repo
      git:
         repo: https://github.com/redgeoff/redgeoff-couchdb-docker
         clone: yes
         dest: /root/redgeoff-couchdb-docker
+        
    - name: add nodes to cluster
      shell: /root/redgeoff-couchdb-docker/create-cluster.sh admin admin 5984 5986 "{{ item }} {{ inventory_hostname }}"
      with_items: "{{ groups['myhost'] }}"
