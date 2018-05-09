@@ -1,0 +1,5 @@
+[myhost]
+115.146.92.98 ansible_user=ubuntu
+115.146.95.239 ansible_user=ubuntu
+115.146.92.67 ansible_user=ubuntu
+115.146.95.31 ansible_user=ubuntu 
