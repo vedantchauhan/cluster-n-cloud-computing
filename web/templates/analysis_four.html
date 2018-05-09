@@ -47,41 +47,66 @@
         }
     </script>
 
-	<script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+    <script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var response_sports = JSON.parse('{{ response_sports | tojson | safe}}');
 
-      function drawChart() {
-          var response_sports = JSON.parse('{{ response_sports | tojson | safe}}');
-          var response_income = JSON.parse('{{ response_income | tojson | safe}}');
+      var data = google.visualization.arrayToDataTable([
+        ['City','Sports tweet'],
+            ['Melbourne', response_sports.Melbourne],
+			['Sydney', response_sports.Sydney],
+			['Perth', response_sports.Perth],
+			['Adelaide', response_sports.Adelaide],
+			['Darwin', response_sports.Darwin],
+			['Hobart',  response_sports.Hobart],
+			['Canberra', response_sports.Canberra],
+			['Brisbane', response_sports.Brisbane]
+      ]);
 
-          var data = google.visualization.arrayToDataTable([
-            ['City','Sports tweet', 'Income in city'],
-            ['Melbourne', response_sports.Melbourne, response_income.Melbourne],
-			['Sydney', response_sports.Sydney, response_income.Sydney],
-			['Perth', response_sports.Perth, response_income.Perth],
-			['Adelaide', response_sports.Adelaide, response_income.Adelaide],
-			['Darwin', response_sports.Darwin, response_income.Darwin],
-			['Hobart',  response_sports.Hobart, response_income.Hobart],
-			['Canberra', response_sports.Canberra, response_income.Canberra],
-			['Brisbane', response_sports.Brisbane, response_income.Brisbane]
-          ]);
+      var options = {
+        title: "Sports tweet across cities",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+      chart.draw(data, options);
+  }
+  </script>
 
-        var options = {
-          title: 'Financial status wrt sports',
-          curveType: 'function',
-          legend: { position: 'bottom' },
-          explorer: {
-			  keepInBounds: true,
-			  maxZoomIn: 4.0
-		  }
-        };
+    <script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        var response_income = JSON.parse('{{ response_income | tojson | safe}}');
+      var data = google.visualization.arrayToDataTable([
+        ['City','Income in city'],
+            ['Melbourne', response_income.Melbourne],
+			['Sydney', response_income.Sydney],
+			['Perth', response_income.Perth],
+			['Adelaide', response_income.Adelaide],
+			['Darwin', response_income.Darwin],
+			['Hobart',  response_income.Hobart],
+			['Canberra', response_income.Canberra],
+			['Brisbane', response_income.Brisbane]
+      ]);
 
-        chart.draw(data, options);
-      }
-    </script>
+      var options = {
+        title: "Financial status in city",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+          colors:['red'] ,
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values1"));
+      chart.draw(data, options);
+  }
+  </script>
 </head>
 <body>
 <div id="header-wrapper">
@@ -114,8 +139,14 @@
 			<h3>Map Representing the analysis</h3><br>
 			<center><div id="geochart" style="width: 1200px; height: 400px ;"></div></center>
 			<h3>Chart Representing the analysis</h3>
-			<center><div id="curve_chart" style="width: 900px; height: 500px"></div></center>
-			<br><span class="byline">The result shows</span>
+            <center><table>
+             <tr>
+            <td><div id="barchart_values" style="width: 500px; height: 400px"></div>
+            </td>
+            <td><div id="barchart_values1" style="width: 500px; height: 400px"></div></td>
+             </tr>
+            </table></center>
+            <span class="byline">The result shows</span>
 		</div>
 	</div>
 </div>
