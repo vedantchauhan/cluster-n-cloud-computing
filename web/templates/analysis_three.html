@@ -58,43 +58,6 @@
     </script>
 
 	<script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-          var response_neg_score = JSON.parse('{{ response_neg_score | tojson | safe}}');
-          var response_married = JSON.parse('{{ response_married | tojson | safe}}');
-          var response_tot_persons_score = JSON.parse('{{ response_tot_persons_score | tojson | safe}}');
-
-        var data = google.visualization.arrayToDataTable([
-          ['City','Sentiment Score', 'Weighted average of married people'],
-            ['Melbourne', response_neg_score.Melbourne, ((response_married.Melbourne/response_tot_persons_score.Melbourne) * 10 )],
-			['Sydney', response_neg_score.Sydney, ((response_married.Sydney/response_tot_persons_score.Sydney)* 10 )],
-			['Perth', response_neg_score.Perth, ((response_married.Perth/response_tot_persons_score.Perth)* 10 )],
-			['Adelaide', response_neg_score.Adelaide, ((response_married.Adelaide/response_tot_persons_score.Adelaide)* 10 )],
-			['Darwin', response_neg_score.Darwin, ((response_married.Darwin/response_tot_persons_score.Darwin)* 10 )],
-			['Hobart',  response_neg_score.Hobart, ((response_married.Hobart/response_tot_persons_score.Hobart)* 10 )],
-			['Canberra', response_neg_score.Canberra, ((response_married.Canberra/response_tot_persons_score.Canberra)* 10 )],
-			['Brisbane', response_neg_score.Brisbane, ((response_married.Brisbane/response_tot_persons_score.Brisbane)* 10 )]
-        ]);
-
-        var options = {
-          title: 'Marriage quotient in relation to sentiment score',
-          curveType: 'function',
-          legend: { position: 'bottom' },
-			explorer: {
-                    keepInBounds: true,
-                    maxZoomIn: 4.0
-                }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
-      }
-    </script>
-
-	<script type="text/javascript">
     google.charts.load("current", {packages:["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
