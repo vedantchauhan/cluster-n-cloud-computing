@@ -93,6 +93,78 @@
         chart.draw(data, options);
       }
     </script>
+
+	<script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var response_married = JSON.parse('{{ response_married | tojson | safe}}');
+		var response_tot_persons_score = JSON.parse('{{ response_tot_persons_score | tojson | safe}}');
+
+		var melb = ((response_married.Melbourne/response_tot_persons_score.Melbourne) * 10 );
+		var syd = ((response_married.Sydney/response_tot_persons_score.Sydney)* 10 );
+		var per = ((response_married.Perth/response_tot_persons_score.Perth)* 10 );
+		var ade = ((response_married.Adelaide/response_tot_persons_score.Adelaide)* 10 );
+		var dar = ((response_married.Darwin/response_tot_persons_score.Darwin)* 10 );
+		var hob = ((response_married.Hobart/response_tot_persons_score.Hobart)* 10 );
+		var can = ((response_married.Canberra/response_tot_persons_score.Canberra)* 10 );
+		var bri = ((response_married.Brisbane/response_tot_persons_score.Brisbane)* 10 );
+
+      var data = google.visualization.arrayToDataTable([
+        ['City','Weighted average of married people'],
+            ['Melbourne', melb],
+			    ['Sydney',  syd],
+			    ['Perth',  per],
+			    ['Adelaide',  ade],
+			    ['Darwin',  dar],
+			    ['Hobart',  hob],
+			    ['Canberra',  can],
+			    ['Brisbane', bri]
+      ]);
+
+      var options = {
+        title: "Weighted average of married people",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+      chart.draw(data, options);
+  }
+  </script>
+
+    <script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+
+        var response_neg_score = JSON.parse('{{ response_neg_score | tojson | safe}}');
+
+      var data = google.visualization.arrayToDataTable([
+        ['City','Sentiment Score'],
+            ['Melbourne', response_neg_score.Melbourne],
+			['Sydney', response_neg_score.Sydney],
+			['Perth', response_neg_score.Perth],
+			['Adelaide', response_neg_score.Adelaide],
+			['Darwin', response_neg_score.Darwin],
+			['Hobart',  response_neg_score.Hobart],
+			['Canberra', response_neg_score.Canberra],
+			['Brisbane', response_neg_score.Brisbane]
+      ]);
+
+      var options = {
+        title: "Sentiment score of city",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+          colors:['red'] ,
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values1"));
+      chart.draw(data, options);
+  }
+  </script>
 </head>
 <body>
 <div id="header-wrapper">
@@ -125,8 +197,14 @@
 			<h3>Map Representing the analysis</h3><br>
 			<center><div id="geochart" style="width: 1200px; height: 400px ;"></div></center>
 			<h3>Chart Representing the analysis</h3>
-			<center><div id="curve_chart" style="width: 900px; height: 500px"></div></center>
-			<br><span class="byline">The result shows</span>
+            <center><table>
+             <tr>
+            <td><div id="barchart_values" style="width: 500px; height: 400px"></div>
+            </td>
+            <td><div id="barchart_values1" style="width: 500px; height: 400px"></div></td>
+             </tr>
+            </table></center>
+            <span class="byline">The result shows</span>
 		</div>
 	</div>
 </div>
