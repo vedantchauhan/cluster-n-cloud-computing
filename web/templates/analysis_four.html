@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet" />
+<link href="../static/css/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../static/css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+       google.charts.load('current', {
+       'packages': ['geochart'],
+       // Note: you will need to get a mapsApiKey for your project.
+       // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+       'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+     	});
+        google.charts.setOnLoadCallback(drawRegionsMap);
+
+        function drawRegionsMap() {
+
+            var response_sports = JSON.parse('{{ response_sports | tojson | safe}}');
+            var response_income = JSON.parse('{{ response_income | tojson | safe}}');
+
+            var data = google.visualization.arrayToDataTable([
+                ['City', 'Sports tweet','Income in city'],
+         	    ['Melbourne', response_sports.Melbourne, response_income.Melbourne],
+			    ['Sydney', response_sports.Sydney, response_income.Sydney],
+			    ['Perth', response_sports.Perth, response_income.Perth],
+			    ['Adelaide', response_sports.Adelaide, response_income.Adelaide],
+			    ['Darwin', response_sports.Darwin, response_income.Darwin],
+			    ['Hobart',  response_sports.Hobart, response_income.Hobart],
+			    ['Canberra', response_sports.Canberra, response_income.Canberra],
+			    ['Brisbane', response_sports.Brisbane, response_income.Brisbane]
+            ]);
+            var options = {
+                region: 'AU',
+                displayMode: 'markers',
+				colorAxis: {colors: ['#e31b23', 'black', '#00853f']}
+            };
+            var chart = new google.visualization.GeoChart(document.getElementById('geochart'));
+            chart.draw(data, options);
+        }
+    </script>
+
+	<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+          var response_sports = JSON.parse('{{ response_sports | tojson | safe}}');
+          var response_income = JSON.parse('{{ response_income | tojson | safe}}');
+
+          var data = google.visualization.arrayToDataTable([
+            ['City','Sports tweet', 'Income in city'],
+            ['Melbourne', response_sports.Melbourne, response_income.Melbourne],
+			['Sydney', response_sports.Sydney, response_income.Sydney],
+			['Perth', response_sports.Perth, response_income.Perth],
+			['Adelaide', response_sports.Adelaide, response_income.Adelaide],
+			['Darwin', response_sports.Darwin, response_income.Darwin],
+			['Hobart',  response_sports.Hobart, response_income.Hobart],
+			['Canberra', response_sports.Canberra, response_income.Canberra],
+			['Brisbane', response_sports.Brisbane, response_income.Brisbane]
+          ]);
+
+        var options = {
+          title: 'Financial status wrt sports',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          explorer: {
+			  keepInBounds: true,
+			  maxZoomIn: 4.0
+		  }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+</head>
+<body>
+<div id="header-wrapper">
+	<div id="header" class="container">
+		<div id="logo">
+			<h1><a href="index"><u>Citylights</u>.</a></h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><a href="index" accesskey="1" title="">Homepage</a></li>
+				<li><a href="analysis_one" accesskey="2" title="">Analysis One</a></li>
+				<li><a href="analysis_two" accesskey="3" title="">Analysis Two</a></li>
+				<li><a href="analysis_three" accesskey="4" title="">Analysis Three</a></li>
+                <li class="active"><a href="analysis_four" accesskey="5" title="">Analysis Four</a></li>
+			</ul>
+		</div>
+	</div>
+
+</div>
+<div id="wrapper">
+	<div id="three-column" class="container">
+
+		<div class="title">
+			<h2>A Rich Man’s Game?</h2><br>
+            <span class="byline">Sports has always been the great source of entertainment from ages. It is a debatable topic that
+				whether the rich people follow sports more or whether poor
+				people follow it more. This scenario tries to compare the number of sports tweets in the city with the financial
+				status of the people in that city.
+			</span><br>
+			<h3>Map Representing the analysis</h3><br>
+			<center><div id="geochart" style="width: 1200px; height: 400px ;"></div></center>
+			<h3>Chart Representing the analysis</h3>
+			<center><div id="curve_chart" style="width: 900px; height: 500px"></div></center>
+			<br><span class="byline">The result shows</span>
+		</div>
+	</div>
+</div>
+<div id="copyright" class="container">
+	<p>&copy; Comp90024 Group 49. All rights reserved.</p>
+</div>
+</body>
+</html>
