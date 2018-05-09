@@ -55,6 +55,14 @@
         clone: yes
         dest: /home/ubuntu/cluster-n-cloud-computing
 
+
+   - name: make directory to nltk words
+     file: path=/home/ubuntu/nltk_data state=directory  
+
+   - name: copy nltk words
+     #copy: src=/home/ubuntu/cluster-n-cloud-computing/ansible/corpora dest=/home/ubuntu/nltk_data remote_src=yes directory_mode=yes
+     command: cp -r /home/ubuntu/cluster-n-cloud-computing/ansible/corpora /home/ubuntu/nltk_data/
+
    - name: update apt cache
      apt: 
         update_cache: yes
