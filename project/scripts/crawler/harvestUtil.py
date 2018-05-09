@@ -6,6 +6,7 @@ from database import database
 from crawler.config import db_name
 from database.parser import Parser
 from crawler.config import app_auth,smoke_file,crime_file,cricket_file,afl_file
+from topic.tagger import Tagger
 import re
 import time
 import sys
@@ -25,7 +26,7 @@ def containTopic(topics,text):
      for word in text.split(' ')]
 
     for word in text:
-        if word in topics:
+        if word.lower() in topics:
             return True
     return False
     
@@ -37,7 +38,8 @@ def searchById(admin, userid):
     #set up
     db = database.DButils()
     cl = classifier.MyClassifier()
-    parser = Parser()    
+    parser = Parser()
+    tagger = Tagger()
     user = admin
     auth = tweepy.OAuthHandler(app_auth[user].ckey, app_auth[user].csec)
     #auth = tweepy.AppAuthHandler(app_auth[user].ckey, app_auth[user].csec)
@@ -56,7 +58,6 @@ def searchById(admin, userid):
         print("crawler back to work")
         return
     for status in query[1:]:
-        
         # filter out retweets
         try:
             if status.retweeted_status:
@@ -66,26 +67,7 @@ def searchById(admin, userid):
         
         
         #filter out tweets without interested topics
-        topics = loadTopicFiles(smoke_file)              #smoke
-        if not containTopic(topics, status.text):
-            topics= loadTopicFiles(crime_file)           #crime
-            if not containTopic(topics,status.text):
-                topics = loadTopicFiles(cricket_file)    #cricket
-                if not containTopic(topics, status.text):
-                    topics = loadTopicFiles(afl_file)    #footy
-                    if not containTopic(topics,status.text):
-                        topic = ""
-                    else:
-                        topic = "afl"
-                else:
-                    topic = "cricket"
-
-            else:
-                topic = "crime"
-        else:
-            topic = "tobacco"
-        
-        
+        topic = tagger.topic_tagger(status.text)
         
         # perform sentiment analysis n store scores to json
         polarity, subjectivity, label = cl.get_sent_score(status.text)
@@ -119,6 +101,7 @@ class MyStreamListener(tweepy.StreamListener):
         db = database.DButils()
         cl = classifier.MyClassifier()
         parser = Parser()
+        tagger = Tagger()
         
         # filter out retweets
         try:
@@ -126,31 +109,11 @@ class MyStreamListener(tweepy.StreamListener):
                 return None
         except:
             pass
-        
 
-        
         
         #filter out unrelated topics
-        topics = loadTopicFiles(smoke_file)
-        if not containTopic(topics, status.text):
-            topics = loadTopicFiles(crime_file)
-            if not containTopic(topics, status.text):
-                topics = loadTopicFiles(cricket_file)
-                if not containTopic(topics, status.text):
-                    topics = loadTopicFiles(afl_file)
-                    if not containTopic(topics, status.text):
-                        topic = ""
-                    else:
-                        topic = "afl"
-                else:
-                    topic = "cricket"
+        topic = tagger.topic_tagger(status.text)
 
-            else:
-                topic = "crime"
-        else:
-            topic = "tobacco"
-        
-        
         
         # perform sentiment analysis n store scores to json
         polarity, subjectivity, label = cl.get_sent_score(status.text)

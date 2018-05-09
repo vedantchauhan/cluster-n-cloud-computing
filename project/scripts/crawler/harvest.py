@@ -24,8 +24,7 @@ import nltk
 
 class HarvestSys():
     def __init__(self):
-        nltk.download('words')
-        nltk.download('twitter_samples')
+        pass
 
     
     

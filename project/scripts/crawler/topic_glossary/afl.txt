@@ -5,7 +5,7 @@ arena
 barrel
 baulk
 bump
-centre umpire
+umpire
 chase
 checkside
 clanger
@@ -13,10 +13,7 @@ corkie
 crumb
 evasion
 falcon
-fat side
-filed umpire
-fifty metre line
-final siren
+siren
 footy
 hammy
 huddle
