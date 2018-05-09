@@ -57,14 +57,14 @@
 
         var data = google.visualization.arrayToDataTable([
           ['City', 'Gambling activities', 'Sport tweets'],
-			['Melbourne',  ((response_gamble.Melbourne/response_tot_persons.Melbourne) * 100 ),  response_sports.Melbourne],
-			['Sydney', ((response_gamble.Sydney/response_tot_persons.Sydney)* 100 ) , response_sports.Sydney],
-			['Perth', ((response_gamble.Perth/response_tot_persons.Perth)* 100 ) , response_sports.Perth],
-			['Adelaide', ((response_gamble.Adelaide/response_tot_persons.Adelaide)* 100 ) , response_sports.Adelaide],
-			['Darwin', ((response_gamble.Darwin/response_tot_persons.Darwin)* 100 ) ,  response_sports.Darwin],
-			['Hobart',  ((response_gamble.Hobart/response_tot_persons.Hobart)* 100 ) , response_sports.Hobart],
-			['Canberra', ((response_gamble.Canberra/response_tot_persons.Canberra)* 100 ) , response_sports.Canberra],
-			['Brisbane', ((response_gamble.Brisbane/response_tot_persons.Brisbane)* 100 ) , response_sports.Brisbane]
+			['Melbourne',  ((response_gamble.Melbourne/response_tot_persons.Melbourne) * 100 ),  response_sports.Melbourne/100],
+			['Sydney', ((response_gamble.Sydney/response_tot_persons.Sydney)* 100 ) , response_sports.Sydney/100],
+			['Perth', ((response_gamble.Perth/response_tot_persons.Perth)* 100 ) , response_sports.Perth/100],
+			['Adelaide', ((response_gamble.Adelaide/response_tot_persons.Adelaide)* 100 ) , response_sports.Adelaide/100],
+			['Darwin', ((response_gamble.Darwin/response_tot_persons.Darwin)* 100 ) ,  response_sports.Darwin/100],
+			['Hobart',  ((response_gamble.Hobart/response_tot_persons.Hobart)* 100 ) , response_sports.Hobart/100],
+			['Canberra', ((response_gamble.Canberra/response_tot_persons.Canberra)* 100 ) , response_sports.Canberra/100],
+			['Brisbane', ((response_gamble.Brisbane/response_tot_persons.Brisbane)* 100 ) , response_sports.Brisbane/100]
         ]);
 
         var options = {

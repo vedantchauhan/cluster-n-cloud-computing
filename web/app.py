@@ -47,6 +47,44 @@ def index():
 @app.route('/analysis_one')
 def analysis_one():
     try:
+        # variables passed to ui
+        count_neg_melb = 0
+        count_neg_syd = 0
+        count_neg_dar = 0
+        count_neg_per = 0
+        count_neg_ade = 0
+        count_neg_bri = 0
+        count_neg_hob = 0
+        count_neg_can = 0
+
+        server = connect_db()
+        db_tweets = server["tweets"]
+
+        # collecting views
+        for item in db_tweets.view('group49/melb_neg'):
+            count_neg_melb = item["value"]
+
+        for item in db_tweets.view('group49/syd_neg'):
+            count_neg_syd = item["value"]
+
+        for item in db_tweets.view('group49/bri_neg'):
+            count_neg_bri = item["value"]
+
+        for item in db_tweets.view('group49/can_neg'):
+            count_neg_can = item["value"]
+
+        for item in db_tweets.view('group49/ade_neg'):
+            count_neg_ade = item["value"]
+
+        for item in db_tweets.view('group49/hob_neg'):
+            count_neg_hob = item["value"]
+
+        for item in db_tweets.view('group49/per_neg'):
+            count_neg_per = item["value"]
+
+        for item in db_tweets.view('group49/dar_neg'):
+            count_neg_dar = item["value"]
+
         # variable for ui
         melb_neg_mor = 0
         melb_neg_mid = 0
@@ -81,8 +119,8 @@ def analysis_one():
         ade_neg_aft = 0
         ade_neg_eve = 0
 
-        server = connect_db()
-        db_tweets = server["tweets"]
+        #server = connect_db()
+        #db_tweets = server["tweets"]
 
         # collecting views
         for item in db_tweets.view('group49/melb_neg_morn'):
@@ -158,38 +196,38 @@ def analysis_one():
             can_neg_mid = item["value"]
 
         response_tweet_score.update({
-            "melb_mor": melb_neg_mor,
-            "melb_aft": melb_neg_aft,
-            "melb_eve": melb_neg_eve,
-            "melb_mid": melb_neg_mid,
-            "syd_mor": syd_neg_mor,
-            "syd_aft": syd_neg_aft,
-            "syd_eve": syd_neg_eve,
-            "syd_mid": syd_neg_mid,
-            "dar_mor": dar_neg_mor,
-            "dar_aft": dar_neg_aft,
-            "dar_eve": dar_neg_eve,
-            "dar_mid": dar_neg_mid,
-            "hob_mor": hob_neg_mor,
-            "hob_aft": hob_neg_aft,
-            "hob_eve": hob_neg_eve,
-            "hob_mid": hob_neg_mid,
-            "bri_mor": bri_neg_mor,
-            "bri_aft": bri_neg_aft,
-            "bri_eve": bri_neg_eve,
-            "bri_mid": bri_neg_mid,
-            "per_mor": per_neg_mor,
-            "per_aft": per_neg_aft,
-            "per_eve": per_neg_eve,
-            "per_mid": per_neg_mid,
-            "can_mor": can_neg_mor,
-            "can_aft": can_neg_aft,
-            "can_eve": can_neg_eve,
-            "can_mid": can_neg_mid,
-            "ade_mor": ade_neg_mor,
-            "ade_aft": ade_neg_aft,
-            "ade_eve": ade_neg_eve,
-            "ade_mid": ade_neg_mid
+            "melb_mor": melb_neg_mor/count_neg_melb,
+            "melb_aft": melb_neg_aft/count_neg_melb,
+            "melb_eve": melb_neg_eve/count_neg_melb,
+            "melb_mid": melb_neg_mid/count_neg_melb,
+            "syd_mor": syd_neg_mor/count_neg_syd,
+            "syd_aft": syd_neg_aft/count_neg_syd,
+            "syd_eve": syd_neg_eve/count_neg_syd,
+            "syd_mid": syd_neg_mid/count_neg_syd,
+            "dar_mor": dar_neg_mor/count_neg_dar,
+            "dar_aft": dar_neg_aft/count_neg_dar,
+            "dar_eve": dar_neg_eve/count_neg_dar,
+            "dar_mid": dar_neg_mid/count_neg_dar,
+            "hob_mor": hob_neg_mor/count_neg_hob,
+            "hob_aft": hob_neg_aft/count_neg_hob,
+            "hob_eve": hob_neg_eve/count_neg_hob,
+            "hob_mid": hob_neg_mid/count_neg_hob,
+            "bri_mor": bri_neg_mor/count_neg_bri,
+            "bri_aft": bri_neg_aft/count_neg_bri,
+            "bri_eve": bri_neg_eve/count_neg_bri,
+            "bri_mid": bri_neg_mid/count_neg_bri,
+            "per_mor": per_neg_mor/count_neg_per,
+            "per_aft": per_neg_aft/count_neg_per,
+            "per_eve": per_neg_eve/count_neg_per,
+            "per_mid": per_neg_mid/count_neg_per,
+            "can_mor": can_neg_mor/count_neg_can,
+            "can_aft": can_neg_aft/count_neg_can,
+            "can_eve": can_neg_eve/count_neg_can,
+            "can_mid": can_neg_mid/count_neg_can,
+            "ade_mor": ade_neg_mor/count_neg_ade,
+            "ade_aft": ade_neg_aft/count_neg_ade,
+            "ade_eve": ade_neg_eve/count_neg_ade,
+            "ade_mid": ade_neg_mid/count_neg_ade
         })
         return render_template('analysis_one.html', response_tweet_score=response_tweet_score)
     except Exception as e:
