@@ -24,22 +24,22 @@
         function drawRegionsMap() {
             var response_gamble = JSON.parse('{{ response_gamble | tojson | safe}}');
           	var response_tot_persons = JSON.parse('{{ response_tot_persons | tojson | safe}}');
+          	var response_sports = JSON.parse('{{ response_sports | tojson | safe}}');
 
             var data = google.visualization.arrayToDataTable([
-                ['City', '%age of people gamble'],
-         	['Melbourne',  ((response_gamble.Melbourne/response_tot_persons.Melbourne) * 100 )],
-			['Sydney',  ((response_gamble.Sydney/response_tot_persons.Sydney)* 100 )],
-			['Perth',   ((response_gamble.Perth/response_tot_persons.Perth)* 100 )],
-			['Adelaide', ((response_gamble.Adelaide/response_tot_persons.Adelaide)* 100 )],
-			['Darwin',    ((response_gamble.Darwin/response_tot_persons.Darwin)* 100 )],
-			['Hobart',  ((response_gamble.Hobart/response_tot_persons.Hobart)* 100 )],
-			['Canberra',  ((response_gamble.Canberra/response_tot_persons.Canberra)* 100 )],
-			['Brisbane',  ((response_gamble.Brisbane/response_tot_persons.Brisbane)* 100 )]
+                ['City', 'Gambling activities', 'Sport tweets'],
+         	['Melbourne',  ((response_gamble.Melbourne/response_tot_persons.Melbourne) * 100 ),  response_sports.Melbourne],
+			['Sydney', ((response_gamble.Sydney/response_tot_persons.Sydney)* 100 ) , response_sports.Sydney],
+			['Perth', ((response_gamble.Perth/response_tot_persons.Perth)* 100 ) , response_sports.Perth],
+			['Adelaide', ((response_gamble.Adelaide/response_tot_persons.Adelaide)* 100 ) , response_sports.Adelaide],
+			['Darwin', ((response_gamble.Darwin/response_tot_persons.Darwin)* 100 ) ,  response_sports.Darwin],
+			['Hobart',  ((response_gamble.Hobart/response_tot_persons.Hobart)* 100 ) , response_sports.Hobart],
+			['Canberra', ((response_gamble.Canberra/response_tot_persons.Canberra)* 100 ) , response_sports.Canberra],
+			['Brisbane', ((response_gamble.Brisbane/response_tot_persons.Brisbane)* 100 ) , response_sports.Brisbane]
             ]);
             var options = {
                 region: 'AU',
-                displayMode: 'markers',
-				backgroundColor: '#81d4fa'
+                displayMode: 'markers'
             };
             var chart = new google.visualization.GeoChart(document.getElementById('geochart'));
             chart.draw(data, options);
@@ -56,8 +56,8 @@
           var response_tot_persons = JSON.parse('{{ response_tot_persons | tojson | safe}}');
 
         var data = google.visualization.arrayToDataTable([
-          ['City', 'Gambling done in sports', 'Sports'],
-                ['Melbourne',  ((response_gamble.Melbourne/response_tot_persons.Melbourne) * 100 ),  response_sports.Melbourne],
+          ['City', 'Gambling activities', 'Sport tweets'],
+			['Melbourne',  ((response_gamble.Melbourne/response_tot_persons.Melbourne) * 100 ),  response_sports.Melbourne],
 			['Sydney', ((response_gamble.Sydney/response_tot_persons.Sydney)* 100 ) , response_sports.Sydney],
 			['Perth', ((response_gamble.Perth/response_tot_persons.Perth)* 100 ) , response_sports.Perth],
 			['Adelaide', ((response_gamble.Adelaide/response_tot_persons.Adelaide)* 100 ) , response_sports.Adelaide],
@@ -68,9 +68,13 @@
         ]);
 
         var options = {
-          title: 'City with most gambling in afl and cricket',
+          title: 'Gambling in relation with sports',
           curveType: 'function',
-          legend: { position: 'bottom' }
+          legend: { position: 'bottom' },
+			explorer: {
+                    keepInBounds: true,
+                    maxZoomIn: 4.0
+                }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
@@ -102,10 +106,18 @@
 	<div id="three-column" class="container">
 
 		<div class="title">
-			<h3>Map Representing the data</h3><br>
+			<h2> For the love of the Game!!!!</h2><br>
+            <span class="byline">Gambling has been a very well-known platform for the sports lovers to use their knowledge
+				of the game to predict the outcomes or the events in the game to earn money. This scenario tries to compare the percentage of
+				people which are involved in gambling activities in a particular city with the number of sports tweets coming in from
+				these cities.
+			</span><br>
+			<h3>Map Representing the analysis</h3><br>
 			<center><div id="geochart" style="width: 1200px; height: 400px ;"></div></center>
-			<h4>Chart Representing the data</h4>
+			<h3>Chart Representing the analysis</h3>
 			<center><div id="curve_chart" style="width: 900px; height: 500px"></div></center>
+			<br><span class="byline">The result shows
+			</span>
 		</div>
 	</div>
 </div>

@@ -25,6 +25,8 @@
 
             var response_married = JSON.parse('{{ response_married | tojson | safe}}');
             var response_tot_persons_score = JSON.parse('{{ response_tot_persons_score | tojson | safe}}');
+            var response_neg_score = JSON.parse('{{ response_neg_score | tojson | safe}}');
+
 			var melb = ((response_married.Melbourne/response_tot_persons_score.Melbourne) * 10 );
 			var syd = ((response_married.Sydney/response_tot_persons_score.Sydney)* 10 );
 			var per = ((response_married.Perth/response_tot_persons_score.Perth)* 10 );
@@ -35,22 +37,20 @@
 			var bri = ((response_married.Brisbane/response_tot_persons_score.Brisbane)* 10 );
 
             var data = google.visualization.arrayToDataTable([
-                ['City', 'people married'],
-         	    ['Melbourne', melb],
-			    ['Sydney', syd],
-			    ['Perth', per],
-			    ['Adelaide', ade],
-			    ['Darwin', dar],
-			    ['Hobart', hob],
-			    ['Canberra', can],
-			    ['Brisbane', bri]
+                ['City', 'Sentiment Score', 'Weighted average of married people'],
+         	    ['Melbourne', response_neg_score.Melbourne, melb],
+			    ['Sydney', response_neg_score.Sydney, syd],
+			    ['Perth', response_neg_score.Perth, per],
+			    ['Adelaide', response_neg_score.Adelaide, ade],
+			    ['Darwin', response_neg_score.Darwin, dar],
+			    ['Hobart', response_neg_score.Hobart, hob],
+			    ['Canberra', response_neg_score.Canberra, can],
+			    ['Brisbane', response_neg_score.Brisbane, bri]
             ]);
             var options = {
-                region: 'AU',  //AU
+                region: 'AU',
                 displayMode: 'markers',
-				colorAxis: {colors: ['#00853f', 'black', '#e31b23']},
-				backgroundColor: '#81d4fa',
-				defaultColor: '#f5f5f5'
+				colorAxis: {colors: ['#00853f', 'black', '#e31b23']}
             };
             var chart = new google.visualization.GeoChart(document.getElementById('geochart'));
             chart.draw(data, options);
@@ -67,7 +67,7 @@
           var response_tot_persons_score = JSON.parse('{{ response_tot_persons_score | tojson | safe}}');
 
         var data = google.visualization.arrayToDataTable([
-          ['City','Sentiment Score', 'Married people in city'],
+          ['City','Sentiment Score', 'Weighted average of married people'],
             ['Melbourne', response_neg_score.Melbourne, ((response_married.Melbourne/response_tot_persons_score.Melbourne) * 10 )],
 			['Sydney', response_neg_score.Sydney, ((response_married.Sydney/response_tot_persons_score.Sydney)* 10 )],
 			['Perth', response_neg_score.Perth, ((response_married.Perth/response_tot_persons_score.Perth)* 10 )],
@@ -79,9 +79,13 @@
         ]);
 
         var options = {
-          title: 'City with married people sad',
+          title: 'Marriage quotient in relation to sentiment score',
           curveType: 'function',
-          legend: { position: 'bottom' }
+          legend: { position: 'bottom' },
+			explorer: {
+                    keepInBounds: true,
+                    maxZoomIn: 4.0
+                }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
@@ -112,11 +116,17 @@
 	<div id="three-column" class="container">
 
 		<div class="title">
-			<h3>Map Representing the data</h3><br>
+			<h2>Marriage is a Disaster?</h2><br>
+            <span class="byline"> There are many number of stories and regular discussions prevalent among people regarding the
+				relation of marital status and happiness in life. So, we tried to analyse the same with the data available with us.
+				This scenario tries to compare the weighted average of married people in the city and tries to relate it with
+				the sentiment score in the city.
+			</span><br>
+			<h3>Map Representing the analysis</h3><br>
 			<center><div id="geochart" style="width: 1200px; height: 400px ;"></div></center>
-			<h4>Chart Representing the data</h4>
+			<h3>Chart Representing the analysis</h3>
 			<center><div id="curve_chart" style="width: 900px; height: 500px"></div></center>
-
+			<br><span class="byline">The result shows</span>
 		</div>
 	</div>
 </div>
