@@ -19,14 +19,52 @@
    - name: install pip3
      apt: name=python3-pip state=present
 
+   - name: install tweepy
+     pip: name=tweepy state=present executable=pip3
+
+   - name: install couchdb
+     pip: name=couchdb state=present executable=pip3
+
+   - name: install textblob
+     pip: name=textblob state=present executable=pip3
+
+   - name: install numpy
+     pip: name=numpy state=present executable=pip3
+
+   - name: install nltk
+     pip: name=nltk state=present executable=pip3
+
+   - name: install sklearn
+     pip: name=sklearn state=present executable=pip3
+
+   - name: install flask
+     pip: name=flask state=present executable=pip3
+
    - name: clone docker repo into root folder
-     git: 
+     git:
         repo: https://github.com/redgeoff/docker-ce-vagrant
         clone: yes
         dest: /root/docker-ce-vagrant
 
+   - name: make directory to save development code
+     file: path=/home/ubuntu/cluster-n-cloud-computing state=directory
+
+   - name: clone development code repo into cluster-n-cloud-computing folder
+     git:
+        repo: https://github.com/freddieMe/cluster-n-cloud-computing
+        clone: yes
+        dest: /home/ubuntu/cluster-n-cloud-computing
+
+
+   - name: make directory to nltk words
+     file: path=/home/ubuntu/nltk_data state=directory
+
+   - name: copy nltk words
+     #copy: src=/home/ubuntu/cluster-n-cloud-computing/ansible/corpora dest=/home/ubuntu/nltk_data remote_src=yes directory_mode=yes
+     command: cp -r /home/ubuntu/cluster-n-cloud-computing/ansible/corpora /home/ubuntu/nltk_data/
+
    - name: update apt cache
-     apt: 
+     apt:
         update_cache: yes
 
    - name: change into repository directory and install docker
@@ -48,7 +86,7 @@
           max-size: 100m
         published_ports: "[{% for port in range(9100, 9201) %}'{{port}}:{{port}}'{% if not loop.last %},{% endif %}{% endfor %},'4369:4369','5984:5984','5986:5986']"
         volumes:
-          - /home/ubuntu/common:/home/couchdb/common 
+          - /home/ubuntu/common:/home/couchdb/common
         env:
             COUCHDB_DATA_DIR: "/home/couchdb/common/data"
             COUCHDB_USER: "admin"
@@ -69,28 +107,25 @@
      npm:
         name:  npm
         global: yes
+
    - name: install add-cors-to-couchdb module
-     npm: 
+     npm:
         name: add-cors-to-couchdb
         global: yes
+
    - name: add cors to couchdb
      shell: "add-cors-to-couchdb http://localhost:5984 -u admin -p admin"
+
    - name: clone cluster repo
      git:
         repo: https://github.com/redgeoff/redgeoff-couchdb-docker
         clone: yes
         dest: /root/redgeoff-couchdb-docker
+
    - name: add nodes to cluster
      shell: /root/redgeoff-couchdb-docker/create-cluster.sh admin admin 5984 5986 "{{ item }} {{ inventory_hostname }}"
      with_items: "{{ groups['myhost'] }}"
      when: inventory_hostname == groups['myhost'][0] and inventory_hostname != item
-    
-
-   
-   
- 
-       
-
 
 
 
