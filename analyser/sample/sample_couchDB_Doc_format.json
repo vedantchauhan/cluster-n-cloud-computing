@@ -1,0 +1,33 @@
+{
+  "_id": "985551370064248832",
+  "_rev": "",
+  "id_str": "",
+  "coordinates": null,
+  "timestamp":"morning",
+  "place": {
+    "place_type": "city",
+    "name": "Perth",
+    "bounding_box": {
+      "coordinates": [],
+      "type": "Polygon"
+    },
+    "full_name": "Perth, Western Australia",
+    "country_code": "AU",
+    "country": "Australia"
+  },
+  "user": {
+    "id":"",
+    "id_str": "",
+    "name": "",
+    "description": ""
+  },
+  "lang": "en",
+  "text": "",
+  "sentiment": {
+    "polarity": "0.5",
+    "subjectiviy": "0.5",
+    "label": "Positive"
+  },
+  "topic": "",
+  "hashtag": []
+}
