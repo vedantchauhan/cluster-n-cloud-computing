@@ -3,6 +3,7 @@
   "_rev": "",
   "id_str": "",
   "coordinates": null,
+  "timestamp":"morning",
   "place": {
     "place_type": "city",
     "name": "Perth",
@@ -27,6 +28,6 @@
     "subjectiviy": "0.5",
     "label": "Positive"
   },
-  "topic": "null",
+  "topic": "",
   "hashtag": []
 }
