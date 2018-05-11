@@ -1,0 +1,2 @@
+ - name: set restrictive permission for the ssh private key
+     copy: src=~/id_rsa dest=/home/ubuntu/.ssh/github_key owner=root mode=0644 force=no
