@@ -1,4 +1,4 @@
-#   2018 comp90024 cluster and cloud computing team 49  #
+#   A study among cities in Australia by leveraging NECTAR (AWS like cloud) cloud-based solutions, AURIN and tweets   #
 
 #   Description
 A study among cities in Australia by leveraging NECTAR[1] cloud-based solutions,  AURIN[2] and tweets[3]
@@ -14,7 +14,7 @@ https://www.youtube.com/watch?v=wCEoxUTgxkg&feature=youtu.be
     -   http://115.146.95.31:5002/index
     -   http://115.146.92.67:5002/index
     -   http://115.146.95.239:5002/index
-
+49
 #   Source Code Directory
 -   ansible
     -   automation scripts
