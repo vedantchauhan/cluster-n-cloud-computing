@@ -53,7 +53,7 @@ https://www.youtube.com/watch?v=wCEoxUTgxkg&feature=youtu.be
     -   Contribution: ansible, boto, cloud architecture design, scenario creation
 
 -   Vedant Chauhan: https://github.com/vedantchauhan
-    -   Contribution: web, UI, leveraging aurin, scenario creation and implementation
+    -   Contribution: web, UI, leveraging aurin, cloud architecture design, couchDB map/reduce, scenario creation and implementation
 
 -   Shashank Parab: https://github.com/Shashank830132
     -   Contribution: leveraging aurin, scenario creation
